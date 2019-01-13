@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 12-Jan-2019 às 03:07
+-- Generation Time: 13-Jan-2019 às 15:30
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 7.2.12
 
@@ -63,12 +63,8 @@ CREATE TABLE `tb_class` (
 
 CREATE TABLE `tb_configs_site` (
   `con_id` int(11) NOT NULL,
-  `con_nome_site` varchar(255) NOT NULL,
-  `con_favico` varchar(255) NOT NULL,
-  `con_status` int(11) NOT NULL,
-  `con_descricao` mediumtext NOT NULL,
-  `con_logo` varchar(255) NOT NULL,
-  `con_cr` mediumtext NOT NULL
+  `con_name` varchar(255) NOT NULL,
+  `con_value` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -79,9 +75,11 @@ CREATE TABLE `tb_configs_site` (
 
 CREATE TABLE `tb_info_users` (
   `inf_id` int(11) NOT NULL,
+  `inf_usu_id` int(11) NOT NULL,
   `inf_name` varchar(155) NOT NULL,
   `inf_lastname` varchar(255) NOT NULL,
-  `inf_email` varchar(255) NOT NULL
+  `inf_email` varchar(255) NOT NULL,
+  `inf_registration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -95,6 +93,19 @@ CREATE TABLE `tb_lists` (
   `lis_titulo` varchar(255) NOT NULL,
   `lis_subject` int(11) NOT NULL,
   `lis_teacher` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_register_class`
+--
+
+CREATE TABLE `tb_register_class` (
+  `reg_id` int(11) NOT NULL,
+  `reg_usu_id` int(11) NOT NULL,
+  `reg_cla_hash` int(11) NOT NULL,
+  `reg_date` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -157,6 +168,12 @@ ALTER TABLE `tb_info_users`
 --
 ALTER TABLE `tb_lists`
   ADD PRIMARY KEY (`lis_id`);
+
+--
+-- Indexes for table `tb_register_class`
+--
+ALTER TABLE `tb_register_class`
+  ADD PRIMARY KEY (`reg_id`);
 
 --
 -- Indexes for table `tb_subjects`

@@ -1,4 +1,5 @@
 <?php
+//verif_setup();
 /**
  * CodeIgniter
  *
