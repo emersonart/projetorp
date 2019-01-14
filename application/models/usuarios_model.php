@@ -6,6 +6,18 @@ class Usuarios_model extends CI_Model{
 		parent::__construct();
 		$this->load->model('option_model','option');
 	}
+
+	public function logout(){
+		if($this->session->userdata()){
+			$this->session->unset_userdata('usuario','id_usuario','perm','pagina_anterior','nome','sobrenome','matricula','email','logged');	
+			$this->session->sess_destroy();
+
+			set_msg('Você saiu do sistema com sucesso!','success');
+		}
+
+		redirect('usuarios/login');
+	}
+
 	public function login($values){
 
 		$q = array('USU_login' => $values['login'], 'USU_senha' => $values['senha']);
@@ -40,26 +52,8 @@ class Usuarios_model extends CI_Model{
 			return set_msg('login e/ou senhas inválidos','danger');
 		}
 
-
-
-
-
-		//$this->db->where($q);
-		//$query = $this->db->get('usuarios',1);
-		//if($query->num_rows() == 1){
-		//	$row = $query->row();
-		//	$arg = array(
-		////		'usuario' => $row->USU_login,
-		//		'id_usuario' => $row->USU_id,
-		//		'perm' => $row->USU_perm
-		//	);
-		//	$this->session->set_userdata($arg);
-		//	
-		//	redirect('home','refresh');
-		//}else{
-		//	return NULL;
-		//}
 	}
+
 	public function cadastrar($values){
 
 		$this->db->select('cla_id');
@@ -68,7 +62,7 @@ class Usuarios_model extends CI_Model{
 		$this->db->limit(1);
 		if($this->db->get()->num_rows() != 1){
 			set_msg('Código de turma incorreto!','danger');
-			redirect('register','refresh');
+			redirect('usuarios/register','refresh');
 		}else{
 			$this->db->select('usu_id');
 			$this->db->from('tb_users');
@@ -106,8 +100,7 @@ class Usuarios_model extends CI_Model{
 				}
 			}
 		}
-		
-
-
 	}
+
+
 }

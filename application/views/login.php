@@ -40,9 +40,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <div class="app-block">
       <div class="app-form">
+
         <div class="form-header">
           <div class="app-brand"><span class="highlight">Koala</span></div>
         </div>
+        <?php echo get_msg();?>
         <?php echo form_open();?>
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon1">

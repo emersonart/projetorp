@@ -5,8 +5,6 @@ class Usuarios extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
-		$this->load->helper('form');
-		$this->load->library('form_validation');
 		$this->load->model('usuarios_model','usuario');
 		$this->load->model('option_model','option');
 	}
@@ -42,7 +40,7 @@ class Usuarios extends CI_Controller {
 
 
 	public function logout(){
-		
+		$this->usuario->logout();
 	}
 
 	public function register(){

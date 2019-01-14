@@ -69,7 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             Possui um código de turma? Crie já sua conta!
           </div>
           <?php echo get_msg();?>
-          <?php echo form_open('usuarios/register');?>
+          <?php echo form_open();?>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">
                   <i class="fa fa-address-card" aria-hidden="true"></i></span>
