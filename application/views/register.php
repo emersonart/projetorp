@@ -71,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">
                   <i class="fa fa-paper-plane" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Fullname" aria-describedby="basic-addon1">
+                <input type="number" class="form-control" placeholder="Matrícula" aria-describedby="basic-addon1">
               </div>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon2">
@@ -79,14 +79,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon2">
               </div>
               <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                  <i class="fa fa-paper-plane" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Nome" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                  <i class="fa fa-paper-plane" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Sobrenome" aria-describedby="basic-addon1">
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon2">
+                  <i class="fa fa-user" aria-hidden="true"></i></span>
+                <input type="email" class="form-control" placeholder="Email" aria-describedby="basic-addon2">
+              </div>
+              <div class="input-group">
                 <span class="input-group-addon" id="basic-addon3">
                   <i class="fa fa-key" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Password" aria-describedby="basic-addon3">
+                <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon3">
               </div>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon4">
                   <i class="fa fa-check" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Confirm Password" aria-describedby="basic-addon4">
+                <input type="password" class="form-control" placeholder="Confirm Password" aria-describedby="basic-addon4">
+              </div>
+               <div class="input-group">
+                <span class="input-group-addon" id="basic-addon3">
+                  <i class="fa fa-key" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" placeholder="Código da turma" aria-describedby="basic-addon3">
               </div>
               <div class="text-center">
                   <input type="submit" class="btn btn-success btn-submit" value="Register">
