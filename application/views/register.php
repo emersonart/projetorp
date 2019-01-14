@@ -39,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <div class="app-block">
         <div class="app-right-section">
-          <div class="app-brand"><span class="highlight">Simplio</span> Admin</div>
+          <div class="app-brand"><span class="highlight">Koala</span> <span style="font-size:.7em">educational</span></div>
           <div class="app-info">
             
             <ul class="list">
