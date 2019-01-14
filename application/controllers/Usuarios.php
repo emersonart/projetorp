@@ -10,7 +10,7 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function index(){
-
+		$this->load->view('register');
 	}
 
 	public function login(){
@@ -96,5 +96,7 @@ class Usuarios extends CI_Controller {
 			);
 			$this->usuario->cadastrar($valor);
 		}
+
+		$this->load->view('register');
 	}
 }
