@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/font-awesome.min.css');?>">
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/vendor.css');?>">
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/flat-admin.css');?>">
 
@@ -70,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <form action="/" method="POST">
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">
-                  <i class="fa fa-paper-plane" aria-hidden="true"></i></span>
+                  <i class="fa fa-address-card" aria-hidden="true"></i></span>
                 <input type="number" class="form-control" placeholder="Matrícula" aria-describedby="basic-addon1">
               </div>
               <div class="input-group">
@@ -80,17 +81,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">
-                  <i class="fa fa-paper-plane" aria-hidden="true"></i></span>
+                  <i class="fa fa-user" aria-hidden="true"></i></span>
                 <input type="text" class="form-control" placeholder="Nome" aria-describedby="basic-addon1">
               </div>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">
-                  <i class="fa fa-paper-plane" aria-hidden="true"></i></span>
+                  <i class="fa fa-user" aria-hidden="true"></i></span>
                 <input type="text" class="form-control" placeholder="Sobrenome" aria-describedby="basic-addon1">
               </div>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon2">
-                  <i class="fa fa-user" aria-hidden="true"></i></span>
+                  <i class="fa fa-envelope" aria-hidden="true"></i></span>
                 <input type="email" class="form-control" placeholder="Email" aria-describedby="basic-addon2">
               </div>
               <div class="input-group">
@@ -105,24 +106,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
                <div class="input-group">
                 <span class="input-group-addon" id="basic-addon3">
-                  <i class="fa fa-key" aria-hidden="true"></i></span>
+                  <i class="fa fa-users" aria-hidden="true"></i></span>
                 <input type="text" class="form-control" placeholder="Código da turma" aria-describedby="basic-addon3">
               </div>
               <div class="text-center">
                   <input type="submit" class="btn btn-success btn-submit" value="Register">
               </div>
           </form>
-          <div class="form-line">
-            <div class="title">OR</div>
-          </div>
-          <div class="form-footer">
-            <button type="button" class="btn btn-default btn-sm btn-social __facebook">
-              <div class="info">
-                <i class="icon fa fa-facebook-official" aria-hidden="true"></i>
-                <span class="title">Register w/ Facebook</span>
-              </div>
-            </button>
-          </div>
         </div>
       </div>
     </div>
