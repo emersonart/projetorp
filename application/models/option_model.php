@@ -32,7 +32,7 @@ class Option_model extends CI_Model{
 				'con_name' => $option_name,
 				'con_value' => $option_value
 			);
-			$this->db->insert('tb_options',$dados);
+			$this->db->insert('tb_configs_site',$dados);
 			return $this->db->insert_id();
 		}
 	}
