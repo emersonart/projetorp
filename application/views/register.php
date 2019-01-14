@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html>
 <head>
   <title>Sistema de Atividades IFRN</title>
-  
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/font-awesome.min.css');?>">
@@ -39,7 +39,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <div class="app-block">
         <div class="app-right-section">
-          <div class="app-brand"><span class="highlight">Simplio</span> Admin</div>
+          <div class="app-brand text-center">
+            <img src="<?php echo base_url('assets/images/logo/logo-branco.png');?>" style="width: 150px;height:auto;" ><br><br>
+            <span class="highlight">Koala</span> <span style="font-size:.7em"> educational</span>
+          </div>
           <div class="app-info">
             
             <ul class="list">
@@ -66,65 +69,66 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <div class="app-form">
           <div class="form-suggestion">
-            Create an account for free.
+            Possui um código de turma? Crie já sua conta!
           </div>
-          <form action="/" method="POST">
+          <?php echo get_msg();?>
+          <?php echo form_open();?>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">
                   <i class="fa fa-address-card" aria-hidden="true"></i></span>
-                <input type="number" class="form-control" placeholder="Matrícula" aria-describedby="basic-addon1">
+                <input type="text" value="<?php echo set_value('matricula'); ?>" class="form-control" placeholder="Matrícula" name="matricula" aria-describedby="basic-addon1">
               </div>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon2">
                   <i class="fa fa-user" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon2">
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">
-                  <i class="fa fa-user" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Nome" aria-describedby="basic-addon1">
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">
-                  <i class="fa fa-user" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Sobrenome" aria-describedby="basic-addon1">
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon2">
-                  <i class="fa fa-envelope" aria-hidden="true"></i></span>
-                <input type="email" class="form-control" placeholder="Email" aria-describedby="basic-addon2">
+                <input type="text" value="<?php echo set_value('login'); ?>" class="form-control" placeholder="Username" name="login" aria-describedby="basic-addon2">
               </div>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon3">
-                  <i class="fa fa-key" aria-hidden="true"></i></span>
-                <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon3">
+                  <i class="fa fa-user" aria-hidden="true"></i></span>
+                <input type="text" value="<?php echo set_value('nome'); ?>" class="form-control" placeholder="Nome" name="nome" aria-describedby="basic-addon3">
               </div>
               <div class="input-group">
                 <span class="input-group-addon" id="basic-addon4">
+                  <i class="fa fa-user" aria-hidden="true"></i></span>
+                <input type="text" value="<?php echo set_value('sobrenome'); ?>" class="form-control" placeholder="Sobrenome" name="sobrenome" aria-describedby="basic-addon4">
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon5">
+                  <i class="fa fa-envelope" aria-hidden="true"></i></span>
+                <input type="email" value="<?php echo set_value('email'); ?>" class="form-control" placeholder="Email" name="email" aria-describedby="basic-addon5">
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon6">
+                  <i class="fa fa-key" aria-hidden="true"></i></span>
+                <input type="password" value="<?php echo set_value('senha'); ?>" class="form-control" placeholder="Password" name="senha" aria-describedby="basic-addon6">
+              </div>
+              <div class="input-group">
+                <span class="input-group-addon" id="basic-addon7">
                   <i class="fa fa-check" aria-hidden="true"></i></span>
-                <input type="password" class="form-control" placeholder="Confirm Password" aria-describedby="basic-addon4">
+                <input type="password" class="form-control" placeholder="Confirm Password" name="senha2" aria-describedby="basic-addon7">
               </div>
                <div class="input-group">
-                <span class="input-group-addon" id="basic-addon3">
+                <span class="input-group-addon" id="basic-addon8">
                   <i class="fa fa-users" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Código da turma" aria-describedby="basic-addon3">
+                <input type="text" value="<?php echo set_value('codigoturma'); ?>" class="form-control" placeholder="Código da turma" name="codigoturma" aria-describedby="basic-addon8">
               </div>
               <div class="text-center">
-                  <input type="submit" class="btn btn-success btn-submit" value="Register">
+                  <button type="submit" class="btn btn-success btn-submit" value="Cadastrar">cadastrar</button>
               </div>
-          </form>
+          <?php echo form_close();?>
         </div>
       </div>
     </div>
-    <div class="app-footer">
-    </div>
+
   </div>
 </div>
 
   </div>
   
   <script type="text/javascript" src="<?php echo base_url('assets/js/vendor.js');?>"></script>
-  <script type="text/javascript" src="<?php echo base_url('assets/js/app.js');?>"></script>
+
+  <div class="autocomplete-suggestions" style="position: absolute; display: none; max-height: 300px; z-index: 9999;"></div>
 
 </body>
 </html>

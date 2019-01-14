@@ -5,12 +5,12 @@ class Usuarios extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
-		$this->load->helper('form');
-		$this->load->library('form_validation');
+		$this->load->model('usuarios_model','usuario');
+		$this->load->model('option_model','option');
 	}
 
 	public function index(){
-		$this->load->view('register');
+		echo 'aki';
 	}
 
 	public function login(){
@@ -35,25 +35,25 @@ class Usuarios extends CI_Controller {
 			//$this->usuario->login($dados_login);
 		}
 		$dados['titulo'] = "Logar no sistema";
-		$this->load->view('usuarios/logar',$dados);
+		$this->load->view('login',$dados);
 	}
 
 
 	public function logout(){
-		
+		$this->usuario->logout();
 	}
 
 	public function register(){
 
 		//parametros de validação
-		$this->form_validation->set_rules('login','Login','trim|required|min_length[5]|is_unique[tb_usuarios.USU_login]');
-		$this->form_validation->set_rules('email','Email','trim|required|valid_email|is_unique[tb_usuarios_info.INF_email]');
+		$this->form_validation->set_rules('login','Login','trim|required|min_length[5]|is_unique[tb_users.usu_login]');
+		$this->form_validation->set_rules('email','Email','trim|required|valid_email|is_unique[tb_info_users.inf_email]');
 		$this->form_validation->set_rules('senha','Senha','trim|required|min_length[6]');
 		$this->form_validation->set_rules('senha2','Repita a Senha','trim|required|min_length[6]|matches[senha]');
 		$this->form_validation->set_rules('nome','Nome','trim|required|min_length[4]');
 		$this->form_validation->set_rules('sobrenome','Sobrenome','trim|required|min_length[4]');
-		$this->form_validation->set_rules('codigoturma','Código da Turma','trim|required|min_length[8]');
-		$this->form_validation->set_rules('matricula','Matrícula','trim|required|min_length[14]|regex_match[/^[\d]+$/]');
+		$this->form_validation->set_rules('codigoturma','Código da Turma','trim|required|min_length[6]');
+		$this->form_validation->set_rules('matricula','Matrícula','trim|required|min_length[11]|max_lenght[14]|regex_match[/^[\d]+$/]'); //|regex_match[/^[\d]+$/]
 
 		//verifica validação
 		if($this->form_validation->run() == FALSE){
