@@ -39,7 +39,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <div class="app-block">
         <div class="app-right-section">
-          <div class="app-brand"><span class="highlight">Koala</span> <span style="font-size:.7em">educational</span></div>
+          <div class="app-brand text-center">
+            <img src="<?php echo base_url('assets/images/logo/logo-branco.png');?>" style="width: 150px;height:auto;" ><br><br>
+            <span class="highlight">Koala</span> <span style="font-size:.7em"> educational</span>
+          </div>
           <div class="app-info">
             
             <ul class="list">

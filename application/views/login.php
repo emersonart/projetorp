@@ -41,9 +41,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       <div class="app-block">
       <div class="app-form">
 
-        <div class="form-header">
-          <div class="app-brand"><span class="highlight">Koala</span></div>
-        </div>
+        <div class="app-brand text-center">
+          <img src="<?php echo base_url('assets/images/logo/logo-verde.png');?>" style="width: 150px;height:auto;" ><br><br>
+            <span style="font-size: 1.6em;color: white;background-color: #18aa4a;border-radius: 2px;padding: 2px 8px;font-weight: 200;">Koala </span> <span style="margin-left: 5px;font-size:1.2em">  educational</span><br><br>        </div>
         <?php echo get_msg();?>
         <?php echo form_open();?>
             <div class="input-group">
