@@ -1,134 +1,194 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?>
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html class="no-js" lang="en">
+
 <head>
-  <title>Sistema de Atividades IFRN</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/font-awesome.min.css');?>">
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/vendor.css');?>">
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/flat-admin.css');?>">
-
-  <!-- Theme -->
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/theme/blue-sky.css');?>">
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/theme/blue.css');?>">
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/theme/red.css');?>">
-  <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/theme/yellow.css');?>">
-
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Registrar no Koala Educational</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon
+        ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/img/favicon.ico');?>">
+    <!-- Google Fonts
+        ============================================ -->
+    <link href="https://fonts.googleapis.com/css?family=Play:400,700" rel="stylesheet">
+    <!-- Bootstrap CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap.min.css');?>">
+    <!-- Bootstrap CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/font-awesome.min.css');?>">
+    <!-- owl.carousel CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/owl.carousel.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/owl.theme.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/owl.transitions.css');?>">
+    <!-- animate CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/animate.css');?>">
+    <!-- normalize CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/normalize.css');?>">
+    <!-- main CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/main.css');?>">
+    <!-- morrisjs CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/morrisjs/morris.css');?>">
+    <!-- mCustomScrollbar CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/scrollbar/jquery.mCustomScrollbar.min.css');?>">
+    <!-- metisMenu CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/metisMenu/metisMenu.min.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/metisMenu/metisMenu-vertical.css');?>">
+    <!-- calendar CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/calendar/fullcalendar.min.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/calendar/fullcalendar.print.min.css');?>">
+    <!-- forms CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/form/all-type-forms.css');?>">
+    <!-- style CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/style.css');?>">
+    <!-- ALERTS CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/alerts.css');?>">
+    <!-- responsive CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/responsive.css');?>">
+    <!-- modernizr JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/vendor/modernizr-2.8.3.min.js');?>"></script>
 </head>
+
 <body>
-  <div class="app app-default">
-
-<div class="app-container app-login">
-  <div class="flex-center">
-    <div class="app-header"></div>
-    <div class="app-body">
-      <div class="loader-container text-center">
-          <div class="icon">
-            <div class="sk-folding-cube">
-                <div class="sk-cube1 sk-cube"></div>
-                <div class="sk-cube2 sk-cube"></div>
-                <div class="sk-cube4 sk-cube"></div>
-                <div class="sk-cube3 sk-cube"></div>
-              </div>
-            </div>
-          <div class="title">Logging in...</div>
-      </div>
-      <div class="app-block">
-        <div class="app-right-section">
-          <div class="app-brand text-center">
-            <img src="<?php echo base_url('assets/images/logo/logo-branco.png');?>" style="width: 150px;height:auto;" ><br><br>
-            <span class="highlight">Koala</span> <span style="font-size:.7em"> educational</span>
-          </div>
-          <div class="app-info">
-            
-            <ul class="list">
-              <li>
-                <div class="icon">
-                  <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+    <!--[if lt IE 8]>
+		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<![endif]-->
+	<div class="error-pagewrap">
+		<div class="error-page-int">
+			<div class="text-center custom-login">
+				<h3>Registration</h3>
+				<p>This is the best app ever!</p>
+			</div>
+			<div class="content-error">
+				<div class="hpanel">
+                    <div class="panel-body">
+                        <?php echo get_msg();?>
+                        <?php echo form_open('','loginForm');?>
+                            <div class="row">
+                                <div class="form-group col-lg-12">
+                                    <label>Login</label>
+                                    <input class="form-control" name="login" type="text" value="<?php echo set_value('login'); ?>" placeholder="nome de usuário">
+                                </div>
+                                <div id="passwordme" class="col-lg-6">
+                                    <div class="form-group" >
+                                        <label>Senha</label>
+                                        <input type="password" class="form-control senha1" name="senha" placeholder="******">
+                                    </div>
+                                    <div class="form-group mg-b-pass">
+                                            <div class="pwstrength_viewport_progress">
+                                                
+                                            </div>
+                                        </div>
+                                </div>
+                                 <div id="passwordme2" class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Confirme a senha</label>
+                                        <input type="password" class="form-control senha2"  name="senha2" placeholder="******">
+                                        
+                                    </div>
+                                    <div class="pwstrength_viewport_progress">
+                                                
+                                            </div>
+                                </div>
+                                 <div class="form-group col-lg-6">
+                                    <label>Nome</label>
+                                    <input class="form-control" name="nome" type="text" value="<?php echo set_value('nome'); ?>" placeholder="Nome">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Sobrenome</label>
+                                    <input class="form-control" name="sobrenome" type="text" value="<?php echo set_value('sobrenome'); ?>" placeholder="Sobrenome">
+                                </div>
+                                <div class="form-group col-lg-12">
+                                    <label>Email</label>
+                                    <input class="form-control" type="name" name="email"  value="<?php echo set_value('email'); ?>" placeholder="email@host.com">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Matrícula</label>
+                                    <input class="form-control" name="matricula" type="text"  value="<?php echo set_value('matricula'); ?>" placeholder="00000000000000">
+                                </div>
+                                <div class="form-group col-lg-6">
+                                    <label>Código da Turma</label>
+                                    <input class="form-control" name="codigoturma" type="text"  value="<?php echo set_value('codigoturma'); ?>" placeholder="fiy7n4">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-success loginbtn" type="submit">Register</button>
+                                <button class="btn btn-default" type="reset">Cancel</button>
+                            </div>
+                        <?php echo form_close();?>
+                    </div>
                 </div>
-                <div class="title">Increase <b>Productivity</b></div>
-              </li>
-              <li>
-                <div class="icon">
-                  <i class="fa fa-cubes" aria-hidden="true"></i>
-                </div>
-                <div class="title">Lot of <b>Components</b></div>
-              </li>
-              <li>
-                <div class="icon">
-                  <i class="fa fa-usd" aria-hidden="true"></i>
-                </div>
-                <div class="title">Forever <b>Free</b></div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="app-form">
-          <div class="form-suggestion">
-            Possui um código de turma? Crie já sua conta!
-          </div>
-          <?php echo get_msg();?>
-          <?php echo form_open();?>
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">
-                  <i class="fa fa-address-card" aria-hidden="true"></i></span>
-                <input type="text" value="<?php echo set_value('matricula'); ?>" class="form-control" placeholder="Matrícula" name="matricula" aria-describedby="basic-addon1">
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon2">
-                  <i class="fa fa-user" aria-hidden="true"></i></span>
-                <input type="text" value="<?php echo set_value('login'); ?>" class="form-control" placeholder="Username" name="login" aria-describedby="basic-addon2">
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon3">
-                  <i class="fa fa-user" aria-hidden="true"></i></span>
-                <input type="text" value="<?php echo set_value('nome'); ?>" class="form-control" placeholder="Nome" name="nome" aria-describedby="basic-addon3">
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon4">
-                  <i class="fa fa-user" aria-hidden="true"></i></span>
-                <input type="text" value="<?php echo set_value('sobrenome'); ?>" class="form-control" placeholder="Sobrenome" name="sobrenome" aria-describedby="basic-addon4">
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon5">
-                  <i class="fa fa-envelope" aria-hidden="true"></i></span>
-                <input type="email" value="<?php echo set_value('email'); ?>" class="form-control" placeholder="Email" name="email" aria-describedby="basic-addon5">
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon6">
-                  <i class="fa fa-key" aria-hidden="true"></i></span>
-                <input type="password" value="<?php echo set_value('senha'); ?>" class="form-control" placeholder="Password" name="senha" aria-describedby="basic-addon6">
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon7">
-                  <i class="fa fa-check" aria-hidden="true"></i></span>
-                <input type="password" class="form-control" placeholder="Confirm Password" name="senha2" aria-describedby="basic-addon7">
-              </div>
-               <div class="input-group">
-                <span class="input-group-addon" id="basic-addon8">
-                  <i class="fa fa-users" aria-hidden="true"></i></span>
-                <input type="text" value="<?php echo set_value('codigoturma'); ?>" class="form-control" placeholder="Código da turma" name="codigoturma" aria-describedby="basic-addon8">
-              </div>
-              <div class="text-center">
-                  <button type="submit" class="btn btn-success btn-submit" value="Cadastrar">cadastrar</button>
-              </div>
-          <?php echo form_close();?>
-        </div>
-      </div>
+			</div>
+			<div class="text-center login-footer">
+				<p>Copyright © 2018. All rights reserved. Template by <a href="https://colorlib.com/wp/templates/">Colorlib</a></p>
+			</div>
+		</div>   
     </div>
-
-  </div>
-</div>
-
-  </div>
-  
-  <script type="text/javascript" src="<?php echo base_url('assets/js/vendor.js');?>"></script>
-
-  <div class="autocomplete-suggestions" style="position: absolute; display: none; max-height: 300px; z-index: 9999;"></div>
-
+    <!-- jquery
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/vendor/jquery-1.12.4.min.js');?>"></script>
+    <!-- bootstrap JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/bootstrap.min.js');?>"></script>
+    <!-- wow JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/wow.min.js');?>"></script>
+    <!-- price-slider JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/jquery-price-slider.js');?>"></script>
+    <!-- meanmenu JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/jquery.meanmenu.js');?>"></script>
+    <!-- owl.carousel JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/owl.carousel.min.js');?>"></script>
+    <!-- sticky JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/jquery.sticky.js');?>"></script>
+    <!-- scrollUp JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/jquery.scrollUp.min.js');?>"></script>
+    <!-- mCustomScrollbar JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/scrollbar/jquery.mCustomScrollbar.concat.min.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/scrollbar/mCustomScrollbar-active.js');?>"></script>
+    <!-- metisMenu JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/metisMenu/metisMenu.min.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/metisMenu/metisMenu-active.js');?>"></script>
+    <!-- pwstrength JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/password-meter/pwstrength-bootstrap.min.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/password-meter/zxcvbn.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/password-meter/password-meter-active.js');?>"></script>
+    <!-- tab JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/tab.js');?>"></script>
+    <!-- icheck JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/icheck/icheck.min.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/icheck/icheck-active.js');?>"></script>
+    <!-- plugins JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/plugins.js');?>"></script>
+    <!-- main JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/main.js');?>"></script>
 </body>
+
 </html>

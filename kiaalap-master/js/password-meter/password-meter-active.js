@@ -4,7 +4,7 @@
 			// Example 1
             var options1 = {};
             options1.ui = {
-                container: "#pwd-container1",
+                container: "#senha",
                 showVerdictsInsideProgressBar: true,
                 viewports: {
                     progress: ".pwstrength_viewport_progress"
@@ -13,7 +13,7 @@
             options1.common = {
                 debug: false,
             };
-            $('.example1').pwstrength(options1);
+            $('.senha').pwstrength(options1);
 
             // Example 2
             var options2 = {};

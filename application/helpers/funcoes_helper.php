@@ -3,12 +3,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 //set a message
 if(!function_exists('set_msg')){
-	function set_msg($msg=NULL,$tipo='dark'){
+	function set_msg($msg=NULL,$tipo='dark',$c2 = FALSE){
 		$ci = & get_instance();
+		if($c2 == TRUE){
+			$extra = 'alert-st-';
+			switch ($tipo) {
+				case 'success':
+					$extra .= 'one';
+					break;
+				case 'info':
+					$extra .= 'two';
+					break;
+				case 'warning':
+					$extra .= 'three';
+					break;	
+				case 'danger':
+					$extra .= 'four';
+					break;	
+				default:
+					$extra = '';
+					break;
+			}
+		}else{
+			$extra = '';
+		}
+		
 		if($msg == NULL){
 			$ci->session->set_userdata('aviso',$msg);
 		}else{
-			$msg = '<div class="alert alert-'.$tipo.'" role="alert">'.$msg.'</div>';
+			$msg = '<div class="alert alert-'.$tipo.' '.$extra.'" role="alert">'.$msg.'</div>';
 			$ci->session->set_userdata('aviso',$msg);
 		}
 		
