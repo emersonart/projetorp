@@ -4719,3 +4719,67 @@ div#sparklinehome canvas {
 	color:#fff;
 	text-decoration:none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ------------------------------ O QUE A GENTE MEXEEEEEE ---------------------------------- */
+
+#dash-professor-card-title {
+	font-size: 20px;
+	box-sizing: border-box;
+	color: rgb(0, 109, 240);
+	font-weight: 700;
+	text-decoration-color: rgb(0, 109, 240);
+}
+
+#dash-professor-menu-title {
+	padding-top: 18px;
+}
+
+#dash-professor-icon {
+	padding-right: 10px;
+}
+
+#aprovar-cadastro-card-title {
+	font-size: 20px;
+	box-sizing: border-box;
+	color: rgb(0, 109, 240);
+	font-weight: 700;
+	text-decoration-color: rgb(0, 109, 240);
+}
+
+#botao-aprovar:hover {
+	background-color: #5cb85c;
+	border-color: #4cae4c;
+	color: white;
+}
+
+#botao-reprovar:hover {
+	background-color: #d9534f;
+	border-color: #d43f3a;
+	color: white;
+}
