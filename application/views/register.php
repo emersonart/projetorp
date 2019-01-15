@@ -134,6 +134,11 @@
                     </div>
                 </div>
 			</div>
+            <!-- 
+                ESSA PARADA É PRA GERAR A KEY
+                TROCA FI PELA INICIAL DA MATERIA
+                ?php echo 'fi'.bin2hex($this->encryption->create_key(2));? 
+            -->
 			<div class="text-center login-footer">
 				<p>Copyright © 2018. All rights reserved. Template by <a href="https://colorlib.com/wp/templates/">Colorlib</a></p>
 			</div>

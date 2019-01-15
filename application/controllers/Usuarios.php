@@ -10,7 +10,7 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function index(){
-		echo 'aki';
+		load_template('painel/teste');
 	}
 
 	public function login(){

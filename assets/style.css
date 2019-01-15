@@ -4725,3 +4725,8 @@ div#sparklinehome canvas {
 	margin-top: 12px;
 	margin-bottom: 25px;
 }
+
+.bg-site{
+	padding: 20px;
+    background: #fff;
+}

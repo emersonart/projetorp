@@ -8,10 +8,10 @@ class Option_model extends CI_Model{
 
 	public function get_option($option_name){
 		$this->db->where('con_name',$option_name);
-		$query = $this->db->get('tb_options',1);
+		$query = $this->db->get('tb_configs_site',1);
 		if($query->num_rows() == 1){
 			$row = $query->row();
-			return $row->OPT_value;
+			return $row->con_value;
 		}else{
 			return NULL;
 		}
@@ -19,7 +19,7 @@ class Option_model extends CI_Model{
 
 	public function update_option($option_name,$option_value){
 		$this->db->where('con_name',$option_name);
-		$query = $this->db->get('tb_options',1);
+		$query = $this->db->get('tb_configs_site',1);
 		if($query->num_rows() == 1){
 			//Existe dados
 			$this->db->set('con_value',$option_value);
