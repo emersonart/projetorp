@@ -34,7 +34,7 @@
                                                 </li>
                                                 <li class="nav-item dropdown res-dis-nn">
                                                     <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">Project <span class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a>
-                                                    <div role="menu" class="dropdown-menu animated zoomIn">
+                                                    <div role="menu" class="dropdown-menu animated fadeIn faster">
                                                         <a href="#" class="dropdown-item">Documentation</a>
                                                         <a href="#" class="dropdown-item">Expert Backend</a>
                                                         <a href="#" class="dropdown-item">Expert FrontEnd</a>
@@ -51,7 +51,7 @@
                                             <ul class="nav navbar-nav mai-top-nav header-right-menu">
                                                 <li class="nav-item dropdown">
                                                     <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-message edu-chat-pro" aria-hidden="true"></i><span class="indicator-ms"></span></a>
-                                                    <div role="menu" class="author-message-top dropdown-menu animated zoomIn">
+                                                    <div role="menu" class="author-message-top dropdown-menu animated fadeIn faster">
                                                         <div class="message-single-top">
                                                             <h1>Message</h1>
                                                         </div>
@@ -111,7 +111,7 @@
                                                     </div>
                                                 </li>
                                                 <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-bell" aria-hidden="true"></i><span class="indicator-nt"></span></a>
-                                                    <div role="menu" class="notification-author dropdown-menu animated zoomIn">
+                                                    <div role="menu" class="notification-author dropdown-menu animated fadeIn faster">
                                                         <div class="notification-single-top">
                                                             <h1>Notifications</h1>
                                                         </div>
@@ -176,7 +176,7 @@
 															<span class="admin-name">Prof.Anderson</span>
 															<i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
 														</a>
-                                                    <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
+                                                    <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated fadeIn faster">
                                                         <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a>
                                                         </li>
                                                         <li><a href="#"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a>
@@ -191,7 +191,7 @@
                                                 </li>
                                                 <li class="nav-item nav-setting-open"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-menu"></i></a>
 
-                                                    <div role="menu" class="admintab-wrap menu-setting-wrap menu-setting-wrap-bg dropdown-menu animated zoomIn">
+                                                    <div role="menu" class="admintab-wrap menu-setting-wrap menu-setting-wrap-bg dropdown-menu animated fadeIn faster">
                                                         <ul class="nav nav-tabs custon-set-tab">
                                                             <li class="active"><a data-toggle="tab" href="#Notes">Notes</a>
                                                             </li>
