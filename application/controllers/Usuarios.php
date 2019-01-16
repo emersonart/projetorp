@@ -10,6 +10,7 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function index(){
+		verif_login(2,'perfil');
 		load_template('painel/teste');
 	}
 

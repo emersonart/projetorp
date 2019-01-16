@@ -5,7 +5,7 @@
         <div class="bg-site">
         <!-- C O N T E U D O -->
 
-       <form action="" method="">
+      <?php echo form_open();?>
 
   <div class="card" >
     <div class="card-header" id="dash-professor-card-title">
@@ -29,7 +29,7 @@
           </div>
 
           <br><div class="input-group-mb-3">
-              <select class="custom-select" id="inputGroupSelect01" style="height: 40px; padding-left: 15px;">
+              <select class="custom-select" id="inputGroupSelect01" name="materia" style="height: 40px; padding-left: 15px;">
                 <option selected>Disciplina</option>
                 <option value="1">Física</option>
                 <option value="2">Matemática</option>
@@ -44,7 +44,7 @@
     </div>
   </div>
 
-</form>
+<?php echo form_close();?>
 
 
       <!-- FIM CONTEUDO -->

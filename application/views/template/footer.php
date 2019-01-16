@@ -14,7 +14,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="footer-copy-right">
-                    <p>Copyright © 2018. All rights reserved. Template by <a href="https://colorlib.com/wp/templates/">Colorlib</a></p>
+                    <p>Copyright © <?php echo date('Y')?>. Desenvolvido por: Emerson Bruno e Tiago Coutinho. Template por <a style="color:black" href="https://colorlib.com/wp/templates/">Colorlib</a></p>
+                    <p>versão: 0.1b</p>
                 </div>
             </div>
         </div>
@@ -74,9 +75,18 @@
         <script src="<?php echo base_url('assets/js/calendar/moment.min.js');?>"></script>
         <script src="<?php echo base_url('assets/js/calendar/fullcalendar.min.js');?>"></script>
         <script src="<?php echo base_url('assets/js/calendar/fullcalendar-active.js');?>"></script>
+        <!-- pwstrength JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/password-meter/pwstrength-bootstrap.min.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/password-meter/zxcvbn.js');?>"></script>
+    <script src="<?php echo base_url('assets/js/password-meter/password-meter-active.js');?>"></script>
     <!-- tab JS
         ============================================ -->
         <script src="<?php echo base_url('assets/js/tab.js');?>"></script>
+    <!-- chosen JS
+        ============================================ -->
+        <script src="<?php echo base_url('assets/js/chosen/chosen.jquery.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/chosen/chosen-active.js');?>"></script>
     <!-- icheck JS
         ============================================ -->
         <script src="<?php echo base_url('assets/js/icheck/icheck.min.js');?>"></script>

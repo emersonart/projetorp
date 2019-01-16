@@ -52,11 +52,16 @@ if(!function_exists('get_msg')){
 
 //verify if user is looged into system
 if(!function_exists('verif_login')){
-	function verif_login($page='login'){
+	function verif_login($prof,$page ='login'){
 		$ci = & get_instance();
 		$logado = $ci->session->userdata('logged');
 		if($logado){
-			return true;
+			if($ci->session->userdata('perm') == $prof or $ci->session->userdata('perm') == 0){
+				return true;
+			}else{
+				set_msg('Acesso restrito, apenas admins e professores são permitidos','info');
+				redirect($page,'refresh');
+			}
 		}else{
 			set_msg('Acesso restrito, faça login para acessar','warning');
 			redirect($page,'refresh');

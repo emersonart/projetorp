@@ -94,11 +94,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <button class="btn btn-success btn-block loginbtn">Login</button>
                             <a class="btn btn-primary btn-block text-white" href="<?php echo base_url('registrar');?>" style="margin: 5px 0;">Registrar</a>
                         <?php echo form_close(); ?>
-                        <div class="text-center login-footer">
-                            Copyright © <?php echo date('Y')?>. Desenvolvido por: Emerson Bruno e Tiago Coutinho. Template por <a href="https://colorlib.com/wp/templates/">Colorlib</a>
-                        </div>
+                        
                     </div>
-
+                    <div class="text-center login-footer">
+                            Copyright © <?php echo date('Y')?>. Desenvolvido por: Emerson Bruno e Tiago Coutinho. Template por <a style="color:black" href="https://colorlib.com/wp/templates/">Colorlib</a>
+                        </div>
                 </div>
 			</div>
 			

@@ -59,6 +59,9 @@
     <!-- style CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/style.css');?>">
+    <!-- chosen CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/chosen/bootstrap-chosen.css');?>">
     <!-- responsive CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/responsive.css');?>">

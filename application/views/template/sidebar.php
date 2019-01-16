@@ -3,7 +3,7 @@
         <nav id="sidebar" class="">
             <div class="sidebar-header">
                 <a href="index.html"><img class="main-logo" src="<?php echo base_url('assets/img/logo/logo.png');?>" alt="" /></a>
-                <strong><a href="index.html"><img src="<?php echo base_url('assets/img/logo/logosn.png');?>" alt="" /></a></strong>
+                <strong><a href="index.html"><img class="main-logo-small" src="<?php echo base_url('assets/images/logo/logo-verde.png');?>" alt="" /></a></strong>
             </div>
             <div class="left-custom-menu-adp-wrap comment-scrollbar">
                 <nav class="sidebar-nav left-sidebar-menu-pro">

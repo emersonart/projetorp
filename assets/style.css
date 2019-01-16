@@ -167,7 +167,9 @@ body {}
 #sidebar.active .sidebar-header h3, #sidebar.active .CTAs {
     display:none;
 }
-
+.sidebar-header img.main-logo-small{
+	max-width: 61%!important;
+}
 #sidebar.active .sidebar-header strong {
     display: block;
 }
@@ -3719,7 +3721,7 @@ div#sparklinehome canvas {
     background-color: #86bc42;
 }
 .footer-copyright-area {
-    background: #29c75f;
+    background: #6a6a6a;
 	padding: 20px 0px;
     text-align: center;
 }
@@ -4083,7 +4085,7 @@ div#sparklinehome canvas {
 	color:#D80027;
 }
 .progress-bar.progress-bar-danger{
-	background:#933EC5;
+	/*background:#933EC5;*/
 }
 .progress-bar.progress-bar-info{
 	background:#65b12d;
@@ -4319,7 +4321,8 @@ div#sparklinehome canvas {
     margin-bottom:0px;
 }
 .pwstrength_viewport_progress .progress, .pwstrength_viewport_progress2 .progress, .pwstrength_viewport_progress4 .progress, .form-group.mg-b-pass {
-	margin-bottom:0px;
+	margin-bottom:10px;
+	display: block!important;
 }
 /*----------------------------------------*/
 /*  19. Mini Sidebar
@@ -4371,7 +4374,8 @@ div#sparklinehome canvas {
 /*  20. Custom Scroll
 /*----------------------------------------*/
 .comment-scrollbar, .timeline-scrollbar, .messages-scrollbar, .project-list-scrollbar {
-    height: 580px;
+    height: 100%;
+    padding-bottom: 60px;
 }
 .mCSB_outside+.mCSB_scrollTools {
     right: -15px;
@@ -4729,4 +4733,52 @@ div#sparklinehome canvas {
 .bg-site{
 	padding: 20px;
     background: #fff;
+}
+
+.choice-teacher{
+	color: #255625;
+	background: #fff;
+	width: 100%;
+	border: 1px solid #ddd;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	padding: 80px 40px;
+	cursor: pointer;
+	border-radius: 10px;
+	font-size: 2em;
+	margin: 15px 10px;
+}
+.choice-teacher.new:hover{
+	background: #5cb85c;
+	color: white;
+}
+.choice-teacher.sea:hover{
+	background: #4285f3;
+	color: white;
+}
+
+.password-verdict{
+	color: black;
+	margin-bottom: -5px;
+	margin-top: 10px;
+	padding: 0;
+	height: 15px;
+	display: grid;
+}
+
+.chosen-container-single .chosen-single{
+	border-radius: 0!important;
+}
+
+.chosen-container-active .chosen-single {
+    border: 1px solid #29c75f!important;
+    -webkit-box-shadow: none!important;
+    box-shadow: none!important;
+    -webkit-transition: none!important;
+    -o-transition: none!important;
+    transition: none!important;
+}
+.chosen-container .chosen-results li.highlighted{
+	background: #29c75f!important;
 }

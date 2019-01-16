@@ -64,15 +64,15 @@
     <script src="<?php echo base_url('assets/js/vendor/modernizr-2.8.3.min.js');?>"></script>
 </head>
 
-<body>
+<body style="background: #29c75f;">
     <!--[if lt IE 8]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
 	<div class="error-pagewrap">
 		<div class="error-page-int">
 			<div class="text-center custom-login">
-				<h3>Registration</h3>
-				<p>This is the best app ever!</p>
+				<img src="<?php echo base_url('assets/images/logo/logo-branco.png');?>" style="width: 150px;height:auto;" >
+                <p class="text-white logo-white"><span style="font-size: 1.6em;color: #18aa4a;background-color: white;border-radius: 2px;padding: 2px 8px;font-weight: 200;margin-right: 5px;">Koala</span>  educational</p>
 			</div>
 			<div class="content-error">
 				<div class="hpanel">
@@ -82,7 +82,7 @@
                             <div class="row">
                                 <div class="form-group col-lg-12">
                                     <label>Login</label>
-                                    <input class="form-control" name="login" type="text" value="<?php echo set_value('login'); ?>" placeholder="nome de usuário">
+                                    <input id="username" class="form-control" name="login" type="text" value="<?php echo set_value('login'); ?>" placeholder="nome de usuário">
                                 </div>
                                 <div id="passwordme" class="col-lg-6">
                                     <div class="form-group" >
@@ -107,7 +107,7 @@
                                 </div>
                                  <div class="form-group col-lg-6">
                                     <label>Nome</label>
-                                    <input class="form-control" name="nome" type="text" value="<?php echo set_value('nome'); ?>" placeholder="Nome">
+                                    <input id="nome" class="form-control" name="nome" type="text" value="<?php echo set_value('nome'); ?>" placeholder="Nome">
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label>Sobrenome</label>
@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="form-group col-lg-12">
                                     <label>Email</label>
-                                    <input class="form-control" type="name" name="email"  value="<?php echo set_value('email'); ?>" placeholder="email@host.com">
+                                    <input id="email" class="form-control" type="name" name="email"  value="<?php echo set_value('email'); ?>" placeholder="email@host.com">
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label>Matrícula</label>
@@ -123,7 +123,8 @@
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label>Código da Turma</label>
-                                    <input class="form-control" name="codigoturma" type="text"  value="<?php echo set_value('codigoturma'); ?>" placeholder="fiy7n4">
+                                    <input class="form-control" name="codigoturma" type="text"  value="<?php echo set_value('codigoturma'); ?>" placeholder="Física">
+                                    <span
                                 </div>
                             </div>
                             <div class="text-center">
@@ -140,8 +141,8 @@
                 ?php echo 'fi'.bin2hex($this->encryption->create_key(2));? 
             -->
 			<div class="text-center login-footer">
-				<p>Copyright © 2018. All rights reserved. Template by <a href="https://colorlib.com/wp/templates/">Colorlib</a></p>
-			</div>
+                            Copyright © <?php echo date('Y')?>. Desenvolvido por: Emerson Bruno e Tiago Coutinho. Template por <a style="color:black" href="https://colorlib.com/wp/templates/">Colorlib</a>
+                        </div>
 		</div>   
     </div>
     <!-- jquery
