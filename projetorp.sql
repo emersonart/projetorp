@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 13-Jan-2019 às 15:30
+-- Generation Time: 16-Jan-2019 às 04:28
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 7.2.12
 
@@ -48,12 +48,19 @@ CREATE TABLE `tb_activities` (
 
 CREATE TABLE `tb_class` (
   `cla_id` int(11) NOT NULL,
-  `cla_hash` int(11) NOT NULL,
+  `cla_hash` varchar(22) NOT NULL,
   `cla_teacher` int(11) NOT NULL,
   `cla_subject` int(11) NOT NULL,
   `cla_start_time` varchar(255) NOT NULL,
   `cla_end_time` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_class`
+--
+
+INSERT INTO `tb_class` (`cla_id`, `cla_hash`, `cla_teacher`, `cla_subject`, `cla_start_time`, `cla_end_time`) VALUES
+(1, 'fi758d', 1, 1, '14-01-2019', '15-02-2019');
 
 -- --------------------------------------------------------
 
@@ -82,6 +89,15 @@ CREATE TABLE `tb_info_users` (
   `inf_registration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `tb_info_users`
+--
+
+INSERT INTO `tb_info_users` (`inf_id`, `inf_usu_id`, `inf_name`, `inf_lastname`, `inf_email`, `inf_registration`) VALUES
+(1, 1, 'Emerson', 'Bruno', 'emersonbruno_@hotmail.com', 0),
+(2, 3, 'emersonart', 'emersonart', 'emersonbruno_@homail.com', 2147483647),
+(3, 4, 'Emerson', 'Silva', 'emersonbruno2_@homail.com', 2147483647);
+
 -- --------------------------------------------------------
 
 --
@@ -92,8 +108,16 @@ CREATE TABLE `tb_lists` (
   `lis_id` int(11) NOT NULL,
   `lis_titulo` varchar(255) NOT NULL,
   `lis_subject` int(11) NOT NULL,
-  `lis_teacher` int(11) NOT NULL
+  `lis_teacher` int(11) NOT NULL,
+  `tb_id_act` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_lists`
+--
+
+INSERT INTO `tb_lists` (`lis_id`, `lis_titulo`, `lis_subject`, `lis_teacher`, `tb_id_act`) VALUES
+(1, 'lista termodinamica', 1, 5, '1/8/10/11/12');
 
 -- --------------------------------------------------------
 
@@ -105,7 +129,8 @@ CREATE TABLE `tb_register_class` (
   `reg_id` int(11) NOT NULL,
   `reg_usu_id` int(11) NOT NULL,
   `reg_cla_hash` int(11) NOT NULL,
-  `reg_date` varchar(255) NOT NULL
+  `reg_date` varchar(255) NOT NULL,
+  `reg_status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -117,9 +142,16 @@ CREATE TABLE `tb_register_class` (
 CREATE TABLE `tb_subjects` (
   `sub_id` int(11) NOT NULL,
   `sub_nome` varchar(255) NOT NULL,
-  `sub_teacher` int(11) NOT NULL,
-  `sub_description` text NOT NULL
+  `sub_description` text NOT NULL,
+  `sub_teacher` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_subjects`
+--
+
+INSERT INTO `tb_subjects` (`sub_id`, `sub_nome`, `sub_description`, `sub_teacher`) VALUES
+(1, 'fisica', 'materia de fisica', 0);
 
 -- --------------------------------------------------------
 
@@ -134,6 +166,15 @@ CREATE TABLE `tb_users` (
   `usu_session` varchar(255) NOT NULL,
   `usu_perm` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_users`
+--
+
+INSERT INTO `tb_users` (`usu_id`, `usu_login`, `usu_password`, `usu_session`, `usu_perm`) VALUES
+(1, 'professor', '123456', '', 2),
+(3, 'emersonart', 'emerson23', '', 0),
+(4, 'emersonart2', 'emerson23', '', 1);
 
 --
 -- Indexes for dumped tables
@@ -201,7 +242,7 @@ ALTER TABLE `tb_activities`
 -- AUTO_INCREMENT for table `tb_class`
 --
 ALTER TABLE `tb_class`
-  MODIFY `cla_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cla_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tb_configs_site`
@@ -213,25 +254,25 @@ ALTER TABLE `tb_configs_site`
 -- AUTO_INCREMENT for table `tb_info_users`
 --
 ALTER TABLE `tb_info_users`
-  MODIFY `inf_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `inf_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_lists`
 --
 ALTER TABLE `tb_lists`
-  MODIFY `lis_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `lis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tb_subjects`
 --
 ALTER TABLE `tb_subjects`
-  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `usu_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `usu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
