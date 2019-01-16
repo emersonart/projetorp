@@ -31,4 +31,16 @@ class Professor extends CI_Controller {
 
 	}
 
+	public function aprovarCadastro(){
+		verif_login(2,'perfil');
+		load_template('painel/aprovarCadastro');
+
+	}
+
+	public function cadastrarQuestoes(){
+		verif_login(2,'perfil');
+		load_template('painel/cadastrarQuestoes');
+
+	}
+
 }
