@@ -24,4 +24,11 @@ class Professor extends CI_Controller {
 		load_template('painel/criarMateria');
 
 	}
+
+	public function inicioProfessor(){
+		verif_login(2,'perfil');
+		load_template('painel/inicioProfessor');
+
+	}
+
 }
