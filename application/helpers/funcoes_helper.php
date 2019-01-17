@@ -37,6 +37,21 @@ if(!function_exists('set_msg')){
 		
 	}
 }
+//date converter
+if(!function_exists('converter_data')){
+	function converter_data($data, $inverse=0){
+		if($inverse == 0){
+			$new_data = explode('/', $data)[2].'-'.explode('/', $data)[1].'-'.explode('/', $data)[0];
+		}else if($inverse == 1){
+			$new_data = explode('-', $data)[2].'/'.explode('-', $data)[1].'/'.explode('-', $data)[0];
+		}else{
+			$new_data = explode('-', $data)[2].'-'.explode('-', $data)[1].'-'.explode('-', $data)[0];
+		}
+		
+
+		return $new_data;
+	}
+}
 
 //display a message
 if(!function_exists('get_msg')){

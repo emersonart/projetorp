@@ -61,6 +61,7 @@ class Usuarios_model extends CI_Model{
 			$this->db->select('cla_id');
 			$this->db->from('tb_class');
 			$this->db->where('cla_hash',$values['codigoturma']);
+			$this->db->where('cla_insc',1);
 			$this->db->limit(1);
 			if($this->db->get()->num_rows() != 1){
 				$turma = FALSE;
