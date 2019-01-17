@@ -84,6 +84,9 @@ if(!function_exists('verif_setup')){
 if(!function_exists('load_template')){
 	function load_template($cert,$dados = NULL){
 		$ci = &get_instance();
+		if(!isset($dados['h1'])){
+			$dados['h1'] =  $ci->option->get_option('site_title');
+		}
 		$dados['nomeSite'] = $ci->option->get_option('site_title');
 		$dados['version_site'] = $ci->option->get_option('site_version');
 		if(isset($dados['titulo'])):
