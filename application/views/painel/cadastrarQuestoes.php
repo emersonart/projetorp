@@ -12,11 +12,11 @@
             <br><br>
             <div class="card-body">
               <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
+                <div class="col-lg-12">
                   <?php echo get_msg();?>
                   <?php echo form_open('','');?>
                   <div class="row">
-                   <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                   <div class="col-lg-7 col-lg-offset-3">
                     <div class="tinymce-single responsive-mg-b-30">
                       <div class="alert-title">
                         <h2>Enunciado da questão</h2>
