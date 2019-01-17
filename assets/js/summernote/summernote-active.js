@@ -1,7 +1,19 @@
-(function ($) {
+$(document).ready(function ($) {
  "use strict";
 	$('#summernote1').summernote({
-		height: 200,
+		lang: 'pt-BR',
+		minHeight: 200,
+		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+		toolbar: [
+		    // [groupName, [list of button]]
+		    ['style', ['bold', 'italic', 'underline', 'clear']],
+		    ['font', ['strikethrough', 'superscript', 'subscript']],
+		    ['fontsize', ['fontsize']],
+		    ['fontname',['fontname']],
+		    ['color', ['color']],
+		    ['para', ['ul', 'ol', 'paragraph']],
+		    ['height', ['height']]
+		  ]
 	});
 	$('#summernote2').summernote({
 		height: 200,
