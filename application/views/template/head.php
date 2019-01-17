@@ -71,9 +71,10 @@
     <!-- responsive CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/responsive.css');?>">
-    <!-- modernizr JS
+        <!-- dropzone CSS
         ============================================ -->
-    <script src="<?php echo base_url('assets/js/vendor/modernizr-2.8.3.min.js');?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/dropzone/dropzone.css');?>">
+
 </head>
 
 <body>
