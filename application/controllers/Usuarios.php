@@ -13,7 +13,6 @@ class Usuarios extends CI_Controller {
 		verif_login(2,'perfil');
 		load_template('painel/teste');
 	}
-
 	public function login(){
 
 		//regra de validação de form

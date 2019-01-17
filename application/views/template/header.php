@@ -173,7 +173,7 @@
                                                 <li class="nav-item">
                                                     <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
 															<img src="<?php echo base_url('assets/img/product/pro4.jpg');?>" alt="" />
-															<span class="admin-name">Prof.Anderson</span>
+															<span class="admin-name">Prof.<?php echo $usuario['nome'];?></span>
 															<i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
 														</a>
                                                     <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated fadeIn faster">

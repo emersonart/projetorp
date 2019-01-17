@@ -13,6 +13,11 @@ class Adms extends CI_Controller {
 
 	}
 
+	public function excluirUsuarios(){
+		verif_login(0,'usuarios');
+		load_template('painel/excluirUsuarios');
+	}
+
 	public function criarProfessor(){
 		verif_login(0,'perfil');
 
