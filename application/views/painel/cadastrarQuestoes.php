@@ -27,7 +27,8 @@
                   </div>
                 </div>
                 <div class="row mg-b-15">
-                  <div class="col-lg-12 col-md-6 col-sm-6 col-xs-12 mg-b-15">
+                  <div class="col-lg-7 col-lg-offset-3">
+                  <div class="col-lg mg-b-15">
                     <div class="file-upload-inner ts-forms">
                       <div class="input prepend-big-btn">
                         <label class="icon-right" for="prepend-big-btn">
@@ -41,8 +42,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md col-lg-offset-">
-                  <button class="btn btn-custon-four btn-success" type="submit">Cadastrar questão</button>
+                  <div class="col-lg-8 col-lg-offset-2">
+                  <div class="col-lg">
+                  <button class="btn btn-success btn-custon-four loginbtn btn-block btn-lg" type="submit">Cadastrar questão</button>
+                  </div>
                 </div>
                 </div>
               </div>
