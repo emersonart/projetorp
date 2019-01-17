@@ -4790,3 +4790,24 @@ div#sparklinehome canvas {
 .chosen-container .chosen-results li small{
 	font-size: 8px!important;
 }
+
+@media (max-width: 1169px) and (min-width: 992px){
+.col-lg-1.col-md-0.col-sm-1.col-xs-12 {
+display: block!important;
+}
+.menu-switcher-pro{
+	display: block!important;
+}
+}
+.mini-navbar .all-content-wrapper{
+	margin-left: 0!important;
+}
+
+.breadcome-list h1{
+	font-size: 1.7em;
+}
+
+.breadcome-heading form{
+	float: right;
+	margin-right: 20px;
+}

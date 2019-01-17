@@ -49,4 +49,27 @@ class Option_model extends CI_Model{
 		}
 	}
 
+
+	public function getMateria($id,$tipo = 0){
+		$this->db->select('*');
+		$this->db->from('tb_subjects');
+
+		if($tipo == 0){
+			$this->db->where('sub_teacher',$id);
+		}else{
+			$this->db->where('sub_id',$id);
+		}
+		
+
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+	}
+
+
+
 }

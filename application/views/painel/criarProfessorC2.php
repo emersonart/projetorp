@@ -17,7 +17,7 @@
                     <div class="row">
                       <div class="chosen-select-single mg-b-20 form-group col-lg-6" >
                         <label style="font-weight:700;">Usuário</label>
-                        <select data-placeholder="Escolha o usuário" class="chosen-select" tabindex="-1">
+                        <select data-placeholder="Escolha o usuário" class="chosen-select" tabindex="-1" name="login">
                           <option value="0">Escolha o usuário</option>
                            <?php 
                               if(isset($usuarios) && sizeof($usuarios)>0){ 

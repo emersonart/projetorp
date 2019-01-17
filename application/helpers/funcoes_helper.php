@@ -52,10 +52,10 @@ if(!function_exists('get_msg')){
 
 //verify if user is looged into system
 if(!function_exists('verif_login')){
-	function verif_login($prof,$page ='login'){
+	function verif_login($prof,$page ='perfil'){
 		$ci = & get_instance();
 		$logado = $ci->session->userdata('logged');
-		if($logado){
+		if($logado == TRUE){
 			if($ci->session->userdata('perm') == $prof or $ci->session->userdata('perm') == 0){
 				return true;
 			}else{
@@ -64,7 +64,7 @@ if(!function_exists('verif_login')){
 			}
 		}else{
 			set_msg('Acesso restrito, faça login para acessar','warning');
-			redirect($page,'refresh');
+			redirect('login','refresh');
 			}
 
 	}
@@ -112,5 +112,34 @@ if(!function_exists('menu_active')){
 		if($uri == $url):
 			return 'active';
 		endif;
+	}
+}
+
+//remove chars specials
+if(!function_exists('tirarAcentos')){
+function tirarAcentos($string){
+    return preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),explode(" ","a A e E i I o O u U n N"),$string);
+}
+}
+
+//criar hash da turma
+if(!function_exists('gerarHash')){
+	function gerarHash($id){
+		$ci = & get_instance();
+		$ids = $ci->option->getMateria($id);
+		if($ids){
+			$nomemateria = $ids[0]['sub_nome'];
+			$semacento = tirarAcentos($nomemateria);
+			$f = substr($semacento, 0, 2);
+
+			$hash = strtoupper($f.bin2hex($ci->encryption->create_key(2)));
+
+			return $hash;
+
+		}else{
+			set_msg('Matéria não encontrada, solicitação abortada','warning');
+			return $ids;
+		}
+
 	}
 }

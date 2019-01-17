@@ -74,7 +74,7 @@ class Adms extends CI_Controller {
 						'login' => $dados_form['login'],
 						'materia' => $dados_form['materia'],
 					);
-					$this->usuario->cadastrar($valor);
+					$this->usuario->transformProf($valor);
 				}
 
 				$dados['usuarios'] = $this->usuario->getUsers();

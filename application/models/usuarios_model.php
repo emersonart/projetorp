@@ -130,7 +130,7 @@ class Usuarios_model extends CI_Model{
 		$this->db->select('*');
 		$this->db->from('tb_users');
 		$this->db->where('usu_id',$values['login']);
-		$this->db->where('usu_perm',$values['1']);
+		$this->db->where('usu_perm',1);
 		$this->db->limit(1);
 		$query = $this->db->get();
 
@@ -144,14 +144,14 @@ class Usuarios_model extends CI_Model{
 		$query2 = $this->db->get();
 
 		if($query->num_rows() > 0 and $query2->num_rows() > 0){
-			$this->db->set('usu_perm',$query->row()->usu_id);
+			$this->db->set('usu_perm',2);
 			$this->db->where('usu_id',$query->row()->usu_id);
 			$update = $this->db->update('tb_users');
-			if($update->affected_rows() == 1){
+			if($this->db->affected_rows()>0){
 				$this->db->set('sub_teacher',$query->row()->usu_id);
 				$this->db->where('sub_id',$query2->row()->sub_id);
 				$update2 = $this->db->update('tb_subjects');
-				if($update2->affected_rows() == 1){
+				if($this->db->affected_rows()>0){
 					set_msg('Cadastro atualizado com sucesso! '.$query->row()->usu_login.' agora é um professor');
 					return TRUE;
 				}else{
