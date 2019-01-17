@@ -103,6 +103,13 @@
         <script src="<?php echo base_url('assets/js/summernote/summernote-active.js');?>"></script>
         <script src="<?php echo base_url('assets/js/summernote/lang/summernote-pt-BR.js');?>"></script>
         <script src="<?php echo base_url('assets/js/summernote/lang/summernote-ko-KR.js');?>"></script>
+    <!-- dropzone JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/dropzone/dropzone.js');?>"></script>
+    <!-- modernizr JS
+        ============================================ -->
+    <script src="<?php echo base_url('assets/js/vendor/modernizr-2.8.3.min.js');?>"></script>
+
 
 
 
