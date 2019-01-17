@@ -56,7 +56,7 @@
 
       <div class="row">
         <div class="form-group col-md-2 col-md-offset-2">
-          <button type="button" class="btn btn-success" style="padding-left: 10px;"> Criar sala</button>
+          <button type="button" class="btn btn-success btn-custon-four" style="padding-left: 10px;"> Criar sala</button>
         </div> 
       </div>
       

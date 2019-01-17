@@ -12,7 +12,7 @@
                                     <p class="small mg-t-box">
                                         Crie uma sala, adicione uma descrição e ponha um tempo limite para o seus alunos se cadastrarem.
                                     </p>
-                                    <button class="btn btn-success widget-btn-1 btn-sm">Criar sala</button>
+                                    <button class="btn btn-custon-four btn-success widget-btn-1 btn-sm">Criar sala</button>
                                 </div>
                             </div>
                         </div>
@@ -28,7 +28,7 @@
                                     <p class="small mg-t-box">
                                         Aqui você poderá criar uma lista de exercício ou upar um arquivo para o seus alunos responderem futuramente.
                                     </p>
-                                    <button class="btn btn-info widget-btn-2 btn-sm">Criar atividades</button>
+                                    <button class="btn btn-custon-four btn-info widget-btn-2 btn-sm">Criar atividades</button>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                                     <p class="small mg-t-box">
                                         Você pode controlar os participantes que entraram na sua turma aprovando o cadastro dos seus alunos.
                                     </p>
-                                    <button class="btn btn-warning widget-btn-3 btn-sm">Aprovar cadastro</button>
+                                    <button class="btn btn-custon-four btn-warning widget-btn-3 btn-sm">Aprovar cadastro</button>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                     <p class="small mg-t-box">
                                         Aqui você pode acessar a resposta do que seus alunos responderam de acordo com a lista e também da questão.
                                     </p>
-                                    <button class="btn btn-danger widget-btn-4 btn-sm">Acessar respostas</button>
+                                    <button class="btn btn-custon-four btn-danger widget-btn-4 btn-sm">Acessar respostas</button>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                                     <p class="small mg-t-box">
                                         Nesta página, classifique as listas de exercícios respondidas pelos seus alunos. A classificação se dá como A, B, C ou D. 
                                     </p>
-                                    <button class="btn btn-danger widget-btn-4 btn-sm">Classificar lista de exercícios</button>
+                                    <button class="btn btn-custon-four btn-danger widget-btn-4 btn-sm">Classificar lista de exercícios</button>
                                 </div>
                             </div>
                         </div>

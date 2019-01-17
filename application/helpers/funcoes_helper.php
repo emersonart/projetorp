@@ -85,6 +85,7 @@ if(!function_exists('load_template')){
 	function load_template($cert,$dados = NULL){
 		$ci = &get_instance();
 		$dados['nomeSite'] = $ci->option->get_option('site_title');
+		$dados['version_site'] = $ci->option->get_option('site_version');
 		if(isset($dados['titulo'])):
 			$dados['titulo'] .= ' - '.$ci->option->get_option('site_title');
 		else:

@@ -1,4 +1,4 @@
-<div class="mg-b-15">
+ <div class="mg-b-15">
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -32,7 +32,7 @@
               </select>
           </div>
           
-          <button type="button" class="btn btn-success"> Criar sala</button>
+          <button type="button" class="btn btn-success btn-custon-four"> Criar sala</button>
           </div>
       </div>
     </div>

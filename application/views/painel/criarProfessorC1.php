@@ -78,11 +78,11 @@
                             <div class="text-center" style="margin-top: 15px;">
                               <div class="row">
                                 <div class="col-lg-5 col-lg-offset-1">
-                                  <button class="btn btn-default btn-block col-lg-6 btn-lg" type="reset">Cancel</button>
+                                  <button class="btn btn-default btn-block btn-custon-four col-lg-6 btn-lg" type="reset">Cancel</button>
                                   
                                 </div>
                                 <div class="col-lg-5">
-                                  <button class="btn btn-success loginbtn btn-block btn-lg" type="submit">Cadastrar</button>
+                                  <button class="btn btn-success loginbtn btn-block btn-custon-four btn-lg" type="submit">Cadastrar</button>
                                 </div>
                                 </div>
                             </div>

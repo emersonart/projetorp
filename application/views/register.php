@@ -128,8 +128,8 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button class="btn btn-success loginbtn" type="submit">Register</button>
-                                <button class="btn btn-default" type="reset">Cancel</button>
+                                <button class="btn btn-custon-four btn-success loginbtn" type="submit">Register</button>
+                                <button class="btn btn-custon-four btn-default" type="reset">Cancel</button>
                             </div>
                         <?php echo form_close();?>
                     </div>
