@@ -17,18 +17,16 @@
                     <div class="row">
                       <div class="chosen-select-single mg-b-20 form-group col-lg-6" >
                         <label style="font-weight:700;">Usuário</label>
-                        <select data-placeholder="Choose a Country..." class="chosen-select" tabindex="-1">
-                          <option value="0">Select</option>
+                        <select data-placeholder="Escolha o usuário" class="chosen-select" tabindex="-1">
+                          <option value="0">Escolha o usuário</option>
                            <?php 
                               if(isset($usuarios) && sizeof($usuarios)>0){ 
                               foreach ($usuarios as $user) {
                             ?>
-                              <option value="<?php echo $user->usu_id;?>"><?php echo $user->usu_login;?></option>
+                              <option value="<?php echo $user->usu_id;?>"><?php echo $user->usu_login;?> | <?php echo $user->inf_name;?> | <?php echo $user->inf_email;?></small></option>
                           <?php }}?>
                           
-                          <option value="United Kingdom">United Kingdom</option>
-                          <option value="Afghanistan">Afghanistan</option>
-                          <option value="Aland Islands">Aland Islands</option>
+                        
                         </select>
                       </div>
                       <div class="form-group col-lg-6">
@@ -48,7 +46,7 @@
                     </div>
                      
 
-                  <button type="submit" class="btn btn-success"> Criar sala</button>
+                  <button type="submit" class="btn btn-custon-four btn-success"> <i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Criar sala</button>
                   <?php echo form_close();?>
                 </div>
               </div>

@@ -168,12 +168,13 @@ class Usuarios_model extends CI_Model{
 		}
 	}
 
-	public function getUsers($tipo = 1){
-		if($tipo != 1){
-			$this->db->where('usu_perm',$tipo);
-		}
-		$this->db->select('*');
+	public function getUsers($perm = 1){
+		
+		$this->db->select('usu_id, usu_login, inf_email, inf_name, inf_lastname');
 		$this->db->from('tb_users');
+		$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id and tb_users.usu_perm = "'.$perm.'"','inner');
+
+		
 		$query = $this->db->get();
 
 		if($query->num_rows() > 0){

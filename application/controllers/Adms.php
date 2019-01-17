@@ -48,7 +48,7 @@ class Adms extends CI_Controller {
 					);
 					$this->usuario->cadastrar($valor);
 				}
-
+				$dados['titulo'] = "criar";
 				$dados['materias'] = $this->option->getMaterias();
 
 				load_template('painel/criarProfessorC1',$dados);

@@ -92,8 +92,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="checkbox login-checkbox">
                                 <label><input type="checkbox" name="remember" class="i-checks"> Lembrar-me </label>
                             </div>
-                            <button class="btn btn-success btn-block loginbtn">Login</button>
-                            <a class="btn btn-primary btn-block text-white" href="<?php echo base_url('registrar');?>" style="margin: 5px 0;">Registrar</a>
+                            <button class="btn btn-custon-four btn-success btn-block loginbtn">Login</button>
+                            <a class="btn btn-custon-four btn-primary btn-block text-white" href="<?php echo base_url('registrar');?>" style="margin: 5px 0;">Registrar</a>
                         <?php echo form_close(); ?>
                         
                     </div>
