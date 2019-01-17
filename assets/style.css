@@ -4798,9 +4798,15 @@ display: block!important;
 .menu-switcher-pro{
 	display: block!important;
 }
+.mini-navbar .all-content-wrapper{
+	margin-left: 40px!important;
+}
+.mini-navbar .header-top-area {
+	left: 10px;
+}
 }
 .mini-navbar .all-content-wrapper{
-	margin-left: 0!important;
+	margin-left: 80px!important;
 }
 
 .breadcome-list h1{
@@ -4810,4 +4816,10 @@ display: block!important;
 .breadcome-heading form{
 	float: right;
 	margin-right: 20px;
+}
+
+.course-buttons .btn{
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 10px; 
 }

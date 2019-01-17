@@ -5,30 +5,34 @@
         <div class="bg-site">
           <!-- C O N T E U D O -->
 
-          <?php echo form_open();?>
-
+          
           <div class="card" >
             <div class="card-header" id="dash-professor-card-title">
-              <h4><?php var_dump($hash); ?></h4>
+              <h4></h4>
             </div>
 
             <div class="card-body">
               <div class="row">
+                <?php echo form_open();?>
 
                 <div class="form-group col-md-8 col-md-offset-2">
                   <div class="row">
+                    <?php echo get_msg();?>
                     <div class="col-lg-6">
                       <div class="form-group"> 
                           <label> Nome da turma </label>
                           <input type="text" class="form-control" aria-describedby="basic-addon1" name="nomeTurma" placeholder=" Nome da Turma">
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="form-group"> 
+                    <?php if(!$adm){ ?>
+                      <div class="col-lg-6">
+                        <div class="form-group"> 
                           <label> Nome da turma </label>
                           <input type="text" class="form-control" aria-describedby="basic-addon1" name="" disabled placeholder=" Nome da Turma" value="<?php echo $hash; ?>">
-                      </div>
+                        </div>
                     </div>
+                    <?php }?>
+                    
                   </div>
 
                   <div class="row">
@@ -41,32 +45,50 @@
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                       <div class="form-group">
+                        <label> Permitir inscrições até: </label>
                         <div class="input-group">
-                          <label class="input-group-addon" id="basic-addon1"> Incrições até:  </label>
+                          <label class="input-group-addon" id="basic-addon1"> <i class="fa fa-calendar"></i></label>
                           <input type="date" class="form-control" aria-describedby="basic-addon1" name="tempoTurma">
                         </div>
                       </div>
                     </div>
+                    <?php if($adm){ ?>
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                            <label> Escolha o Professor: </label>
+                            <select name="profTurma" class="form-control custom-select-value">
+                              <option value="0" style="padding: 5px 3px; font-size: 1.2em;">Selecionar professor</option>
+                              <?php 
+                                if(isset($professores) && sizeof($professores)>0){ 
+                                  foreach ($professores as $linha) {
+                              ?>
+                                <option style="padding: 10px 3px; font-size: 1.2em;" value="<?php echo $linha->usu_id;?>"><?php echo $linha->inf_name;?></option>
+                              <?php }} ?>
+                            </select>
+                        </div>
+                      </div>
+                      <?php } ?>
+                    
                   </div>
 
 
                   <div class="row">
                     <div class="form-group">
-                      <button type="button" class="btn btn-success btn-custon-four" style="padding-left: 10px;">Criar sala</button>
+                      <button type="submit" class="btn btn-success btn-custon-four" style="padding-left: 10px;">Criar sala</button>
                     </div> 
                   </div>
                 </div>
 
               </div>  
 
-
+              <?php echo form_close();?>
             </div>
           </div>
         </div>
 
-        <?php echo form_close();?>
+        
 
 
         <!-- FIM CONTEUDO -->

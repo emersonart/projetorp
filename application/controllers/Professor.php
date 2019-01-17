@@ -7,6 +7,7 @@ class Professor extends CI_Controller {
 		parent::__construct();
 		$this->load->model('usuarios_model','usuario');
 		$this->load->model('option_model','option');
+		$this->load->model('turmas_model','turma');
 	}
 
 	public function index(){
@@ -19,12 +20,19 @@ class Professor extends CI_Controller {
 		verif_login(2,'perfil');
 		$dados['h1'] = 'Criar nova Turma';
 
-		$dados['hash'] = gerarHash($this->session->userdata('id_usuario'));
-
+		
 		//parametros de validação
-		$this->form_validation->set_rules('nomeTurma','Login','trim|required|min_length[5]|is_unique[tb_users.usu_login]');
-		$this->form_validation->set_rules('descricaoTurma','Email','trim|required|valid_email|is_unique[tb_info_users.inf_email]');
-		$this->form_validation->set_rules('tempoTurma','Senha','trim|required|min_length[6]');
+		$this->form_validation->set_rules('nomeTurma','Nome da Turma','trim|required|min_length[5]|is_unique[tb_class.cla_nome]', array('required' => 'É obrigatório inserir um nome para a turma','is_unique'=>'Nome da turma já em uso'));
+		$this->form_validation->set_rules('descricaoTurma','Descrição da Turma','trim');
+		$this->form_validation->set_rules('tempoTurma','Inscrições até:','trim|required|regex_match[/^([2-9][0-9][0-9][0-9])-([0-1][0-9])-([0-3][0-9])$/]',array('regex_match' => 'Formato inválido da data: 0000-00-00','required'=>'É obrigatório inserir uma data para o final das inscrições'));//|regex_match[/^([0-1]?[1-2]-([0-1]|[3-4])(0|5)$/]
+		if($this->session->userdata('perm') == 0){
+			$dados['adm'] = TRUE;
+			$dados['professores'] = $this->usuario->getUsers(2);
+			$this->form_validation->set_rules('profTurma','Professor:','trim|required|greater_than[0]',array('greater_than'=>'É obrigatório inserir um professor para esta turma','required'=>'É obrigatório inserir um professor para esta turma'));
+		}else{
+			$dados['hash'] = gerarHash($this->session->userdata('id_usuario'));
+			$dados['adm'] = FALSE;
+		}
 
 		//verifica validação
 		if($this->form_validation->run() == FALSE){
@@ -33,42 +41,26 @@ class Professor extends CI_Controller {
 			}
 		}else{
 			$dados_form = $this->input->post();
+			if($this->session->userdata('perm') == 0){
+				$prof = $dados_form['profTurma'];
+				$dados['hash'] = gerarHash($dados_form['profTurma']);
 
-			/* pra upload de foto futuro
-			$this->load->library('upload');
-			$config['upload_path'] = './assets/images/users';
-            $config['allowed_types'] = 'gif|jpg|png';
-            $config['max_size'] = 1024;
-            $config['max_width'] = 1024;
-            $config['max_height'] = 1024;
-            $config['file_ext_tolower'] = TRUE;
-            $config['encrypt_name'] = TRUE;
-
-        $this->upload->initialize($config);
-
-            if(!$this->upload->do_upload('foto')){
-            	$msg = $this->upload->display_errors();
-            	set_msg($msg,'danger');
-            	redirect('usuarios/novousuario','redirect');
-            }else{
-            	$local = 'assets/images/users/'.$this->upload->data('file_name');
-            }
-		*/
+			}else{
+				$prof = $this->session->userdata('id_usuario');
+			}	
 			$valor = array(
-				'login' => $dados_form['login'],
-				'senha' => $dados_form['senha'],
-				'perm' => 1,
-				'nome' => $dados_form['nome'],
-				'sobrenome' => $dados_form['sobrenome'],
-				'email' => $dados_form['email'],
-				'codigoturma' => $dados_form['codigoturma'],
-				'matricula' => $dados_form['matricula']/*,
-				'foto' => $local*/
+				'nomeTurma' => $dados_form['nomeTurma'],
+				'descricaoTurma' => $dados_form['descricaoTurma'],
+				'hashTurma' => $dados['hash'],
+				'startHash' => date('d-m-Y'),
+				'endHash' => converter_data($dados_form['tempoTurma'],2),
+				'profTurma' => $prof,
+				'inscTurma' => 1
 			);
-			$this->usuario->cadastrar($valor);
+			$this->turma->criarTurma($valor);
 		}
 
-		load_template('painel/criarSala',$dados);
+		load_template('professor/criarSala',$dados);
 
 	}
 
@@ -97,6 +89,19 @@ class Professor extends CI_Controller {
 		$dados['h1'] = 'Corrigir questões';
 		load_template('professor/corrigirQuestoes', $dados);
 
+	}
+
+	public function turmas(){
+		verif_login(2,'perfil');
+		$dados['h1'] = "Minhas turmas";
+		if($this->session->userdata('perm') == 0){
+			$dados['turmas'] = $this->turma->getTurmasDetalhes();
+		}else{
+			$dados['turmas'] = $this->turma->getTurmasDetalhes($this->session->userdata('id_usuario'));
+		}
+		
+
+		load_template('professor/turmasProfessor',$dados);
 	}
 
 }
