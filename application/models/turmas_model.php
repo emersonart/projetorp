@@ -40,11 +40,62 @@ class Turmas_model extends CI_Model{
 				return false;
 			}
 		}else{
-			set_msg('Matéria ou Professor não encontrado','danger');
+			set_msg('Matéria ou Professor não encontrado '.$values['profTurma'],'danger');
 			return false;
 		}
 
 		
+	}
+
+	public function getTurmas($perm = 0){
+		$this->db->select('*');
+		$this->db->from('tb_class');
+		if($perm != 0){
+			$this->db->where('cla_teacher',$perm);
+		}
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
+	
+
+	public function getTurmasDetalhes($perm = 0){
+		$this->db->select('usu_id, usu_login, inf_name, inf_lastname, cla_nome, sub_nome, cla_hash');
+		$this->db->from('tb_class');
+		$this->db->join('tb_users','tb_users.usu_id = tb_class.cla_teacher','inner');
+		$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id','inner');
+		$this->db->join('tb_subjects','tb_subjects.sub_teacher = tb_users.usu_id','inner');
+		
+		if($perm != 0){
+			$this->db->where('tb_class.cla_teacher',$perm);
+		}
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
+	public function countAlunosTurma($hash){
+
+		$this->db->select('*');
+		$this->db->from('tb_register_class');
+		$this->db->where('reg_cla_hash',$hash);
+		$this->db->where('reg_status',1);
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			return $query->num_rows();
+		}else{
+			return 0;
+		}
 	}
 
 	}
