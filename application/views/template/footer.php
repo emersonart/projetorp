@@ -97,6 +97,16 @@
     <!-- main JS
         ============================================ -->
         <script src="<?php echo base_url('assets/js/main.js');?>"></script>
+    <!-- summernote JS
+        ============================================ -->
+        <script src="<?php echo base_url('assets/js/summernote/summernote.min.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/summernote/summernote-active.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/summernote/lang/summernote-pt-BR.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/summernote/lang/summernote-ko-KR.js');?>"></script>
+
+
+
+
     </body>
 
     </html>
