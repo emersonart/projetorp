@@ -12,7 +12,7 @@ class Professor extends CI_Controller {
 	public function index(){
 		verif_login(2,'perfil');
 		$dados['h1'] = 'Dashboard do Professor';
-		load_template('painel/inicioProfessor',$dados);
+		load_template('professor/inicioProfessor',$dados);
 	}
 
 	public function criarSala(){
@@ -80,13 +80,22 @@ class Professor extends CI_Controller {
 
 	public function aprovarCadastro(){
 		verif_login(2,'perfil');
-		load_template('painel/aprovarCadastro');
+		$dados['h1'] = 'Aprovar Cadastro';
+		load_template('professor/aprovarCadastro', $dados);
 
 	}
 
 	public function cadastrarQuestoes(){
 		verif_login(2,'perfil');
-		load_template('painel/cadastrarQuestoes');
+		$dados['h1'] = 'Cadastrar questões';
+		load_template('painel/cadastrarQuestoes', $dados);
+
+	}
+
+	public function corrigirQuestoes(){
+		verif_login(2,'perfil');
+		$dados['h1'] = 'Corrigir questões';
+		load_template('professor/corrigirQuestoes', $dados);
 
 	}
 
