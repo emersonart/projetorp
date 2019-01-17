@@ -54,7 +54,7 @@ class Usuarios extends CI_Controller {
 		$this->form_validation->set_rules('nome','Nome','trim|required|min_length[4]');
 		$this->form_validation->set_rules('sobrenome','Sobrenome','trim|required|min_length[4]');
 		$this->form_validation->set_rules('codigoturma','Código da Turma','trim|required|min_length[6]');
-		$this->form_validation->set_rules('matricula','Matrícula','trim|required|min_length[11]|regex_match[/^[\d]+$/]'); //|regex_match[/^[\d]+$/]
+		$this->form_validation->set_rules('matricula','Matrícula','trim|required|min_length[11]|regex_match[/^[\d]+$/]|is_unique[tb_inf_users.inf_registration]'); //|regex_match[/^[\d]+$/]
 
 		//verifica validação
 		if($this->form_validation->run() == FALSE){
@@ -100,4 +100,5 @@ class Usuarios extends CI_Controller {
 
 		$this->load->view('register');
 	}
+
 }

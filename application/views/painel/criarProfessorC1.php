@@ -5,18 +5,17 @@
         <div class="bg-site">
           <!-- C O N T E U D O -->
 
-          <form action="" method="">
-
             <div class="card" >
               <div class="card-header" id="dash-professor-card-title">
                 <h4>Adicionar um novo usuário professor</h4>
+
               </div>
               <br><br><div class="card-body">
                 <div class="row">
                   <div class="col-lg-8 col-lg-offset-2">
                    
                     <?php echo get_msg();?>
-                        <?php echo form_open('adms/criarProfessor/new','id="loginForm"');?>
+                        <?php echo form_open('','id="loginForm"');?>
                             <div class="row">
                                 <div class="form-group col-lg-12">
                                     <label>Login</label>
@@ -63,7 +62,17 @@
                                 </div>
                                 <div class="form-group col-lg-6">
                                     <label>Matéria</label>
-                                    <input class="form-control" name="materia" type="text"  value="<?php echo set_value('materia'); ?>" placeholder="Física">
+                                    <select name="materia" class="form-control custom-select-value">
+                                      <option value="0">Selecionar Matéria</option>
+                                      <?php 
+                                        if(isset($materias) && sizeof($materias)>0){ 
+                                          foreach ($materias as $linha) {
+                                      ?>
+                                        <option value="<?php echo $linha->sub_id;?>"><?php echo $linha->sub_nome;?></option>
+                                      <?php }}else{ ?>
+                                        <option value="0">nao foram encontradas materias</option>
+                                      <?php }?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="text-center" style="margin-top: 15px;">
@@ -83,7 +92,6 @@
               </div>
             </div>
 
-          </form>
 
 
           <!-- FIM CONTEUDO -->

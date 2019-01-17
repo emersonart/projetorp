@@ -78,6 +78,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="hpanel">
                     <div class="panel-body">
                         <?php echo get_msg();?>
+                        <?php var_dump($this->session->userdata());?>
                         <?php echo form_open();?>
                         
                             <div class="form-group">
