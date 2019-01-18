@@ -125,10 +125,11 @@ if(!function_exists('load_template')){
 if(!function_exists('menu_active')){
 	function menu_active($url='painel'){
 		$ci = & get_instance();
-		$uri = $ci->uri->uri_string();
+		$uri = strtolower($ci->uri->uri_string());
+		$url = strtolower($url);
 
 		if($uri == $url):
-			return 'active';
+			return 'actived';
 		endif;
 	}
 }
