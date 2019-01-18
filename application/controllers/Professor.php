@@ -80,7 +80,8 @@ class Professor extends CI_Controller {
 	public function cadastrarQuestoes(){
 		verif_login(2,'perfil');
 		$dados['h1'] = 'Cadastrar questões';
-		load_template('painel/cadastrarQuestoes', $dados);
+		$dados['qtd'] = 5;
+		load_template('professor/cadastrarQuestoes', $dados);
 
 	}
 

@@ -1,6 +1,6 @@
 $(document).ready(function ($) {
- "use strict";
-	$('#summernote1').summernote({
+
+	$('.summernote').summernote({
 		lang: 'pt-BR',
 		minHeight: 200,
 		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
