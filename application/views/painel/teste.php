@@ -45,7 +45,7 @@
   </div>
 
 </form>
-
+<?php var_dump($getturma);?>
 
       <!-- FIM CONTEUDO -->
       </div>

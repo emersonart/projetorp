@@ -6,6 +6,7 @@ class Professor extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 		$this->load->model('usuarios_model','usuario');
+		$this->load->model('questoes_model','questao');
 		$this->load->model('option_model','option');
 		$this->load->model('turmas_model','turma');
 	}
@@ -72,8 +73,10 @@ class Professor extends CI_Controller {
 
 	public function aprovarCadastro(){
 		verif_login(2,'perfil');
-		$dados['h1'] = 'Aprovar Cadastro';
-		load_template('professor/aprovarCadastro', $dados);
+		if(!empty($values['id'] = $this->uri->segment(4)) and !empty($values['hash'] = $this->uri->segment(3))){
+			$att = $this->turma->aprovCadastro($values);
+			redirect('professor/viewturma/'.$values['hash'].'#pendentes','refresh');
+		}
 
 	}
 
@@ -93,11 +96,14 @@ class Professor extends CI_Controller {
 				set_msg(validation_errors(),'danger');
 			}
 		}else{
-			$this->load->library('upload');
+			
 			$dados_form = $this->input->post();
 			$fotos = $_FILES['fotos'];
 			$filesCount = count($fotos); 
 			$filesFinalCount = 0;
+			
+			$this->load->library('upload');
+			//inicio loop de upload de foto
 			for($i=0;$i<$filesCount;$i++){
 				if($fotos['name'][$i] == ""){
 					unset($fotos['name'][$i]);
@@ -152,6 +158,7 @@ class Professor extends CI_Controller {
 
 				}
 			}
+			//final loop de upload de foto
 			print_r($url_crop_foto);
 			echo "<br><br>";
 			print_r($fotos);
@@ -196,6 +203,29 @@ class Professor extends CI_Controller {
 		
 
 		load_template('professor/turmasProfessor',$dados);
+	}
+
+	public function viewTurma(){
+		verif_login(2,'perfil');
+		if(!empty($hash = $this->uri->segment(3))){
+			$values['hash'] = $hash;
+			$values['professor'] = $this->session->userdata('id_usuario');
+
+			if($dados['getturma'] = $this->turma->getTurma($values)[0]){
+				$dados['getalunos'] = $this->turma->getAlunos($values['hash']);
+				$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash']);
+				$dados['getalunospend'] = $this->turma->getAlunos($values['hash'],FALSE);
+				$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash'],FALSE);
+				$dados['h1'] = $dados['getturma']['cla_nome'];
+				load_template('professor/viewTurma',$dados);
+			}else{
+				set_msg('Turma não encontrada!','info');
+				redirect('home','refresh');
+			}
+		}else{
+			set_msg('Parametros incorretos','danger');
+			redirect('home','refresh');
+		}
 	}
 
 }

@@ -4876,3 +4876,42 @@ display: block!important;
 .file-upload-inner.ts-forms .file-button, .file-upload-inner.ts-forms .file-button:active, .file-upload-inner.ts-forms .file-button:focus{
 	width: 90px!important;
 }
+
+.aviso-circulo{
+	background: #d9534f!important;
+    position: absolute!important;
+    top: -10px;
+    /* left: 0; */
+    border-radius: 100%!important;
+    right: 20px!important;
+    margin: 0!important;
+    color: white!important;
+    width: 20px!important;
+    height: 20px!important;
+    font-size: .6em!important;
+    text-align: center!important;
+    padding: 1px 0px!important;
+    vertical-align: middle!important;
+    line-height: 1.7em!important;
+}
+
+.chat-discussion .chat-message .message{
+	margin-right: 20px!important;
+}
+.ap{
+	margin-right: 10px;
+}
+
+#scrollUp{
+	bottom: 20px!important;
+	right: 20px;
+	padding: 2px 15px;
+	background: #29c75f;
+	color: white;
+	opacity: .6;
+	border-radius: 7px;
+	font-size: 2em;
+}
+#scrollUp:hover{
+	opacity: 1;
+}

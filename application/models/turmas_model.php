@@ -62,6 +62,23 @@ class Turmas_model extends CI_Model{
 		}
 	}
 
+	public function getTurma($values){
+		$this->db->select('usu_id, usu_login, usu_perm, inf_name, inf_lastname, inf_email, inf_registration, cla_teacher,cla_hash, cla_id, cla_nome, cla_descricao, sub_nome, sub_description, sub_teacher');
+		$this->db->from('tb_class');
+		$this->db->join('tb_users','tb_users.usu_id = tb_class.cla_teacher','inner');
+		$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id and tb_class.cla_hash = "'.$values['hash'].'"','inner');
+		$this->db->join('tb_subjects','tb_subjects.sub_teacher = tb_users.usu_id','inner');
+
+		$this->db->limit(1);
+
+		$query = $this->db->get();
+
+		if($query->num_rows() == 1){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+	}
 	
 
 	public function getTurmasDetalhes($perm = 0){
@@ -83,18 +100,56 @@ class Turmas_model extends CI_Model{
 		}
 	}
 
-	public function countAlunosTurma($hash){
-
+	public function countAlunosTurma($hash,$confirm = TRUE){
+		if($confirm){
+			$this->db->where('reg_status',1);
+		}else{
+			$this->db->where('reg_status',0);
+		}
 		$this->db->select('*');
 		$this->db->from('tb_register_class');
 		$this->db->where('reg_cla_hash',$hash);
-		$this->db->where('reg_status',1);
+		
 		$query = $this->db->get();
 
 		if($query->num_rows() > 0){
 			return $query->num_rows();
 		}else{
 			return 0;
+		}
+	}
+
+	public function getAlunos($hash,$confirm = TRUE){
+		if($confirm){
+			$condicao = ' and tb_register_class.reg_status = "1"';
+		}else{
+			$condicao = ' and tb_register_class.reg_status = "0"';
+		}
+		$this->db->select('usu_id, usu_login, usu_perm, inf_name, inf_lastname, inf_email, inf_registration, reg_cla_hash, reg_date, reg_status');
+		$this->db->from('tb_register_class');
+		$this->db->join('tb_users','tb_users.usu_id = tb_register_class.reg_usu_id and tb_register_class.reg_cla_hash = "'.$hash.'"'.$condicao ,'inner');
+		$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id','inner');
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
+	public function aprovCadastro($values){
+		$this->db->set('reg_status',1);
+		$this->db->where('reg_cla_hash',$values['hash']);
+		$this->db->where('reg_usu_id',$values['id']);
+		$this->db->update('tb_register_class');
+
+		if($this->db->affected_rows()>0){
+			set_msg_pop('Confirmação do aluno nesta turma realizado com sucesso','success','normal');
+			return true;
+		}else{
+			set_msg_pop('Confirmação do aluno não pode ser realizado','danger','normal');
+			return false;
 		}
 	}
 

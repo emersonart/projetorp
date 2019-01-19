@@ -56,9 +56,16 @@
     <!-- forms CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/form/all-type-forms.css');?>">
+    <!-- alerts CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/alerts.css');?>">
     <!-- style CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/style.css');?>">
+    <!-- notifications CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/notifications/Lobibox.min.css');?>">
+     <link rel="stylesheet" href="<?php echo base_url('assets/css/notifications/notifications.css');?>">
     <!-- buttons CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/buttons.css');?>">

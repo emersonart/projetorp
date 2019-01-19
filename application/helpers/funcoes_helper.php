@@ -1,7 +1,62 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-//set a message
+//set a message popup
+if(!function_exists('set_msg_pop')){
+	function set_msg_pop($msg=NULL,$tipo='default',$size = 'mini'){
+		$ci = & get_instance();
+		switch ($tipo) {
+			case 'success':
+				$title = ",
+					title: 'Sucesso'";
+				break;
+			case 'warning':
+				$title = ",
+					title: 'Cuidado'";
+				break;
+			case 'info':
+				$title = ",
+					title: 'Informação'";
+				break;
+			case 'error':
+				$title = ",
+					title: 'Erro'";
+				break;
+			
+			default:
+				$title = ",
+					title: 'Aviso'";
+				break;
+		}
+		$finalMsg = "Lobibox.notify('";
+		$finalMsg .= $tipo;
+		$finalMsg .= "', {
+                    size: '";
+        $finalMsg .= $size;
+        $finalMsg .= "',
+                    msg: '";
+        $finalMsg .= $msg;
+        $finalMsg .= "',
+        			sound: false";
+    	$finalMsg .= $title;
+        $finalMsg .= "});";
+
+        $ci->session->set_userdata('msgPopup',$finalMsg);
+	}
+}
+
+//get a message popup
+if(!function_exists('get_msg_pop')){
+	function get_msg_pop($destroy=TRUE){
+		$ci = & get_instance();
+		$retorno = $ci->session->userdata('msgPopup');
+		if($destroy){
+			$ci->session->unset_userdata('msgPopup');
+		}
+		return $retorno;
+	}
+}
+//set a message info-box
 if(!function_exists('set_msg')){
 	function set_msg($msg=NULL,$tipo='dark',$c2 = FALSE){
 		$ci = & get_instance();
@@ -44,6 +99,8 @@ if(!function_exists('converter_data')){
 			$new_data = explode('/', $data)[2].'-'.explode('/', $data)[1].'-'.explode('/', $data)[0];
 		}else if($inverse == 1){
 			$new_data = explode('-', $data)[2].'/'.explode('-', $data)[1].'/'.explode('-', $data)[0];
+		}else if($inverse == 3){
+			$new_data = explode('-', $data)[0].'/'.explode('-', $data)[1].'/'.explode('-', $data)[2];
 		}else{
 			$new_data = explode('-', $data)[2].'-'.explode('-', $data)[1].'-'.explode('-', $data)[0];
 		}

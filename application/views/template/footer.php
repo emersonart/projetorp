@@ -105,13 +105,21 @@
         <script src="<?php echo base_url('assets/js/summernote/summernote-active.js');?>"></script>
         <script src="<?php echo base_url('assets/js/summernote/lang/summernote-pt-BR.js');?>"></script>
         <script src="<?php echo base_url('assets/js/summernote/lang/summernote-ko-KR.js');?>"></script>
+    <!-- notification JS 
+        ============================================ -->
+        <script src="<?php echo base_url('assets/js/dropzone/dropzone.js');?>"></script>
     <!-- dropzone JS
         ============================================ -->
-    <script src="<?php echo base_url('assets/js/dropzone/dropzone.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/notifications/Lobibox.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/notifications/notification-active.js');?>"></script>
     <!-- modernizr JS
         ============================================ -->
-    <script src="<?php echo base_url('assets/js/vendor/modernizr-2.8.3.min.js');?>"></script>
-
+        <script src="<?php echo base_url('assets/js/vendor/modernizr-2.8.3.min.js');?>"></script>
+        <?php if($show_message_pop = get_msg_pop()){?>
+            <script type="text/javascript">
+                <?php echo $show_message_pop;?>
+            </script>
+        <?php }?>
 
 
 

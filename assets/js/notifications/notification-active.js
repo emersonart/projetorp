@@ -2,12 +2,9 @@
  "use strict";
  
 			// Mini Notifications active class
-			 $('#miniDefaultAnimation').on('click', function () {
-                Lobibox.notify('default', {
-                    size: 'mini',
-                    msg: 'Lorem ipsum dolor sit amet hears farmer indemnity inherent.'
-                });
-            });
+
+                
+
             $('#miniInfoAnimation').on('click', function () {
                 Lobibox.notify('info', {
                     size: 'mini',
