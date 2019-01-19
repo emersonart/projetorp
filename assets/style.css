@@ -4869,3 +4869,10 @@ display: block!important;
 		max-width: unset!important;
 	}
 }
+
+.file-upload-inner.ts-forms .prepend-big-btn input[type="text"]{
+	padding-left: 100px!important;
+}
+.file-upload-inner.ts-forms .file-button, .file-upload-inner.ts-forms .file-button:active, .file-upload-inner.ts-forms .file-button:focus{
+	width: 90px!important;
+}

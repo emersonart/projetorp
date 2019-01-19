@@ -2,6 +2,7 @@ $(document).ready(function ($) {
 
 	$('.summernote').summernote({
 		lang: 'pt-BR',
+		disableDragAndDrop: true,
 		minHeight: 200,
 		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
 		toolbar: [
@@ -11,24 +12,10 @@ $(document).ready(function ($) {
 		    ['fontsize', ['fontsize']],
 		    ['fontname',['fontname']],
 		    ['color', ['color']],
-		    ['para', ['ul', 'ol', 'paragraph']],
-		    ['height', ['height']]
+		    [ 'insert', [ 'link'] ],
+		    ['para', ['ul', 'ol', 'paragraph']]
 		  ]
 	});
-	$('#summernote2').summernote({
-		height: 200,
-	});
-	$('#summernote3').summernote({
-		height: 200,
-	});
-	$('#summernote4').summernote({
-		height: 200,
-	});
-	$('#summernote5').summernote({
-		height: 400,
-	});
-	$('.summernote6').summernote({
-		height: 300,
-	});
- 
+
+  $('div.note-group-select-from-files').remove();
 })(jQuery); 

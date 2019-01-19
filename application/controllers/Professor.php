@@ -81,6 +81,99 @@ class Professor extends CI_Controller {
 		verif_login(2,'perfil');
 		$dados['h1'] = 'Cadastrar questões';
 		$dados['qtd'] = 5;
+
+		//parametros de validação
+		$this->form_validation->set_rules('nomeLista','Nome da Lista','trim|required|min_length[5]|is_unique[tb_lists.lis_name]', array('required' => 'É obrigatório inserir um nome para a lista','is_unique'=>'Nome da lista já em uso'));
+		$this->form_validation->set_rules('questoes[]','Questões','trim|required',array('required'=>'É obrigatório inserir todas as questões para esta lista'));
+		$this->form_validation->set_rules('fotos[]','Fotos','trim');
+
+		//verifica validação
+		if($this->form_validation->run() == FALSE){
+			if(validation_errors()){
+				set_msg(validation_errors(),'danger');
+			}
+		}else{
+			$this->load->library('upload');
+			$dados_form = $this->input->post();
+			$fotos = $_FILES['fotos'];
+			$filesCount = count($fotos); 
+			$filesFinalCount = 0;
+			for($i=0;$i<$filesCount;$i++){
+				if($fotos['name'][$i] == ""){
+					unset($fotos['name'][$i]);
+					unset($fotos['type'][$i]);
+					unset($fotos['tmp_name'][$i]);
+					unset($fotos['error'][$i]);
+					unset($fotos['size'][$i]);
+					$url_foto[$i] = "";
+				}else{
+
+					$_FILES['file']['name']     = $_FILES['fotos']['name'][$i];
+                	$_FILES['file']['type']     = $_FILES['fotos']['type'][$i];
+                	$_FILES['file']['tmp_name'] = $_FILES['fotos']['tmp_name'][$i];
+                	$_FILES['file']['error']     = $_FILES['fotos']['error'][$i];
+                	$_FILES['file']['size']     = $_FILES['fotos']['size'][$i];
+
+                	// File upload configuration
+	                $uploadPath = './assets/images/teste/';
+	                $config['upload_path'] = $uploadPath;
+	                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+	                $config['override'] = TRUE;
+	                $config['max-size'] = 2048;
+	                $config['file_name'] = 'testando'.$i;
+	                $config['file_ext_tolower'] = TRUE;
+
+	                $this->upload->initialize($config);
+
+	                if($this->upload->do_upload('file')){
+	                    // Uploaded file data
+	                    $fileData = $this->upload->data();
+	                    $url_foto[$i]['file_name'] = $fileData['file_name'];
+	                    $filesFinalCount += 1;
+
+	                    $configcrop['image_library'] = 'gd2';
+						$configcrop['source_image'] = './assets/images/teste/'.$url_foto[$i]['file_name'];
+						$configcrop['new_image']     = './assets/images/crops/'.$fileData['raw_name'].'-crop'.$fileData['file_ext'];
+						$configcrop['maintain_ratio'] = TRUE;
+						$configcrop['create_thumb'] = FALSE;
+						$configcrop['height'] = 550;
+
+						 // Aplica as configurações para a library image_lib
+           				 $this->image_lib->initialize($configcrop);
+
+           				 if(!$this->image_lib->resize()){
+				                // Recupera as mensagens de erro e envia o usuário para a home
+				                $data = array('error' => $this->image_lib->display_errors());
+				                set_msg($data['error'],'info');
+				            }else{
+				            	$url_crop_foto[$i] = '/assets/images/crops/'.$url_foto[$i]['file_name'];
+				            }
+                	}
+
+				}
+			}
+			print_r($url_crop_foto);
+			echo "<br><br>";
+			print_r($fotos);
+			if(!empty($_FILES['fotos']['name'])){
+				
+				set_msg('ue: '.$filesFinalCount,'info');
+			}else{
+				set_msg('deu ruim as fotos','warning');
+			}
+
+			//$valor = array(
+			//	'nomeLista' => $dados_form['nomeTurma'],
+			//	'descricaoTurma' => $dados_form['descricaoTurma'],
+			//	'hashTurma' => $dados['hash'],
+			//	'startHash' => date('d-m-Y'),
+			//	'endHash' => converter_data($dados_form['tempoTurma'],2),
+			//	'profTurma' => $prof,
+			//	'inscTurma' => 1
+			//);
+
+		}
+
 		load_template('professor/cadastrarQuestoes', $dados);
 
 	}
