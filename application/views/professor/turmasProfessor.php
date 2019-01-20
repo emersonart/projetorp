@@ -9,7 +9,7 @@
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 mg-b-15">
                         <div class="courses-inner res-mg-b-30">
                             <div class="courses-title">
-                                <a href="#"><img src="<?php echo base_url('assets/img/courses/1.jpg');?>" alt=""></a>
+                                <a href="#"><img src="<?php echo base_url('assets/img/courses/turmas/1.jpg');?>" alt=""></a>
                                 <h2><?php echo $linha->cla_nome;?></h2>
                             </div>
                             <div class="courses-alaltic">

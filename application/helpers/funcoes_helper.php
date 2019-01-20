@@ -191,6 +191,8 @@ if(!function_exists('menu_active')){
 	}
 }
 
+
+
 //remove chars specials
 if(!function_exists('tirarAcentos')){
 function tirarAcentos($string){

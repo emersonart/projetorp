@@ -63,7 +63,7 @@ class Turmas_model extends CI_Model{
 	}
 
 	public function getTurma($values){
-		$this->db->select('usu_id, usu_login, usu_perm, inf_name, inf_lastname, inf_email, inf_registration, cla_teacher,cla_hash, cla_id, cla_nome, cla_descricao, sub_nome, sub_description, sub_teacher');
+		$this->db->select('usu_id, usu_login, usu_perm, inf_name, inf_lastname, inf_email, inf_registration, cla_teacher,cla_hash, cla_id, cla_nome, cla_descricao, sub_id, sub_nome, sub_description, sub_teacher');
 		$this->db->from('tb_class');
 		$this->db->join('tb_users','tb_users.usu_id = tb_class.cla_teacher','inner');
 		$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id and tb_class.cla_hash = "'.$values['hash'].'"','inner');

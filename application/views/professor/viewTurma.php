@@ -5,7 +5,7 @@
       <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
         <div class="profile-info-inner">
           <div class="profile-img">
-            <img src="<?php echo base_url('assets/img/courses/1.jpg');?>" alt="" />
+            <img src="<?php echo base_url('assets/img/courses/turmas/1.jpg');?>" alt="" />
           </div>
           <div class="profile-details-hr">
             <div class="row">
@@ -50,12 +50,12 @@
       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
         <div class="product-payment-inner-st res-mg-t-30 analysis-progrebar-ctn">
           <ul id="myTabedu1" class="tab-review-design">
-            <li class="active"><a href="#description">Alunos</a></li>
-            <li><a href="#reviews"> Listas</a></li>
+            <li class="active"><a href="#alunos">Alunos</a></li>
+            <li><a href="#listas"> Listas</a></li>
             <li><a href="#pendentes">Cadastros pendentes<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
           </ul>
           <div id="myTabContent" class="tab-content custom-product-edit">
-            <div class="product-tab-list tab-pane fade active in" id="description">
+            <div class="product-tab-list tab-pane fade in active" id="alunos">
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="review-content-section">
@@ -96,7 +96,7 @@
               </div>
             </div>
           </div>
-          <div class="product-tab-list tab-pane fade" id="reviews">
+          <div class="product-tab-list tab-pane fade" id="listas">
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="review-content-section">

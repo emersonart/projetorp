@@ -82,107 +82,128 @@ class Professor extends CI_Controller {
 
 	public function cadastrarQuestoes(){
 		verif_login(2,'perfil');
-		$dados['h1'] = 'Cadastrar questões';
-		$dados['qtd'] = 5;
+		$v['hash'] = $this->uri->segment(3);
+		if(!empty($hash = $this->uri->segment(3)) and $dados_hash = $this->turma->getTurma($v)){
 
-		//parametros de validação
-		$this->form_validation->set_rules('nomeLista','Nome da Lista','trim|required|min_length[5]|is_unique[tb_lists.lis_name]', array('required' => 'É obrigatório inserir um nome para a lista','is_unique'=>'Nome da lista já em uso'));
-		$this->form_validation->set_rules('questoes[]','Questões','trim|required',array('required'=>'É obrigatório inserir todas as questões para esta lista'));
-		$this->form_validation->set_rules('fotos[]','Fotos','trim');
+			$dados['h1'] = 'Cadastrar questões';
+			$dados['qtd'] = 5;
 
-		//verifica validação
-		if($this->form_validation->run() == FALSE){
-			if(validation_errors()){
-				set_msg(validation_errors(),'danger');
-			}
-		}else{
-			
-			$dados_form = $this->input->post();
-			$fotos = $_FILES['fotos'];
-			$filesCount = count($fotos); 
-			$filesFinalCount = 0;
-			
-			$this->load->library('upload');
-			//inicio loop de upload de foto
-			for($i=0;$i<$filesCount;$i++){
-				if($fotos['name'][$i] == ""){
-					unset($fotos['name'][$i]);
-					unset($fotos['type'][$i]);
-					unset($fotos['tmp_name'][$i]);
-					unset($fotos['error'][$i]);
-					unset($fotos['size'][$i]);
-					$url_foto[$i] = "";
-				}else{
+			//parametros de validação
+			$this->form_validation->set_rules('nomeLista','Nome da Lista','trim|required|min_length[5]|is_unique[tb_lists.lis_name]', array('required' => 'É obrigatório inserir um nome para a lista','is_unique'=>'Nome da lista já em uso'));
+			$this->form_validation->set_rules('questoes[]','Questões','trim|required',array('required'=>'É obrigatório inserir todas as questões para esta lista'));
+			$this->form_validation->set_rules('fotos[]','Fotos','trim');
 
-					$_FILES['file']['name']     = $_FILES['fotos']['name'][$i];
-                	$_FILES['file']['type']     = $_FILES['fotos']['type'][$i];
-                	$_FILES['file']['tmp_name'] = $_FILES['fotos']['tmp_name'][$i];
-                	$_FILES['file']['error']     = $_FILES['fotos']['error'][$i];
-                	$_FILES['file']['size']     = $_FILES['fotos']['size'][$i];
-
-                	// File upload configuration
-	                $uploadPath = './assets/images/teste/';
-	                $config['upload_path'] = $uploadPath;
-	                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-	                $config['override'] = TRUE;
-	                $config['max-size'] = 2048;
-	                $config['file_name'] = 'testando'.$i;
-	                $config['file_ext_tolower'] = TRUE;
-
-	                $this->upload->initialize($config);
-
-	                if($this->upload->do_upload('file')){
-	                    // Uploaded file data
-	                    $fileData = $this->upload->data();
-	                    $url_foto[$i]['file_name'] = $fileData['file_name'];
-	                    $filesFinalCount += 1;
-
-	                    $configcrop['image_library'] = 'gd2';
-						$configcrop['source_image'] = './assets/images/teste/'.$url_foto[$i]['file_name'];
-						$configcrop['new_image']     = './assets/images/crops/'.$fileData['raw_name'].'-crop'.$fileData['file_ext'];
-						$configcrop['maintain_ratio'] = TRUE;
-						$configcrop['create_thumb'] = FALSE;
-						$configcrop['height'] = 550;
-
-						 // Aplica as configurações para a library image_lib
-           				 $this->image_lib->initialize($configcrop);
-
-           				 if(!$this->image_lib->resize()){
-				                // Recupera as mensagens de erro e envia o usuário para a home
-				                $data = array('error' => $this->image_lib->display_errors());
-				                set_msg($data['error'],'info');
-				            }else{
-				            	$url_crop_foto[$i] = '/assets/images/crops/'.$url_foto[$i]['file_name'];
-				            }
-                	}
-
+			//verifica validação
+			if($this->form_validation->run() == FALSE){
+				if(validation_errors()){
+					set_msg(validation_errors(),'danger');
 				}
-			}
-			//final loop de upload de foto
-			print_r($url_crop_foto);
-			echo "<br><br>";
-			print_r($fotos);
-			if(!empty($_FILES['fotos']['name'])){
-				
-				set_msg('ue: '.$filesFinalCount,'info');
 			}else{
-				set_msg('deu ruim as fotos','warning');
+				
+				$dados_form = $this->input->post();
+				$fotos = $_FILES['fotos'];
+				$filesCount = count($fotos); 
+				$filesFinalCount = 0;
+				$dados_lista['nomeLista'] = $dados_form['nomeLista'];
+				$dados_lista['id_professor'] = $dados_hash[0]['cla_teacher'];
+				$dados_lista['subject'] = $dados_hash[0]['sub_id'];
+				$dados_lista['class_hash'] =  $dados_hash[0]['cla_hash'];
+				//verificando se a lista foi criada
+				if($id_lista = $this->questao->criarLista($dados_lista)){
+					if(!empty($fotos['name'])){
+					//carregar library de upload
+						$this->load->library('upload');
+					//inicio loop de upload de foto
+						for($i=0;$i<$filesCount;$i++){
+							if($fotos['name'][$i] == ""){
+								unset($fotos['name'][$i]);
+								unset($fotos['type'][$i]);
+								unset($fotos['tmp_name'][$i]);
+								unset($fotos['error'][$i]);
+								unset($fotos['size'][$i]);
+								$url_foto[$i] = "";
+								$url_crop_foto[$i] = '';
+							}else{
+								$idq = $i+1;
+								$_FILES['file']['name']     = $_FILES['fotos']['name'][$i];
+								$_FILES['file']['type']     = $_FILES['fotos']['type'][$i];
+								$_FILES['file']['tmp_name'] = $_FILES['fotos']['tmp_name'][$i];
+								$_FILES['file']['error']     = $_FILES['fotos']['error'][$i];
+								$_FILES['file']['size']     = $_FILES['fotos']['size'][$i];
+
+		                	// File upload configuration
+								$uploadPath = 'assets/img/listas/temp/';
+								$config['upload_path'] = './'.$uploadPath;
+								$config['allowed_types'] = 'jpg|jpeg|png|gif';
+								$config['override'] = TRUE;
+								$config['max-size'] = 2048;
+								$config['file_name'] = strtolower($hash).'-lista-'.$id_lista.'-q-'.$idq;
+								$config['file_ext_tolower'] = TRUE;
+
+								$this->upload->initialize($config);
+
+								if($this->upload->do_upload('file')){
+			                    // Uploaded file data
+									$fileData = $this->upload->data();
+									$uploadCrop = 'assets/img/listas/';
+									$url_foto[$i]['file_name'] = $fileData['file_name'];
+									$filesFinalCount += 1;
+
+									$configcrop['image_library'] = 'gd2';
+									$configcrop['source_image'] = './'.$uploadPath.$url_foto[$i]['file_name'];
+									$configcrop['new_image']     = './'.$uploadCrop.$fileData['raw_name'].$fileData['file_ext'];
+									$configcrop['maintain_ratio'] = TRUE;
+									$configcrop['create_thumb'] = FALSE;
+									$configcrop['height'] = 550;
+
+								 // Aplica as configurações para a library image_lib
+									$this->image_lib->initialize($configcrop);
+
+									if(!$this->image_lib->resize()){
+						                // Recupera as mensagens de erro e envia o usuário para a home
+										$data = array('error' => $this->image_lib->display_errors());
+										set_msg_pop($data['error'],'info');
+									}else{
+										$url_crop_foto[$i] = $uploadCrop.$fileData['raw_name'].$fileData['file_ext'];
+										unlink('./'.$uploadPath.$fileData['raw_name'].$fileData['file_ext']);
+									}
+								}
+
+							}
+						}
+					//final loop de upload de foto
+
+					}
+						$dados_lista['id_lista'] = $id_lista;
+						//cadastrar questoes na lista
+						$criarq = $this->questao->criarQuestoes($dados_form['questoes'],$dados_lista,$url_crop_foto);
+						if($criarq){
+							redirect('turma/'.$dados_hash[0]['cla_hash'].'/lista/'.$id_lista,'refresh');
+						}
+
+						//fim cadastrar questoes na lista
+				}
+				//final verificando se foi criada a lista
+				//print_r($dados_form['questoes']);
+
+
+				//$valor = array(
+				//	'nomeLista' => $dados_form['nomeTurma'],
+				//	'descricaoTurma' => $dados_form['descricaoTurma'],
+				//	'hashTurma' => $dados['hash'],
+				//	'startHash' => date('d-m-Y'),
+				//	'endHash' => converter_data($dados_form['tempoTurma'],2),
+				//	'profTurma' => $prof,
+				//	'inscTurma' => 1
+				//);
+
 			}
 
-			//$valor = array(
-			//	'nomeLista' => $dados_form['nomeTurma'],
-			//	'descricaoTurma' => $dados_form['descricaoTurma'],
-			//	'hashTurma' => $dados['hash'],
-			//	'startHash' => date('d-m-Y'),
-			//	'endHash' => converter_data($dados_form['tempoTurma'],2),
-			//	'profTurma' => $prof,
-			//	'inscTurma' => 1
-			//);
-
+			load_template('professor/cadastrarQuestoes', $dados);
+		}else{
+			set_msg_pop('Turma não encontrada, portanto não é possível criar uma lista de atividade','error','normal');
+			redirect('professor/turmas','refresh');
 		}
-
-		load_template('professor/cadastrarQuestoes', $dados);
-
 	}
 
 	public function corrigirQuestoes(){
@@ -208,10 +229,14 @@ class Professor extends CI_Controller {
 	public function viewTurma(){
 		verif_login(2,'perfil');
 		if(!empty($hash = $this->uri->segment(3))){
+
 			$values['hash'] = $hash;
+
+			
 			$values['professor'] = $this->session->userdata('id_usuario');
 
 			if($dados['getturma'] = $this->turma->getTurma($values)[0]){
+
 				$dados['getalunos'] = $this->turma->getAlunos($values['hash']);
 				$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash']);
 				$dados['getalunospend'] = $this->turma->getAlunos($values['hash'],FALSE);
@@ -229,3 +254,64 @@ class Professor extends CI_Controller {
 	}
 
 }
+
+/*
+//carregar library de upload
+				$this->load->library('upload');
+				//inicio loop de upload de foto
+				for($i=0;$i<$filesCount;$i++){
+					if($fotos['name'][$i] == ""){
+						unset($fotos['name'][$i]);
+						unset($fotos['type'][$i]);
+						unset($fotos['tmp_name'][$i]);
+						unset($fotos['error'][$i]);
+						unset($fotos['size'][$i]);
+						$url_foto[$i] = "";
+					}else{
+
+						$_FILES['file']['name']     = $_FILES['fotos']['name'][$i];
+	                	$_FILES['file']['type']     = $_FILES['fotos']['type'][$i];
+	                	$_FILES['file']['tmp_name'] = $_FILES['fotos']['tmp_name'][$i];
+	                	$_FILES['file']['error']     = $_FILES['fotos']['error'][$i];
+	                	$_FILES['file']['size']     = $_FILES['fotos']['size'][$i];
+
+	                	// File upload configuration
+		                $uploadPath = './assets/images/teste/';
+		                $config['upload_path'] = $uploadPath;
+		                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+		                $config['override'] = TRUE;
+		                $config['max-size'] = 2048;
+		                $config['file_name'] = 'testando'.$i;
+		                $config['file_ext_tolower'] = TRUE;
+
+		                $this->upload->initialize($config);
+
+		                if($this->upload->do_upload('file')){
+		                    // Uploaded file data
+		                    $fileData = $this->upload->data();
+		                    $url_foto[$i]['file_name'] = $fileData['file_name'];
+		                    $filesFinalCount += 1;
+
+		                    $configcrop['image_library'] = 'gd2';
+							$configcrop['source_image'] = './assets/images/teste/'.$url_foto[$i]['file_name'];
+							$configcrop['new_image']     = './assets/images/crops/'.$fileData['raw_name'].'-crop'.$fileData['file_ext'];
+							$configcrop['maintain_ratio'] = TRUE;
+							$configcrop['create_thumb'] = FALSE;
+							$configcrop['height'] = 550;
+
+							 // Aplica as configurações para a library image_lib
+	           				 $this->image_lib->initialize($configcrop);
+
+	           				 if(!$this->image_lib->resize()){
+					                // Recupera as mensagens de erro e envia o usuário para a home
+					                $data = array('error' => $this->image_lib->display_errors());
+					                set_msg($data['error'],'info');
+					            }else{
+					            	$url_crop_foto[$i] = '/assets/images/crops/'.$url_foto[$i]['file_name'];
+					            }
+	                	}
+
+					}
+				}
+				//final loop de upload de foto
+				*/ 
