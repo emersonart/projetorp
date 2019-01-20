@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 18-Jan-2019 às 23:37
+-- Generation Time: 20-Jan-2019 às 01:01
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 7.2.12
 
@@ -31,11 +31,23 @@ SET time_zone = "+00:00";
 CREATE TABLE `tb_activities` (
   `act_id` int(11) NOT NULL,
   `act_lis_id` int(11) NOT NULL,
-  `act_titulo` text NOT NULL,
-  `act_subject` int(11) NOT NULL,
+  `act_enunciado` text NOT NULL,
+  `act_sub_id` int(11) NOT NULL,
   `act_teacher` int(11) NOT NULL,
-  `act_class` int(11) NOT NULL
+  `act_cla_hash` varchar(255) NOT NULL,
+  `act_foto` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_activities`
+--
+
+INSERT INTO `tb_activities` (`act_id`, `act_lis_id`, `act_enunciado`, `act_sub_id`, `act_teacher`, `act_cla_hash`, `act_foto`) VALUES
+(1, 1, '<p>questao 1<br></p>', 2, 8, 'MAC421', 'assets/img/listas/mac421-lista-1-q-1.jpg'),
+(2, 1, '<p>questao 2<br></p>', 2, 8, 'MAC421', ''),
+(3, 1, '<p>questao 3<br></p>', 2, 8, 'MAC421', 'assets/img/listas/mac421-lista-1-q-3.jpg'),
+(4, 1, '<p>questao 4<br></p>', 2, 8, 'MAC421', ''),
+(5, 1, '<p>questao 5<br></p>', 2, 8, 'MAC421', 'assets/img/listas/mac421-lista-1-q-5.jpg');
 
 -- --------------------------------------------------------
 
@@ -119,9 +131,10 @@ CREATE TABLE `tb_info_users` (
 INSERT INTO `tb_info_users` (`inf_id`, `inf_usu_id`, `inf_name`, `inf_lastname`, `inf_email`, `inf_registration`) VALUES
 (1, 1, 'Emerson', 'Bruno', 'emersonbruno_@hotmail.com', '0'),
 (2, 3, 'Alyanna', 'emersonart', 'emersonbruno_@homail.com', '20161044110008'),
-(3, 4, 'Emerson', 'Silva', 'emersonbruno2_@homail.com', '2147483647'),
+(3, 4, 'Emerson', 'Silva', 'emersonbruno2_@homail.com', '20161044110007'),
 (6, 8, 'tiago', 'coutinho', 'tiago@coutinho.com', '20161044110009'),
-(10, 13, 'teste de', 'professor', 'professor2@teste.com', '20161044110001');
+(10, 13, 'Augusto', 'Barbosa', 'augustozero@hotmail.com', '20161044110001'),
+(11, 14, 'Lucas', 'Braz', 'lucasbraz@usuario.com', '20161044110002');
 
 -- --------------------------------------------------------
 
@@ -131,18 +144,18 @@ INSERT INTO `tb_info_users` (`inf_id`, `inf_usu_id`, `inf_name`, `inf_lastname`,
 
 CREATE TABLE `tb_lists` (
   `lis_id` int(11) NOT NULL,
-  `lis_titulo` varchar(255) NOT NULL,
+  `lis_name` text NOT NULL,
   `lis_subject` int(11) NOT NULL,
   `lis_teacher` int(11) NOT NULL,
-  `tb_id_act` text NOT NULL
+  `lis_cla_hash` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `tb_lists`
 --
 
-INSERT INTO `tb_lists` (`lis_id`, `lis_titulo`, `lis_subject`, `lis_teacher`, `tb_id_act`) VALUES
-(1, 'lista termodinamica', 1, 5, '1/8/10/11/12');
+INSERT INTO `tb_lists` (`lis_id`, `lis_name`, `lis_subject`, `lis_teacher`, `lis_cla_hash`) VALUES
+(1, 'testando atividade com algumas imagens apenas (1,3,5)', 2, 8, 'MAC421');
 
 -- --------------------------------------------------------
 
@@ -163,7 +176,9 @@ CREATE TABLE `tb_register_class` (
 --
 
 INSERT INTO `tb_register_class` (`reg_id`, `reg_usu_id`, `reg_cla_hash`, `reg_date`, `reg_status`) VALUES
-(1, 8, 'fi758d', '16-01-2019 16:53', 1);
+(1, 4, 'MAC421', '16-01-2019 16:53', 1),
+(2, 13, 'MAC421', '17-01-2019 13:37', 1),
+(3, 14, 'MAC421', '19-01-2019 14:52', 1);
 
 -- --------------------------------------------------------
 
@@ -209,7 +224,8 @@ INSERT INTO `tb_users` (`usu_id`, `usu_login`, `usu_password`, `usu_session`, `u
 (3, 'emersonart', 'emerson23', '', 0),
 (4, 'emersonart2', 'emerson23', '', 1),
 (8, 'tiago', 't14g00', '', 2),
-(13, 'professorteste2', 'bhunji741', '', 1);
+(13, 'professorteste2', 'bhunji741', '', 1),
+(14, 'lucasbraz', 'uehuebr', '', 1);
 
 --
 -- Indexes for dumped tables
@@ -277,7 +293,7 @@ ALTER TABLE `tb_users`
 -- AUTO_INCREMENT for table `tb_activities`
 --
 ALTER TABLE `tb_activities`
-  MODIFY `act_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `act_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_answers`
@@ -301,7 +317,7 @@ ALTER TABLE `tb_configs_site`
 -- AUTO_INCREMENT for table `tb_info_users`
 --
 ALTER TABLE `tb_info_users`
-  MODIFY `inf_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `inf_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tb_lists`
@@ -313,7 +329,7 @@ ALTER TABLE `tb_lists`
 -- AUTO_INCREMENT for table `tb_register_class`
 --
 ALTER TABLE `tb_register_class`
-  MODIFY `reg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `reg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tb_subjects`
@@ -325,7 +341,7 @@ ALTER TABLE `tb_subjects`
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `usu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `usu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
