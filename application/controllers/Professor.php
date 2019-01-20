@@ -86,7 +86,7 @@ class Professor extends CI_Controller {
 		if(!empty($hash = $this->uri->segment(3)) and $dados_hash = $this->turma->getTurma($v)){
 
 			$dados['h1'] = 'Cadastrar questões';
-			$dados['qtd'] = 5;
+			$dados['qtd'] = (int)$this->option->get_option('qtd_atv');
 
 			//parametros de validação
 			$this->form_validation->set_rules('nomeLista','Nome da Lista','trim|required|min_length[5]|is_unique[tb_lists.lis_name]', array('required' => 'É obrigatório inserir um nome para a lista','is_unique'=>'Nome da lista já em uso'));
@@ -102,7 +102,7 @@ class Professor extends CI_Controller {
 				
 				$dados_form = $this->input->post();
 				$fotos = $_FILES['fotos'];
-				$filesCount = count($fotos); 
+				$filesCount = count($fotos['name']); 
 				$filesFinalCount = 0;
 				$dados_lista['nomeLista'] = $dados_form['nomeLista'];
 				$dados_lista['id_professor'] = $dados_hash[0]['cla_teacher'];
@@ -115,6 +115,7 @@ class Professor extends CI_Controller {
 						$this->load->library('upload');
 					//inicio loop de upload de foto
 						for($i=0;$i<$filesCount;$i++){
+							//$filesFinalCount = $i+1;
 							if($fotos['name'][$i] == ""){
 								unset($fotos['name'][$i]);
 								unset($fotos['type'][$i]);
@@ -162,7 +163,7 @@ class Professor extends CI_Controller {
 									if(!$this->image_lib->resize()){
 						                // Recupera as mensagens de erro e envia o usuário para a home
 										$data = array('error' => $this->image_lib->display_errors());
-										set_msg_pop($data['error'],'info');
+										set_msg($data['error'],'info');
 									}else{
 										$url_crop_foto[$i] = $uploadCrop.$fileData['raw_name'].$fileData['file_ext'];
 										unlink('./'.$uploadPath.$fileData['raw_name'].$fileData['file_ext']);
@@ -178,13 +179,15 @@ class Professor extends CI_Controller {
 						//cadastrar questoes na lista
 						$criarq = $this->questao->criarQuestoes($dados_form['questoes'],$dados_lista,$url_crop_foto);
 						if($criarq){
-							redirect('turma/'.$dados_hash[0]['cla_hash'].'/lista/'.$id_lista,'refresh');
+							redirect('professor/turma/'.$dados_hash[0]['cla_hash'],'refresh');
 						}
 
 						//fim cadastrar questoes na lista
 				}
 				//final verificando se foi criada a lista
-				//print_r($dados_form['questoes']);
+				//var_dump($dados_form['questoes'])."<br><br>";
+				//var_dump(count($dados_form['questoes']))."<br><br>";
+				print_r(count($_FILES['fotos']))."<br><br>";
 
 
 				//$valor = array(
@@ -226,7 +229,7 @@ class Professor extends CI_Controller {
 		load_template('professor/turmasProfessor',$dados);
 	}
 
-	public function viewTurma(){
+	public function turma(){
 		verif_login(2,'perfil');
 		if(!empty($hash = $this->uri->segment(3))){
 
@@ -241,6 +244,7 @@ class Professor extends CI_Controller {
 				$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash']);
 				$dados['getalunospend'] = $this->turma->getAlunos($values['hash'],FALSE);
 				$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash'],FALSE);
+				$dados['getlistas'] = $this->questao->getListas($values['hash']);
 				$dados['h1'] = $dados['getturma']['cla_nome'];
 				load_template('professor/viewTurma',$dados);
 			}else{

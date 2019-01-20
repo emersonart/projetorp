@@ -159,6 +159,7 @@ if(!function_exists('load_template')){
 		if(!isset($dados['h1'])){
 			$dados['h1'] =  $ci->option->get_option('site_title');
 		}
+		$dados['site_favicon'] = base_url($ci->option->get_option('site_favicon'));
 		$dados['nomeSite'] = $ci->option->get_option('site_title');
 		$dados['version_site'] = $ci->option->get_option('site_version');
 		if(isset($dados['titulo'])):

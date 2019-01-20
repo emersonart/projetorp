@@ -39,12 +39,14 @@
                 }
                 if($i < 10){
                     $n = "0".$i;
+                }else{
+                    $n = $i;
                 }
                 ?>
-               <li class="<?php echo $ac;?>"><a href="#questao<?php echo $i;?>" style="padding-left: 20px;"><?php echo $n;?></a></li>
+               <li style="margin-bottom: 40px" class="<?php echo $ac;?>" style="text-align: center;"><a href="#questao<?php echo $i;?>" style="background: #f9f9f9!important;"><?php echo $n;?></a></li>
             <?php }?>
           </ul>
-          <div id="myTabContent" class="tab-content custom-product-edit">
+          <div id="myTabContent" class="tab-content custom-product-edit" style="margin-top: -30px;">
         <?php for($i=1;$i<=$qtd;$i++){
           if($i == 1){
                     $ac = "active";
@@ -53,7 +55,10 @@
                 }
           if($i < 10){
                     $n = "0".$i;
-                }?>
+                }else{
+                    $n = $i;
+                }
+                ?>
           
             <div class="product-tab-list tab-pane fade <?php echo $ac;?> in" id="questao<?php echo $i;?>">
              <div class="card" >
@@ -85,7 +90,7 @@
                             </label>
                             <div class="file-button">
                               <span style="padding: 0 10px">Procurar</span>
-                              <input type="file" accept="image/x-png,image/gif,image/jpeg,image/jpg" name="fotos[]" onchange="document.getElementById('prepend-big-btn-<?php echo $i;?>').value = this.value;">
+                              <input id="f<?php echo $i;?>" type="file" accept="image/x-png,image/gif,image/jpeg,image/jpg" name="fotos[]" onchange="document.getElementById('prepend-big-btn-<?php echo $i;?>').value = this.value;">
                             </div>
                             <input type="text" id="prepend-big-btn-<?php echo $i;?>" placeholder="Adicionar foto ou arquivo">
                           </div>

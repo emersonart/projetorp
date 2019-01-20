@@ -4915,3 +4915,14 @@ display: block!important;
 #scrollUp:hover{
 	opacity: 1;
 }
+
+#myTab3.tab-review-design li a, #myTabedu1.tab-review-design li a {
+	padding: 15px 25px;
+}
+#myTab3.tab-review-design li.active a:before, #myTab4.tab-review-design li.active a:before, #myTabedu1.tab-review-design li.active a:before,#myTab3.tab-review-design li a:before, #myTab4.tab-review-design li a:before, #myTabedu1.tab-review-design li a:before{
+	bottom: -2px;
+}
+.c-lis{
+	padding-top: 15px;
+	padding-bottom: 15px;
+}

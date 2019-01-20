@@ -4,7 +4,8 @@ $(document).ready(function ($) {
 		lang: 'pt-BR',
 		disableDragAndDrop: true,
 		minHeight: 200,
-		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+		disableUpload: true,
+		fontNames: ['Roboto','Arial', 'Arial Black', 'Courier New'],
 		toolbar: [
 		    // [groupName, [list of button]]
 		    ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -12,10 +13,12 @@ $(document).ready(function ($) {
 		    ['fontsize', ['fontsize']],
 		    ['fontname',['fontname']],
 		    ['color', ['color']],
-		    [ 'insert', [ 'link'] ],
-		    ['para', ['ul', 'ol', 'paragraph']]
+		    [ 'insert', [ 'link','table'] ],
+		    ['para', ['ul', 'ol', 'paragraph']],
+		    ['help',['help']],
+		    
 		  ]
 	});
 
   $('div.note-group-select-from-files').remove();
-})(jQuery); 
+}); 

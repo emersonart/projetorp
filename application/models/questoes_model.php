@@ -31,6 +31,14 @@ class Questoes_model extends CI_Model{
 
 	public function criarQuestoes($dados,$lista,$fotos){
 		if(count($dados) != count($fotos)){
+			 for($j = 0; $j < count($fotos);$j++){
+			 		if($fotos[$j] != ''){
+			 			unlink('./'.$fotos[$j]);
+			 		}
+			 		
+			    }
+			    $this->db->where('lis_id',$lista['id_lista']);
+			    $this->db->delete('tb_lists');
 			return false;
 		}else{
 			$dados1 = array(
@@ -51,11 +59,13 @@ class Questoes_model extends CI_Model{
 			    # Something went wrong.
 			    set_msg_pop($this->db->trans_rollback(),'error','normal');
 			    for($j = 0; $j < count($fotos);$j++){
-			    	unlink('./'.$fotos[$j]);
+			    	if($fotos[$i] != ''){
+			 			unlink('./'.$fotos[$j]);
+			 		}
 			    }
 			    $this->db->where('lis_id',$lista['id_lista']);
 			    $this->db->delete('tb_lists');
-			    return FALSE;
+			    return $this->db->trans_rollback();
 			} 
 			else {
 			    # Everything is Perfect. 
@@ -66,6 +76,32 @@ class Questoes_model extends CI_Model{
 			}
 
 			
+		}
+	}
+
+	public function getListas($value){
+		$this->db->select('*');
+		$this->db->from('tb_lists');
+		$this->db->where('lis_cla_hash',$value);
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			return $query->result();
+		}else{
+			return false;
+		}
+	}
+
+	public function countQuestoes($values){
+		$this->db->select('*');
+		$this->db->where('act_cla_hash',$values['cla_hash']);
+		$this->db->where('act_lis_id',$values['id_lista']);
+		$this->db->from('tb_activities');
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			return $query->num_rows();
+		}else{
+			return 0;
 		}
 	}
 }
