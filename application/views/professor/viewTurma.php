@@ -52,7 +52,9 @@
           <ul id="myTabedu1" class="tab-review-design">
             <li class="active"><a href="#alunos">Alunos</a></li>
             <li><a href="#listas"> Listas</a></li>
+            <?php if($usuario['perm'] == 2 or $usuario['perm'] == 0){ ?>
             <li><a href="#pendentes">Cadastros pendentes<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
+          <?php } ?>
           </ul>
           <div id="myTabContent" class="tab-content custom-product-edit">
             <div class="product-tab-list tab-pane fade in active" id="alunos">
@@ -128,6 +130,7 @@
               </div>
             </div>
           </div>
+          <?php if($usuario['perm'] == 2 or $usuario['perm'] == 0){ ?>
           <div class="product-tab-list tab-pane fade" id="pendentes">
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -179,6 +182,7 @@
               </div>
             </div>
           </div>
+        <?php } ?>
         </div>
       </div>
     </div>

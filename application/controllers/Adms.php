@@ -14,12 +14,12 @@ class Adms extends CI_Controller {
 	}
 
 	public function excluirUsuarios(){
-		verif_login(0,'usuarios');
+		verif_login('site',0);
 		load_template('painel/excluirUsuarios');
 	}
 
 	public function criarProfessor(){
-		verif_login(0,'perfil');
+		verif_login('site',0
 
 		if(!empty($this->uri->segment(3))){
 			if($this->uri->segment(3) == "new"){

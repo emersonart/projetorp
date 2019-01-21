@@ -55,3 +55,4 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'usuarios/login';
 $route['registrar'] = 'usuarios/register';
 $route['sair'] = 'usuarios/logout';
+$route['dashboard'] = 'usuarios';

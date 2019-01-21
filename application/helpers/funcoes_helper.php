@@ -124,19 +124,31 @@ if(!function_exists('get_msg')){
 
 //verify if user is looged into system
 if(!function_exists('verif_login')){
-	function verif_login($prof,$page ='perfil'){
+	function verif_login($page ='site',$prof = 1,$redirect = TRUE){
 		$ci = & get_instance();
 		$logado = $ci->session->userdata('logged');
 		if($logado == TRUE){
-			if($ci->session->userdata('perm') == $prof or $ci->session->userdata('perm') == 0){
+			if($prof == 1){
 				return true;
 			}else{
-				set_msg('Acesso restrito, apenas admins e professores são permitidos','info');
-				redirect($page,'refresh');
+				if($ci->session->userdata('perm') == $prof or $ci->session->userdata('perm') == 0){
+					return true;
+				}else{
+					set_msg('Acesso restrito, apenas admins e professores são permitidos','info');
+					return false;
+					if($redirect){
+						redirect($page,'refresh');
+					}
+					
+				}
 			}
+			
 		}else{
 			set_msg('Acesso restrito, faça login para acessar','warning');
-			redirect('login','refresh');
+			if($redirect){
+				redirect('login','refresh');
+			}
+			return false;
 			}
 
 	}

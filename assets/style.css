@@ -4825,8 +4825,19 @@ display: block!important;
 }
 
 .sidebar-nav ul.metismenu .actived a,.sidebar-nav ul.metismenu .actived a span {
+	/*color: #29c75f!important;*/
+	/*background: #F6F6F6;*/
+}
+.sidebar-nav ul.metismenu li.actived > a{
 	color: #29c75f!important;
 	background: #F6F6F6;
+}
+.sidebar-nav ul.metismenu li.actived > a span{
+	color: #29c75f!important;
+}
+.sidebar-nav ul.metismenu li.actived > ul li.actived a{
+	color: #29c75f!important;
+	background: transparent!important;
 }
 .logo-pro{
 
@@ -4925,4 +4936,9 @@ display: block!important;
 .c-lis{
 	padding-top: 15px;
 	padding-bottom: 15px;
+}
+
+.icon-box {
+	margin-bottom: 20px;
+	margin-top: 15px;
 }

@@ -18,11 +18,14 @@
                             </div>
                             <div class="course-des">
                                 <p><span><i class="fa fa-clock"></i></span> <b>Turma:</b> <?php echo $linha->cla_nome;?></p>
-                                <p><span><i class="fa fa-clock"></i></span> <b>Professor:</b> <?php echo $linha->inf_name;?></p>
+                                <p>
+                                    <span><i class="fa fa-clock"></i></span> <b>Professor:</b>
+                                    <?php if($this->session->userdata('perm') == 1): echo $this->turma->getInfoProf($linha->cla_teacher)->inf_name; else: echo $linha->inf_name; endif;?>
+                                </p>
                                 <p><span><i class="fa fa-clock"></i></span> <b>Matéria:</b>  <?php echo $linha->sub_nome;?></p>
                             </div>
                             <div class="course-buttons">
-                                <button type="button" class="btn btn-custon-four btn-success">Ver Turma</button>
+                                <a href="<?php echo base_url('turmas/view/'.$linha->cla_hash);?>" class="btn btn-custon-four btn-success">Ver Turma</a>
                             </div>
                         </div>
                     </div>

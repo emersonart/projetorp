@@ -8,35 +8,37 @@
             <div class="left-custom-menu-adp-wrap comment-scrollbar">
                 <nav class="sidebar-nav left-sidebar-menu-pro">
                     <ul class="metismenu" id="menu1">
-                        <li class="<?php echo menu_active('adms/criarprofessor');?>">
-                            <a href="index.html">
-                                   <span class="educate-icon educate-home icon-wrap"></span>
-                                   <span class="mini-click-non">Dashboard</span>
-                                </a>
-
-                            
+                        <li class="<?php echo menu_active('dashboard');?>">
+                            <a href="<?php echo base_url('dashboard');?>">
+                                <span class="educate-icon educate-home icon-wrap"></span>
+                                <span class="mini-click-non">Dashboard</span>
+                            </a>
                         </li>
-                        <li>
-                            <a title="Landing Page" href="events.html" aria-expanded="false"><span class="educate-icon educate-event icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Event</span></a>
+                        <?php if($usuario['perm']==2){$ic = 'professor';}else if($usuario['perm'] == 1){$ic = 'student';}else{$ic = 'menu';} ?>
+                        <li class="<?php echo menu_active('perfil');?>">
+                            <a title="Landing Page" href="<?php echo base_url('dashboard');?>" aria-expanded="false"><span class="educate-icon educate-<?php echo $ic;?> icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Perfil</span></a>
                         </li>
-                        <li>
-                            <a class="has-arrow" href="all-professors.html" aria-expanded="false"><span class="educate-icon educate-professor icon-wrap"></span> <span class="mini-click-non">Professors</span></a>
+                        <li class="<?php echo menu_active('turmas');?>">
+                            <a class="has-arrow" href="all-professors.html" aria-expanded="false"><span class="educate-icon educate-course icon-wrap"></span> <span class="mini-click-non">Turmas</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="All Professors" href="all-professors.html"><span class="mini-sub-pro">All Professors</span></a></li>
-                                <li><a title="Add Professor" href="add-professor.html"><span class="mini-sub-pro">Add Professor</span></a></li>
-                                <li><a title="Edit Professor" href="edit-professor.html"><span class="mini-sub-pro">Edit Professor</span></a></li>
-                                <li><a title="Professor Profile" href="professor-profile.html"><span class="mini-sub-pro">Professor Profile</span></a></li>
+                                <li class="<?php echo menu_active('turmas');?>"><a title="All Professors" href="<?php echo base_url('turmas');?>"><span class="mini-sub-pro">Minhas turmas</span></a></li>
+                                <?php if(verif_login('',2,false)){?>
+                                <li class="<?php echo menu_active('professor/criarsala');?>"><a title="Add Professor" href="<?php echo base_url('professor/criarsala')?>"><span class="mini-sub-pro">Criar Turma</span></a></li>
+                                <li class="<?php echo menu_active('professor/aprovarcadastro');?>"><a title="Edit Professor" href="<?php echo base_url('professor/aprovarcadastro');?>"><span class="mini-sub-pro">Aprovar Cadastro</span></a></li>
+                                <?php }?>
                             </ul>
                         </li>
-                        <li>
-                            <a class="has-arrow" href="all-students.html" aria-expanded="false"><span class="educate-icon educate-student icon-wrap"></span> <span class="mini-click-non">Students</span></a>
+                        <?php if(verif_login('',0,false)){?>
+                        <li class="<?php echo menu_active('admin');?>">
+                            <a class="has-arrow" href="all-students.html" aria-expanded="false"><span class="educate-icon educate-settings icon-wrap"></span> <span class="mini-click-non">Administração</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="All Students" href="all-students.html"><span class="mini-sub-pro">All Students</span></a></li>
+                                <li class="<?php echo menu_active('admin');?>"><a title="All Students" href="<?php echo base_url('admin')?>"><span class="mini-sub-pro">Configurações</span></a></li>
                                 <li><a title="Add Students" href="add-student.html"><span class="mini-sub-pro">Add Student</span></a></li>
                                 <li><a title="Edit Students" href="edit-student.html"><span class="mini-sub-pro">Edit Student</span></a></li>
                                 <li><a title="Students Profile" href="student-profile.html"><span class="mini-sub-pro">Student Profile</span></a></li>
                             </ul>
                         </li>
+                        <?php } ?>
                         <li>
                             <a class="has-arrow" href="all-courses.html" aria-expanded="false"><span class="educate-icon educate-course icon-wrap"></span> <span class="mini-click-non">Courses</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
@@ -150,26 +152,21 @@
                             <div class="mobile-menu">
                                 <nav id="dropdown">
                                     <ul class="mobile-menu-nav">
-                                        <li><a data-toggle="collapse" data-target="#Charts" href="#">Home <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
-                                            <ul class="collapse dropdown-header-top">
-                                                <li><a href="index.html">Dashboard v.1</a></li>
-                                                <li><a href="index-1.html">Dashboard v.2</a></li>
-                                                <li><a href="index-3.html">Dashboard v.3</a></li>
-                                                <li><a href="analytics.html">Analytics</a></li>
-                                                <li><a href="widgets.html">Widgets</a></li>
-                                            </ul>
+                                        <li class="<?php echo menu_active('dashboard');?>"><a href="<?php echo base_url('dashboard');?>">Dashboard</a>
                                         </li>
-                                        <li><a href="events.html">Event</a></li>
-                                        <li><a data-toggle="collapse" data-target="#demoevent" href="#">Professors <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                        <li class="<?php echo menu_active('perfil');?>"><a href="<?php echo base_url('perfil');?>">Perfil</a></li>
+                                        <li class="<?php echo menu_active('turmas');?>"><a data-toggle="collapse" data-target="#demoevent" href="#">Turmas </a>
                                             <ul id="demoevent" class="collapse dropdown-header-top">
-                                                <li><a href="all-professors.html">All Professors</a>
+                                                <li><a href="<?php echo base_url('turmas');?>">Minhas Turmas</a>
                                                 </li>
+                                                <?php if(verif_login('',2,false)){?>
                                                 <li><a href="add-professor.html">Add Professor</a>
                                                 </li>
                                                 <li><a href="edit-professor.html">Edit Professor</a>
                                                 </li>
                                                 <li><a href="professor-profile.html">Professor Profile</a>
                                                 </li>
+                                                 <?php } ?>
                                             </ul>
                                         </li>
                                         <li><a data-toggle="collapse" data-target="#demopro" href="#">Students <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>

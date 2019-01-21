@@ -10,8 +10,15 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function index(){
-		verif_login(2,'perfil');
-		load_template('painel/teste');
+		$dados['h1'] = 'Dashboard do Professor';
+		if(verif_login('dashboard',1,false) and $this->session->userdata('perm') == 1){
+			load_template('painel/teste',$dados);
+		}else if(verif_login('dashboard',2,false)){
+			load_template('professor/inicioProfessor',$dados);
+		}else{
+			verif_login();
+		}
+		
 	}
 	public function login(){
 
@@ -36,6 +43,15 @@ class Usuarios extends CI_Controller {
 		}
 		$dados['titulo'] = "Logar no sistema";
 		$this->load->view('login',$dados);
+	}
+
+	public function perfil($outro = FALSE){
+		if($outro){
+			echo $outro;
+		}else{
+			echo 'perfil';
+			
+		}
 	}
 
 

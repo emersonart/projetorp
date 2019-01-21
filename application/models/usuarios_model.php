@@ -47,7 +47,7 @@ class Usuarios_model extends CI_Model{
 			$this->session->set_userdata($arg);
 
 			
-			redirect('painel/perfil/'.$arg['usuario'],'refresh');
+			redirect('dashboard','refresh');
 		}else{
 			return set_msg('login e/ou senhas inválidos','danger');
 		}

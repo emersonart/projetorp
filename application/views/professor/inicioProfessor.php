@@ -13,7 +13,7 @@
                                     <p class="small mg-t-box">
                                         Crie uma sala, adicione uma descrição e ponha um tempo limite para o seus alunos se cadastrarem.
                                     </p>
-                                    <button class="btn btn-custon-four btn-success widget-btn-1 btn-sm">Criar sala</button>
+                                    <a href="<?php echo base_url('professor/criarsala');?>" class="btn btn-custon-four btn-success widget-btn-1 btn-sm" style="color:white;">Criar sala</a>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                                     <p class="small mg-t-box">
                                         Aqui você poderá criar uma lista de exercício ou upar um arquivo para o seus alunos responderem futuramente.
                                     </p>
-                                    <button class="btn btn-custon-four btn-danger widget-btn-2 btn-sm">Criar sala</button>
+                                    <a class="btn btn-custon-four btn-danger widget-btn-2 btn-sm" style="color:white;">Criar sala</a>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                         <p class="small mg-t-box">
                                             Você pode controlar os participantes que entraram na sua turma aprovando o cadastro dos seus alunos.
                                         </p>
-                                    <button class="btn btn-custon-four btn-info widget-btn-3 btn-sm">Criar sala</button>
+                                    <a class="btn btn-custon-four btn-info widget-btn-3 btn-sm" style="color:white;">Criar sala</a>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                     <p class="small mg-t-box">
                                         Aqui você pode acessar a resposta do que seus alunos responderam de acordo com a lista e também da questão.
                                     </p>
-                                    <button class="btn btn-custon-four btn-warning widget-btn-4 btn-sm">Criar sala</button>
+                                    <a class="btn btn-custon-four btn-warning widget-btn-4 btn-sm" style="color:white;">Criar sala</a>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                                     <p class="small mg-t-box">
                                         Nesta página, classifique as listas de exercícios respondidas pelos seus alunos. A classificação se dá como A, B, C ou D. 
                                     </p>
-                                    <button class="btn btn-custon-four btn-info widget-btn-2 btn-sm">Criar sala</button>
+                                    <a class="btn btn-custon-four btn-info widget-btn-2 btn-sm" style="color:white;">Criar sala</a>
                                 </div>
                             </div>
                         </div>

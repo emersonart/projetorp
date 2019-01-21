@@ -12,13 +12,11 @@ class Professor extends CI_Controller {
 	}
 
 	public function index(){
-		verif_login(2,'perfil');
-		$dados['h1'] = 'Dashboard do Professor';
-		load_template('professor/inicioProfessor',$dados);
+		redirect('dashboard','refresh');
 	}
 
 	public function criarSala(){
-		verif_login(2,'perfil');
+		verif_login('dashboard',2);
 		$dados['h1'] = 'Criar nova Turma';
 
 		
@@ -65,23 +63,18 @@ class Professor extends CI_Controller {
 
 	}
 
-	public function criarMateria(){
-		verif_login(2,'perfil');
-		load_template('painel/criarMateria');
-
-	}
 
 	public function aprovarCadastro(){
-		verif_login(2,'perfil');
+		verif_login('dashboard',2);
 		if(!empty($values['id'] = $this->uri->segment(4)) and !empty($values['hash'] = $this->uri->segment(3))){
 			$att = $this->turma->aprovCadastro($values);
-			redirect('professor/viewturma/'.$values['hash'].'#pendentes','refresh');
+			redirect('professor/turma/'.$values['hash'].'#pendentes','refresh');
 		}
 
 	}
 
 	public function cadastrarQuestoes(){
-		verif_login(2,'perfil');
+		verif_login('dashboard',2);
 		$v['hash'] = $this->uri->segment(3);
 		if(!empty($hash = $this->uri->segment(3)) and $dados_hash = $this->turma->getTurma($v)){
 
@@ -210,52 +203,13 @@ class Professor extends CI_Controller {
 	}
 
 	public function corrigirQuestoes(){
-		verif_login(2,'perfil');
+		verif_login('dashboard',2);
 		$dados['h1'] = 'Corrigir questões';
 		load_template('professor/corrigirQuestoes', $dados);
 
 	}
 
-	public function turmas(){
-		verif_login(2,'perfil');
-		$dados['h1'] = "Minhas turmas";
-		if($this->session->userdata('perm') == 0){
-			$dados['turmas'] = $this->turma->getTurmasDetalhes();
-		}else{
-			$dados['turmas'] = $this->turma->getTurmasDetalhes($this->session->userdata('id_usuario'));
-		}
-		
-
-		load_template('professor/turmasProfessor',$dados);
-	}
-
-	public function turma(){
-		verif_login(2,'perfil');
-		if(!empty($hash = $this->uri->segment(3))){
-
-			$values['hash'] = $hash;
-
-			
-			$values['professor'] = $this->session->userdata('id_usuario');
-
-			if($dados['getturma'] = $this->turma->getTurma($values)[0]){
-
-				$dados['getalunos'] = $this->turma->getAlunos($values['hash']);
-				$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash']);
-				$dados['getalunospend'] = $this->turma->getAlunos($values['hash'],FALSE);
-				$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash'],FALSE);
-				$dados['getlistas'] = $this->questao->getListas($values['hash']);
-				$dados['h1'] = $dados['getturma']['cla_nome'];
-				load_template('professor/viewTurma',$dados);
-			}else{
-				set_msg('Turma não encontrada!','info');
-				redirect('home','refresh');
-			}
-		}else{
-			set_msg('Parametros incorretos','danger');
-			redirect('home','refresh');
-		}
-	}
+	
 
 }
 
