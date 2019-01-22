@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 20-Jan-2019 às 01:01
+-- Generation Time: 22-Jan-2019 às 04:39
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 7.2.12
 
@@ -43,11 +43,25 @@ CREATE TABLE `tb_activities` (
 --
 
 INSERT INTO `tb_activities` (`act_id`, `act_lis_id`, `act_enunciado`, `act_sub_id`, `act_teacher`, `act_cla_hash`, `act_foto`) VALUES
-(1, 1, '<p>questao 1<br></p>', 2, 8, 'MAC421', 'assets/img/listas/mac421-lista-1-q-1.jpg'),
+(1, 1, '<p><b>questao</b> 1<br></p>', 2, 8, 'MAC421', 'assets/img/listas/mac421-lista-1-q-1.jpg'),
 (2, 1, '<p>questao 2<br></p>', 2, 8, 'MAC421', ''),
 (3, 1, '<p>questao 3<br></p>', 2, 8, 'MAC421', 'assets/img/listas/mac421-lista-1-q-3.jpg'),
 (4, 1, '<p>questao 4<br></p>', 2, 8, 'MAC421', ''),
-(5, 1, '<p>questao 5<br></p>', 2, 8, 'MAC421', 'assets/img/listas/mac421-lista-1-q-5.jpg');
+(5, 1, '<p>questao 5<br></p>', 2, 8, 'MAC421', 'assets/img/listas/mac421-lista-1-q-5.jpg'),
+(6, 2, '<p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 17px; text-align: justify;\">Adote o calor específico da água como <b>1 cal/g⋅°C</b>, e seu calor latente de vaporização como<b> 540 cal/g</b>. Com essas informações, determine a quantidade de calor necessária para vaporizar completamente <b>5 litros</b> de água, inicialmente a uma temperatura de <b>20°C</b>.</span><br></p>', 2, 8, 'MAC421', ''),
+(7, 2, '<span style=\"font-family: &quot;Open Sans&quot;, sans-serif; font-size: 17px; text-align: justify;\">As especificações técnicas de um fogão informam que a potência térmica de um dos queimadores é de <b>645 cal/s</b>. Se o rendimento desse queimador, ao esquentar uma panela com água, é de <b>60%</b>, qual a energia útil fornecida em <b>5 minutos</b>?</span>', 2, 8, 'MAC421', ''),
+(8, 2, '<p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 17px; text-align: justify;\">Considere um queimador de fogão com potência de <b>500 cal/s</b> e rendimento <b>65%</b>. Quanto tempo seria necessário para fazer <b>ferver 2 litros</b> de água, inicialmente a uma temperatura de<b> 25°C</b>?</span><br></p>', 2, 8, 'MAC421', ''),
+(9, 2, '<p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 17px; text-align: justify;\">Uma pessoa põe <b>1,5 litro</b> de água em uma panela, a uma temperatura de <b>20°C</b>, e observa que leva <b>4 minutos</b> para que essa massa de água entre em <b>ebulição</b>, após ser posto em contato térmico com um queimador de fogão. Determine a <b>potência</b> útil desse queimador.</span><br></p>', 2, 8, 'MAC421', ''),
+(10, 2, '<p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 17px; text-align: justify;\">Consultando dados técnicos, obtemos a informação que o <i>poder calorífico</i> do GLP (gás liquefeito de petróleo) é de <b>11730 cal/g</b>. Considerando um fogão potência <b>640 cal/s</b>, com rendimento de <b>62%</b>, qual a massa de gás queimada em <b>15 minutos</b> de uso?</span><br></p>', 2, 8, 'MAC421', ''),
+(11, 25, '<p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 17px; text-align: justify;\">Dois corpos, A e B, inicialmente com temperaturas diferentes, são postos em contato térmico no interior de um recipiente de baixa condutibilidade térmica. Nesse caso, podemos afirmar que:.</span><br></p>', 2, 8, 'MAC421', ''),
+(12, 25, '<p><span style=\"color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 17px; text-align: justify;\">Uma pessoa relata que determinado corpo aquece rapidamente quando exposto a luz solar ao meio dia, mas esfria rapidamente quando colocado na sombra. Em relação a esse fato, podemos afirmar que:.</span><br></p>', 2, 8, 'MAC421', ''),
+(13, 25, '<p><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\"><font face=\"Arial\">Considere uma torradeira doméstica (sanduicheira) e a chapa na qual colocamos o sanduíche para aquecer. Essa chapa deve ter uma capacidade térmica __________, pois deve aquecer ___________ quando for ligada, e esfriar _____________ quando for desligada..</font></span><br></p>', 2, 8, 'MAC421', ''),
+(14, 25, '<p><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\"><font face=\"Arial\">Um corpo apresenta capacidade térmica 500 cal / ºC.</font></span></p><p><font face=\"Arial\"><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\">Sobre o comportamento desse corpo são feitas 4 afirmações. Selecione apenas as que são corretas..</span><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\"><br></span></font><br></p>', 2, 8, 'MAC421', ''),
+(15, 25, '<p><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\"><font face=\"Arial\">O gráfico abaixo mostra como varia a temperatura de dois corpos homogêneos, A e B, em contato térmico no interior de um calorímetro de capacidade térmica desprezível.</font></span></p><p><font face=\"Arial\"><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\">Sobre o fenômeno apresentado abaixo são feitas 4 afirmativas. Quais são elas?.</span></font><br></p>', 2, 8, 'MAC421', 'assets/img/listas/mac421-lista-25-q-5.png'),
+(16, 25, '<p><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\"><font face=\"Arial\">A variação de temperatura da água do mar varia muito pouco entre do dia e a noite, em uma mesma data. Isso ocorre por que:.</font></span><br></p>', 2, 8, 'MAC421', ''),
+(17, 25, '<p><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\"><font face=\"Arial\">Considere uma panela na qual a água está fervendo, cozendo algum alimento. Podemos afirmar correntamente que, nesse caso, mantendo a potência máxima no \"queimador\" do fogão:.</font></span><br></p>', 2, 8, 'MAC421', ''),
+(18, 25, '<p><font face=\"Arial\"><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\">A intensidade da radiação solar, em um dia de verão, próximo a linha do Equador, pode ser estimada com o seguinte valor: I = 60 cal/(cm</span><sup style=\"color: rgb(0, 0, 0); text-align: justify;\">2</sup><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\">&nbsp;⋅ h).</span></font></p><p><font face=\"Arial\"><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\">Analisando essas unidades, marque, entre as afirmações abaixo, apenas as que estão corretas:.</span><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\"><br></span></font><br></p>', 2, 8, 'MAC421', ''),
+(19, 25, '<p><span style=\"color: rgb(0, 0, 0); font-size: 17px; text-align: justify;\"><font face=\"Arial\">Uma pessoa observa que a água de um grande lago estava \"fria\" durante um determinado dia ensolarado e \"morna\" durante a noite, algumas horas depois. Sobre esse fenômeno, podemos afirmar corretamente que:.</font></span><br></p>', 2, 8, 'MAC421', '');
 
 -- --------------------------------------------------------
 
@@ -58,9 +72,33 @@ INSERT INTO `tb_activities` (`act_id`, `act_lis_id`, `act_enunciado`, `act_sub_i
 CREATE TABLE `tb_answers` (
   `ans_id` int(11) NOT NULL,
   `ans_usu_id` int(11) NOT NULL,
-  `ans_cla_id` int(11) NOT NULL,
-  `ans_lis_id` int(11) NOT NULL
+  `ans_cla_hash` text NOT NULL,
+  `ans_lis_id` int(11) NOT NULL,
+  `ans_act_id` int(11) NOT NULL,
+  `ans_resposta` text NOT NULL,
+  `ans_date` varchar(255) NOT NULL,
+  `ans_tries` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tb_answers`
+--
+
+INSERT INTO `tb_answers` (`ans_id`, `ans_usu_id`, `ans_cla_hash`, `ans_lis_id`, `ans_act_id`, `ans_resposta`, `ans_date`, `ans_tries`) VALUES
+(1, 4, 'MAC421', 25, 11, '<p>sdafsdfasdfasdfadsfasdfsadf</p>', '22-01-2019 1:28', 3),
+(2, 4, 'MAC421', 25, 12, '<p>sdafsdfasdfasdfadsfasdfsadf<br></p>', '22-01-2019 1:28', 3),
+(3, 4, 'MAC421', 25, 13, '<p>geraldo professor</p>', '22-01-2019 1:28', 3),
+(4, 4, 'MAC421', 25, 14, '<p>sdafsdfasdfasdfadsfasdfsadf<br></p>', '22-01-2019 1:28', 3),
+(5, 4, 'MAC421', 25, 15, '<p>sdafsdfasdfasdfadsfasdfsadf<br></p>', '22-01-2019 1:28', 3),
+(6, 4, 'MAC421', 25, 16, 'TENTATIVA 3 DE <b>RESPOSTA</b>', '22-01-2019 1:28', 3),
+(7, 4, 'MAC421', 25, 17, '<p>sdafsdfasdfasdfadsfasdfsadf<br></p>', '22-01-2019 1:28', 3),
+(8, 4, 'MAC421', 25, 18, '<p>sdafsdfasdfasdfadsfasdfsadf<br></p>', '22-01-2019 1:28', 3),
+(9, 4, 'MAC421', 25, 19, '<p>sdafsdfasdfasdfadsfasdfsadf<br></p>', '22-01-2019 1:28', 3),
+(10, 4, 'MAC421', 2, 6, '<p><i><u>adsfdfsdg</u></i></p>', '22-01-2019 1:38', 1),
+(11, 4, 'MAC421', 2, 7, '<p>dddasdfsdhsfsad</p>', '22-01-2019 1:38', 1),
+(12, 4, 'MAC421', 2, 8, '<p>asdfwe324324</p>', '22-01-2019 1:38', 1),
+(13, 4, 'MAC421', 2, 9, '<p>sg<font face=\"Arial\">sd<u>fgdsfgdfgdfgdfgddfgfdsg</u></font></p>', '22-01-2019 1:38', 1),
+(14, 4, 'MAC421', 2, 10, '<p>adsfadfa<b>dsfadsfads</b></p>', '22-01-2019 1:38', 1);
 
 -- --------------------------------------------------------
 
@@ -107,7 +145,9 @@ CREATE TABLE `tb_configs_site` (
 INSERT INTO `tb_configs_site` (`con_id`, `con_name`, `con_value`) VALUES
 (1, 'site_title', 'Koala Educational'),
 (2, 'site_author', 'Emerson Bruno e Tiago Coutinho'),
-(3, 'site_version', 'Em Desenvolvimento');
+(3, 'site_version', 'Em Desenvolvimento'),
+(4, 'site_favicon', 'assets/img/favicon.ico'),
+(5, 'qtd_atv', '15');
 
 -- --------------------------------------------------------
 
@@ -155,7 +195,9 @@ CREATE TABLE `tb_lists` (
 --
 
 INSERT INTO `tb_lists` (`lis_id`, `lis_name`, `lis_subject`, `lis_teacher`, `lis_cla_hash`) VALUES
-(1, 'testando atividade com algumas imagens apenas (1,3,5)', 2, 8, 'MAC421');
+(1, 'testando atividade com algumas imagens apenas (1,3,5)', 2, 8, 'MAC421'),
+(2, 'Calorimetria 02', 2, 8, 'MAC421'),
+(25, 'Termodinâmica / Calorimetria - 01', 2, 8, 'MAC421');
 
 -- --------------------------------------------------------
 
@@ -293,13 +335,13 @@ ALTER TABLE `tb_users`
 -- AUTO_INCREMENT for table `tb_activities`
 --
 ALTER TABLE `tb_activities`
-  MODIFY `act_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `act_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `tb_answers`
 --
 ALTER TABLE `tb_answers`
-  MODIFY `ans_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tb_class`
@@ -311,7 +353,7 @@ ALTER TABLE `tb_class`
 -- AUTO_INCREMENT for table `tb_configs_site`
 --
 ALTER TABLE `tb_configs_site`
-  MODIFY `con_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `con_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_info_users`
@@ -323,7 +365,7 @@ ALTER TABLE `tb_info_users`
 -- AUTO_INCREMENT for table `tb_lists`
 --
 ALTER TABLE `tb_lists`
-  MODIFY `lis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `lis_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `tb_register_class`
