@@ -97,7 +97,7 @@
                                                     <li>
                                                         <a href="#">
                                                             <div class="notification-icon">
-                                                                <i class="educate-icon educate-checked edu-checked-pro admin-check-pro" aria-hidden="true"></i>
+                                                                <i class="educate-icon educate-checked edu-checked-pro" aria-hidden="true"></i>
                                                             </div>
                                                             <div class="notification-content">
                                                                 <span class="notification-date">16 Sept</span>
