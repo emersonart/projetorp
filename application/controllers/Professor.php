@@ -76,7 +76,7 @@ class Professor extends CI_Controller {
 	public function cadastrarQuestoes(){
 		verif_login('dashboard',2);
 		$v['hash'] = $this->uri->segment(3);
-		if(!empty($hash = $this->uri->segment(3)) and $dados_hash = $this->turma->getTurma($v)){
+		if(!empty($hash = $this->uri->segment(3)) and $dados_hash = $this->turma->getTurma($hash)){
 
 			$dados['h1'] = 'Cadastrar questões';
 			$dados['qtd'] = (int)$this->option->get_option('qtd_atv');
@@ -198,7 +198,7 @@ class Professor extends CI_Controller {
 			load_template('professor/cadastrarQuestoes', $dados);
 		}else{
 			set_msg_pop('Turma não encontrada, portanto não é possível criar uma lista de atividade','error','normal');
-			redirect('professor/turmas','refresh');
+			redirect('turmas','refresh');
 		}
 	}
 
