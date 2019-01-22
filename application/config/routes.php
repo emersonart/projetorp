@@ -56,3 +56,8 @@ $route['login'] = 'usuarios/login';
 $route['registrar'] = 'usuarios/register';
 $route['sair'] = 'usuarios/logout';
 $route['dashboard'] = 'usuarios';
+$route['perfil'] = 'usuarios/perfil';
+$route['turma/(:any)'] = 'turmas/view/$1';
+
+
+$route['turma/(:any)/responder/(:num)'] = 'alunos/responderlista/$1/$2';

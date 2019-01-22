@@ -29,10 +29,10 @@ class Turmas extends CI_Controller {
 		
 	}
 
-	public function view(){
+	public function view($hash){
 		verif_login('dashboard',2);
-		$v['hash'] = $this->uri->segment(3);
-		if(!empty($hash = $v['hash']) and $dados['getturma'] = $this->turma->getTurma($v)[0]){
+		$v['hash'] = $this->uri->segment(2);
+		if(!empty($hash) and $dados['getturma'] = $this->turma->getTurma($hash)){
 
 			$values['hash'] = $hash;
 

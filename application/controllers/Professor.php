@@ -148,7 +148,7 @@ class Professor extends CI_Controller {
 									$configcrop['new_image']     = './'.$uploadCrop.$fileData['raw_name'].$fileData['file_ext'];
 									$configcrop['maintain_ratio'] = TRUE;
 									$configcrop['create_thumb'] = FALSE;
-									$configcrop['height'] = 550;
+									$configcrop['height'] = 350;
 
 								 // Aplica as configurações para a library image_lib
 									$this->image_lib->initialize($configcrop);
@@ -206,7 +206,6 @@ class Professor extends CI_Controller {
 		verif_login('dashboard',2);
 		$dados['h1'] = 'Corrigir questões';
 		load_template('professor/corrigirQuestoes', $dados);
-
 	}
 
 	

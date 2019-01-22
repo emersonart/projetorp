@@ -1,3 +1,4 @@
+
 <!-- Start Welcome area -->
 <div class="all-content-wrapper">
     
@@ -184,10 +185,13 @@
                 <div class="breadcome-list">
                     <div class="row">
 
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
                             <h1><?php echo $h1; ?></h1>
+                            <?php if($this->uri->segment(3) == 'responder'){?>
+                                <h4>Tentativa: 7</h4>
+                           <?php } ?>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <div class="breadcome-heading">
                                 <form role="search" class="sr-input-func">
                                     <input type="text" placeholder="Search..." class="search-int form-control">

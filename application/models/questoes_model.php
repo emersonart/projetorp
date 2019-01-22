@@ -104,4 +104,115 @@ class Questoes_model extends CI_Model{
 			return 0;
 		}
 	}
+	public function getListainfo($values){
+		$this->db->select('*');
+		$this->db->from('tb_lists');
+		$this->db->where('lis_cla_hash',$values['hash']);
+		$this->db->where('lis_id',$values['id']);
+		$this->db->limit(1);
+
+		$query2 = $this->db->get();
+		if($query2->num_rows() == 1){
+			return $query2->row_array();
+		}else{
+			return false;
+		}
+	}
+	public function getLista($values){
+		//$this->db->select('lis_id, lis_cla_hash');
+		//$this->db->from('tb_lists');
+		//$this->db->where('lis_cla_hash',$values['hash']);
+		//$this->db->where('lis_id',$values['id']);
+		//$this->db->limit(1);
+
+		//$query = $this->db->get();
+		$query = $this->getListainfo($values);
+		if($query){
+			$this->db->select('*');
+			$this->db->from('tb_activities');
+			$this->db->where('act_cla_hash',$query['lis_cla_hash']);
+			$this->db->where('act_lis_id',$query['lis_id']);
+			$query2 = $this->db->get();
+			if($query2->num_rows() > 0){
+				return $id = $query2->result_array();
+			}else{
+				set_msg_pop('Questões não encontradas.','error','normal');
+				return false;
+			}
+
+		}else{
+			set_msg_pop('Lista não encontrada.','error','normal');
+			return false;
+		}
+		
+	}
+
+	public function regResposta($dados,$respostas,$idq){
+
+		if(count($idq) == count($respostas) and count($dados) == 3){
+			$hash = $dados['hash'];
+			$this->db->select('*');
+			$this->db->from('tb_answers');
+			$this->db->where('ans_usu_id',$dados['id_usuario']);
+			$this->db->where('ans_lis_id',$dados['id_lista']);
+			$this->db->where('ans_cla_hash',$dados['hash']);
+			$query = $this->db->get();
+
+			if($query->num_rows() == count($respostas)){
+				//achou uma resposta
+				$this->db->trans_start();
+				for ($i=0; $i < count($respostas); $i++) { 
+					$this->db->set('ans_resposta',$respostas[$i]);
+					$try = (int)$query->row()->ans_tries+1;
+					$this->db->set('ans_tries',$try);
+					$this->db->set('ans_date',date('d-m-Y G:i'));
+					$this->db->where('ans_usu_id',$dados['id_usuario']);
+					$this->db->where('ans_lis_id',$dados['id_lista']);
+					$this->db->where('ans_act_id',$idq[$i]);
+					$this->db->update('tb_answers');
+				}
+				$this->db->trans_complete();
+
+				if ($this->db->trans_status() === FALSE) {
+				    # Something went wrong.
+				    set_msg_pop($this->db->trans_rollback(),'error','normal');
+				    return 1;
+				}else{
+					set_msg('Resposta computada com sucesso','success');
+					set_msg_pop('Resposta computada com sucesso','success','normal');
+					return 2;
+				}
+
+			}else{
+				//nao achou, cadastrar nova resposta
+				$dados1 = array(
+					'ans_lis_id'=>(int)$dados['id_lista'],
+					'ans_usu_id'=>(int)$dados['id_usuario'],
+					'ans_cla_hash' => $hash,
+					'ans_tries' => 1
+				);
+				$this->db->trans_start();
+				for ($i=0; $i < count($respostas); $i++) { 
+					$dados1['ans_act_id'] = $idq[$i];
+					$dados1['ans_date'] = date('d-m-Y G:i');
+					$dados1['ans_resposta'] = $respostas[$i];
+					$this->db->insert('tb_answers',$dados1);
+				}
+				$this->db->trans_complete();
+
+				if ($this->db->trans_status() === FALSE) {
+				    # Something went wrong.
+				    set_msg_pop($this->db->trans_rollback(),'error','normal');
+				    return 3;
+				}else{
+					set_msg('Resposta computada com sucesso pela primeira vez','success');
+					set_msg_pop('Resposta computada com sucesso pela primeira vez','success','normal');
+					return $hash;
+				}
+			}
+		}else{
+			set_msg_pop('Parametros incorretos para esta solicitação','error','normal');
+			return 5;
+		}
+	}
 }

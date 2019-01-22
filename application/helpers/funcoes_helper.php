@@ -134,9 +134,10 @@ if(!function_exists('verif_login')){
 				if($ci->session->userdata('perm') == $prof or $ci->session->userdata('perm') == 0){
 					return true;
 				}else{
-					set_msg('Acesso restrito, apenas admins e professores são permitidos','info');
+					
 					return false;
 					if($redirect){
+						set_msg('Acesso restrito, apenas admins e professores são permitidos','info');
 						redirect($page,'refresh');
 					}
 					
