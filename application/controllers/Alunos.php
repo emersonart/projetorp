@@ -31,13 +31,18 @@ class Alunos extends CI_Controller {
 					set_msg(validation_errors(),'danger');
 				}
 			}else{
-				$dados_form = $this->input->post();
-				$dd = array(
-					'id_usuario' => $this->session->userdata('id_usuario'),
-					'hash' => $hash,
-					'id_lista' => $dados['listainfo']['lis_id']
-				);
-				$this->questao->regResposta($dd,$dados_form['respostas'],$dados_form['qid']);
+				if(verif_login('',2,false)){
+					set_msg_pop('Você não é um aluno desta turma, não pode responder essa lista.','warning','normal');
+				}else{
+					$dados_form = $this->input->post();
+					$dd = array(
+						'id_usuario' => $this->session->userdata('id_usuario'),
+						'hash' => $hash,
+						'id_lista' => $dados['listainfo']['lis_id']
+					);
+					$this->questao->regResposta($dd,$dados_form['respostas'],$dados_form['qid']);
+				}
+				
 					
 			
 			}	
