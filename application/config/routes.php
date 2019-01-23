@@ -59,5 +59,5 @@ $route['dashboard'] = 'usuarios';
 $route['perfil'] = 'usuarios/perfil';
 $route['turma/(:any)'] = 'turmas/view/$1';
 
-
+$route['turma/(:any)/corrigir/(:num)/(:num)'] = 'professor/corrigirlista/$1/$2/$3';
 $route['turma/(:any)/responder/(:num)'] = 'alunos/responderlista/$1/$2';

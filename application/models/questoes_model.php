@@ -118,7 +118,7 @@ class Questoes_model extends CI_Model{
 			return false;
 		}
 	}
-	public function getLista($values){
+	public function getQuestoes($values){
 		//$this->db->select('lis_id, lis_cla_hash');
 		//$this->db->from('tb_lists');
 		//$this->db->where('lis_cla_hash',$values['hash']);
@@ -214,5 +214,14 @@ class Questoes_model extends CI_Model{
 			set_msg_pop('Parametros incorretos para esta solicitação','error','normal');
 			return 5;
 		}
+	}
+
+	public function getRespostas($values){
+		$this->db->select('*');
+		$this->db->from('tb_answers');
+		$this->db->join('tb_activities','tb_activities.act_lis_id = "'.$values['id_lista'].'" and tb_activities.act_cla_hash = tb_answers.ans_cla_hash and tb_answers.ans_cla_hash = "'.$values['hash'].'" and tb_answers.ans_usu_id="'.$values['id_usuario'].'" and tb_answers.ans_act_id = tb_activities.act_id','inner');
+		//$this->db->get();
+
+		return $this->db->get()->result_array();
 	}
 }

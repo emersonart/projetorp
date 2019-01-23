@@ -155,11 +155,24 @@ class Turmas_model extends CI_Model{
 	public function verifAluno($values){
 		$this->db->select('reg_id');
 		$this->db->from('tb_register_class');
-		$this->db->where('reg_cla_hash',$values);
-		$this->db->where('reg_usu_id',$this->session->userdata('id_usuario'));
+		$this->db->where('reg_cla_hash',$values['hash']);
+		$this->db->where('reg_usu_id',$values['id_usuario']);
 		$query = $this->db->get();
 		if($query->num_rows() > 0){
 			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public function getAluno($id){
+		$this->db->select('usu_id,inf_name, inf_email, inf_lastname, inf_registration, usu_login');
+		$this->db->from('tb_users');
+		$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id and tb_users.usu_id = "'.$id.'"','inner');
+		$this->db->limit(1);
+		$query = $this->db->get();
+		if($query->num_rows() == 1){
+			return $query->row_array();
 		}else{
 			return false;
 		}

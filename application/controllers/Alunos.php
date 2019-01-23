@@ -16,8 +16,9 @@ class Alunos extends CI_Controller {
 	}
 
 	public function responderLista($hash,$id){
-		$values = array('id' => $id,'hash' => $hash );
-		if($lista = $this->questao->getLista($values) and ($alu = $this->turma->verifAluno($hash) or verif_login('',2,false))){
+		verif_login();
+		$values = array('id' => $id,'hash' => $hash,'id_usuario'=>$this->session->userdata('id_usuario') );
+		if($lista = $this->questao->getQuestoes($values) and ($alu = $this->turma->verifAluno($values) or verif_login('',2,false))){
 
 			$dados['lista'] = $lista;
 			$dados['listainfo'] = $this->questao->getListainfo($values);
@@ -52,7 +53,5 @@ class Alunos extends CI_Controller {
 		
 	}
 
-	public function criarResposta($hash,$id){
-		load_template('painel/teste');
-	}
+
 }

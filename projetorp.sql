@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 22-Jan-2019 às 04:39
+-- Generation Time: 23-Jan-2019 às 22:21
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 7.2.12
 
@@ -225,6 +225,19 @@ INSERT INTO `tb_register_class` (`reg_id`, `reg_usu_id`, `reg_cla_hash`, `reg_da
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `tb_reviews`
+--
+
+CREATE TABLE `tb_reviews` (
+  `rev_id` int(11) NOT NULL,
+  `rev_lis_id` int(11) NOT NULL,
+  `rev_usu_id` int(11) NOT NULL,
+  `rev_nota` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `tb_subjects`
 --
 
@@ -316,6 +329,12 @@ ALTER TABLE `tb_register_class`
   ADD PRIMARY KEY (`reg_id`);
 
 --
+-- Indexes for table `tb_reviews`
+--
+ALTER TABLE `tb_reviews`
+  ADD PRIMARY KEY (`rev_id`);
+
+--
 -- Indexes for table `tb_subjects`
 --
 ALTER TABLE `tb_subjects`
@@ -372,6 +391,12 @@ ALTER TABLE `tb_lists`
 --
 ALTER TABLE `tb_register_class`
   MODIFY `reg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tb_reviews`
+--
+ALTER TABLE `tb_reviews`
+  MODIFY `rev_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tb_subjects`

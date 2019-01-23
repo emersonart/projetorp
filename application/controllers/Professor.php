@@ -202,10 +202,44 @@ class Professor extends CI_Controller {
 		}
 	}
 
-	public function corrigirQuestoes(){
+	public function corrigirLista($hash,$id_lista,$id_aluno){
 		verif_login('dashboard',2);
-		$dados['h1'] = 'Corrigir questões';
-		load_template('professor/corrigirQuestoes', $dados);
+		$okhash = $this->turma->getTurma($hash);
+		$oklista = $this->questao->getListainfo(array('hash' => $hash, 'id'=>$id_lista));
+		//$okaluno = $this->turma->getAluno($id_aluno);
+		$lista = $this->questao->getRespostas(array('hash' => $hash, 'id_lista'=>$id_lista,'id_usuario'=>$id_aluno));
+		if(($lista or $this->turma->verifAluno(array('id_usuario' => $id_aluno, 'hash'=>$hash))) and $oklista and $okhash){
+			$okaluno = $this->turma->getAluno($id_aluno);
+			$dados['h1'] = 'Lista: '.$oklista['lis_name'];
+			$dados['turma'] = $okhash;
+			if($lista){
+				$dados['semresposta'] = FALSE;
+				$dados['lista'] = $lista;
+			}else{
+				$dados['semresposta'] = TRUE;
+				$dados['lista'] = $this->questao->getQuestoes(array('hash' => $hash, 'id'=>$id_lista));
+			}
+			
+			$dados['infolista'] = $oklista;
+			$dados['aluno'] = $okaluno;
+			$dados['qtd'] = count($lista);
+
+			if($okhash['cla_teacher'] == $this->session->userdata('id_usuario')){
+				$dados['profok'] = TRUE;
+			}else{
+				$dados['profok'] = FALSE;
+			}
+
+
+			load_template('professor/corrigirQuestoes', $dados);
+		}else if($this->turma->getTurma($hash)){
+			set_msg_pop('Lista e/ou Aluno não encontrado nesta turma','warning','normal');
+			redirect('turma/'.$hash,'refresh');
+		}else{
+			set_msg_pop('Turma não encontrada','error','normal');
+			redirect('turmas','refresh');
+		}
+		
 	}
 
 	

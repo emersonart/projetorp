@@ -14,6 +14,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="footer-copy-right">
+                    <p>sql time: {elapsed_time} | memory used: {memory_usage}</p>
                     <p><?php echo $nomeSite;?></p>
                     <p>Copyright © <?php echo date('Y')?>. Desenvolvido por: <?php echo $site_author;?>. Template por <a style="color:black" href="https://colorlib.com/wp/templates/">Colorlib</a></p>
                     <p>versão: <?php echo $version_site;?></p>
