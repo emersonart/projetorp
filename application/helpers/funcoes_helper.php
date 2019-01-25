@@ -126,12 +126,12 @@ if(!function_exists('get_msg')){
 if(!function_exists('verif_login')){
 	function verif_login($page ='site',$prof = 1,$redirect = TRUE){
 		$ci = & get_instance();
-		$logado = $ci->session->userdata();
-		if($logado['logged'] == TRUE){
+		$logado = $ci->session->userdata('logged');
+		if($logado){
 			if($prof == 1){
 				return true;
 			}else{
-				if($logado['perm'] == $prof){
+				if($logado == $prof or $ci->session->userdata('perm') == 0){
 
 					return true;
 				}else{
@@ -141,7 +141,7 @@ if(!function_exists('verif_login')){
 						set_msg_pop('Acesso restrito, apenas admins e professores são permitidos','error','normal');
 						redirect($page,'refresh');
 					}
-					return 0;
+					return false;
 					
 				}
 			}

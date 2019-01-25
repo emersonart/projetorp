@@ -12,8 +12,6 @@ class Site extends CI_Controller {
 	}
 
 	public function index(){
-		verif_login();
-		$dados['h1'] = 'Dashboard do Professor';
-		load_template('professor/inicioProfessor',$dados);
+		redirect('dashboard','refresh');
 	}
 }
