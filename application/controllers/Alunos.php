@@ -19,7 +19,13 @@ class Alunos extends CI_Controller {
 		verif_login();
 		$values = array('id' => $id,'hash' => $hash,'id_usuario'=>$this->session->userdata('id_usuario') );
 		if($lista = $this->questao->getQuestoes($values) and ($alu = $this->turma->verifAluno($values) or verif_login('',2,false))){
+			$dados['tentativas'] = $this->questao->getRespostas(array('hash' => $hash, 'id_lista'=>$id,'id_usuario'=>$this->session->userdata('id_usuario')));
 
+			if($dados['tentativas']){
+				$dados['tentativas'] = $this->questao->getRespostas(array('hash' => $hash, 'id_lista'=>$id,'id_usuario'=>$this->session->userdata('id_usuario')))[0]['ans_tries'] +1;
+			}else{
+				$dados['tentativas'] = 1;
+			}
 			$dados['lista'] = $lista;
 			$dados['listainfo'] = $this->questao->getListainfo($values);
 			$dados['h1'] = 'Responder lista: '.$dados['listainfo']['lis_name'];

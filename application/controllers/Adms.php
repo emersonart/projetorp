@@ -10,7 +10,7 @@ class Adms extends CI_Controller {
 	}
 
 	public function index(){
-
+		redirect('dashboard','refresh');
 	}
 
 	public function excluirUsuarios(){
@@ -19,7 +19,7 @@ class Adms extends CI_Controller {
 	}
 
 	public function criarProfessor(){
-		verif_login('site',0
+		verif_login('site',0);
 
 		if(!empty($this->uri->segment(3))){
 			if($this->uri->segment(3) == "new"){

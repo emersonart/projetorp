@@ -12,7 +12,7 @@ class Turmas extends CI_Controller {
 	}
 
 	public function index(){
-		verif_login('dashboard',2);
+		verif_login();
 		
 		if($this->session->userdata('perm') == 0){
 			$dados['h1'] = "Turmas no sistema";
@@ -29,14 +29,19 @@ class Turmas extends CI_Controller {
 		
 	}
 
-	public function view($hash){
-		verif_login('dashboard',2);
+	public function view($hash,$aba = 'alunos'){
+		verif_login();
 		$v['hash'] = $this->uri->segment(2);
 		if(!empty($hash) and $dados['getturma'] = $this->turma->getTurma($hash)){
-
+			$okhash = $this->turma->getTurma($hash);
+			if($okhash['cla_teacher'] == $this->session->userdata('id_usuario')){
+				$dados['profok'] = TRUE;
+			}else{
+				$dados['profok'] = FALSE;
+			}
 			$values['hash'] = $hash;
-
-			
+			$dados['hashturma'] = $hash;
+			$dados['aba'] = $aba;
 			$values['professor'] = $this->session->userdata('id_usuario');
 
 

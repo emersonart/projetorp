@@ -9,13 +9,14 @@ class Usuarios_model extends CI_Model{
 
 	public function logout(){
 		if($this->session->userdata()){
+			$this->session->set_userdata('logged',false);
 			$this->session->unset_userdata('usuario','id_usuario','perm','pagina_anterior','nome','sobrenome','matricula','email','logged');	
 			$this->session->sess_destroy();
 
 			set_msg('Você saiu do sistema com sucesso!','success');
 		}
 
-		redirect('usuarios/login');
+		redirect('login');
 	}
 
 	public function login($values){

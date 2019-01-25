@@ -66,17 +66,18 @@ class Professor extends CI_Controller {
 
 	public function aprovarCadastro(){
 		verif_login('dashboard',2);
-		if(!empty($values['id'] = $this->uri->segment(4)) and !empty($values['hash'] = $this->uri->segment(3))){
+		$okhash = $this->turma->getTurma($this->uri->segment(3));
+		if(($okhash['cla_teacher'] == $this->session->userdata('id_usuario') or $this->session->userdata('perm') == 0) and !empty($values['id'] = $this->uri->segment(4)) and !empty($values['hash'] = $this->uri->segment(3))){
 			$att = $this->turma->aprovCadastro($values);
-			redirect('professor/turma/'.$values['hash'].'#pendentes','refresh');
+			redirect('turma/'.$values['hash'].'/pendentes','refresh');
 		}
 
 	}
 
-	public function cadastrarQuestoes(){
+	public function cadastrarQuestoes($hashs){
 		verif_login('dashboard',2);
-		$v['hash'] = $this->uri->segment(3);
-		if(!empty($hash = $this->uri->segment(3)) and $dados_hash = $this->turma->getTurma($hash)){
+		echo $ci->session->userdata('perm');
+		if($dados_hash = $this->turma->getTurma($hashs)){
 
 			$dados['h1'] = 'Cadastrar questões';
 			$dados['qtd'] = (int)$this->option->get_option('qtd_atv');
@@ -98,9 +99,9 @@ class Professor extends CI_Controller {
 				$filesCount = count($fotos['name']); 
 				$filesFinalCount = 0;
 				$dados_lista['nomeLista'] = $dados_form['nomeLista'];
-				$dados_lista['id_professor'] = $dados_hash[0]['cla_teacher'];
-				$dados_lista['subject'] = $dados_hash[0]['sub_id'];
-				$dados_lista['class_hash'] =  $dados_hash[0]['cla_hash'];
+				$dados_lista['id_professor'] = $dados_hash['cla_teacher'];
+				$dados_lista['subject'] = $dados_hash['sub_id'];
+				$dados_lista['class_hash'] =  $dados_hash['cla_hash'];
 				//verificando se a lista foi criada
 				if($id_lista = $this->questao->criarLista($dados_lista)){
 					if(!empty($fotos['name'])){
@@ -131,7 +132,7 @@ class Professor extends CI_Controller {
 								$config['allowed_types'] = 'jpg|jpeg|png|gif';
 								$config['override'] = TRUE;
 								$config['max-size'] = 2048;
-								$config['file_name'] = strtolower($hash).'-lista-'.$id_lista.'-q-'.$idq;
+								$config['file_name'] = strtolower($hashs).'-lista-'.$id_lista.'-q-'.$idq;
 								$config['file_ext_tolower'] = TRUE;
 
 								$this->upload->initialize($config);
@@ -139,7 +140,10 @@ class Professor extends CI_Controller {
 								if($this->upload->do_upload('file')){
 			                    // Uploaded file data
 									$fileData = $this->upload->data();
-									$uploadCrop = 'assets/img/listas/';
+									if(!is_dir('./assets/img/listas/'.$id_lista)){
+										mkdir('./assets/img/listas/'.$id_lista,0755);
+									}
+									$uploadCrop = 'assets/img/listas/'.$id_lista.'/';
 									$url_foto[$i]['file_name'] = $fileData['file_name'];
 									$filesFinalCount += 1;
 
@@ -172,7 +176,7 @@ class Professor extends CI_Controller {
 						//cadastrar questoes na lista
 						$criarq = $this->questao->criarQuestoes($dados_form['questoes'],$dados_lista,$url_crop_foto);
 						if($criarq){
-							redirect('professor/turma/'.$dados_hash[0]['cla_hash'],'refresh');
+							redirect('turma/'.$dados_hash['cla_hash'],'refresh');
 						}
 
 						//fim cadastrar questoes na lista
@@ -203,18 +207,45 @@ class Professor extends CI_Controller {
 	}
 
 	public function corrigirLista($hash,$id_lista,$id_aluno){
-		verif_login('dashboard',2);
+		verif_login('',2,TRUE);
 		$okhash = $this->turma->getTurma($hash);
 		$oklista = $this->questao->getListainfo(array('hash' => $hash, 'id'=>$id_lista));
 		//$okaluno = $this->turma->getAluno($id_aluno);
 		$lista = $this->questao->getRespostas(array('hash' => $hash, 'id_lista'=>$id_lista,'id_usuario'=>$id_aluno));
-		if(($lista or $this->turma->verifAluno(array('id_usuario' => $id_aluno, 'hash'=>$hash))) and $oklista and $okhash){
+		if(($lista ) and $oklista and $okhash){
+			if($no = $this->questao->getNotaLista(array('id_aluno' => $id_aluno, 'id_lista'=>$id_lista))){
+				$dados['nota'] = $no;
+			}else{
+				$dados['nota'] = '';
+			}
+			
 			$okaluno = $this->turma->getAluno($id_aluno);
 			$dados['h1'] = 'Lista: '.$oklista['lis_name'];
 			$dados['turma'] = $okhash;
 			if($lista){
 				$dados['semresposta'] = FALSE;
 				$dados['lista'] = $lista;
+
+				//parametros post
+				$this->form_validation->set_rules('notaLista','Nota da Lista','trim|required', array('required' => 'Nota da lista não inserida'));
+
+				//verificar
+				if($this->form_validation->run() == FALSE){
+					if(validation_errors()){
+						set_msg(validation_errors(),'danger');
+					}
+				}else{
+					$dados_form = $this->input->post();
+					$dados_model = array(
+						'id_aluno' => $id_aluno,
+						'id_lista' => $id_lista,
+						'nota_lista' => $dados_form['notaLista']
+					);
+
+					if($this->questao->corrigirLista($dados_model)){
+						$dados['nota'] = $dados_form['notaLista'];
+					}
+				}
 			}else{
 				$dados['semresposta'] = TRUE;
 				$dados['lista'] = $this->questao->getQuestoes(array('hash' => $hash, 'id'=>$id_lista));
@@ -242,7 +273,28 @@ class Professor extends CI_Controller {
 		
 	}
 
-	
+	public function excluirLista($hash,$id){
+		verif_login('dashboard',2);
+		$oklista = $this->questao->getListainfo(array('hash' => $hash, 'id'=>$id));
+		if($oklista){
+			if($oklista['lis_teacher'] == $this->session->userdata('id_usuario') || $this->session->userdata('perm') == 0){
+				if($this->questao->excluirLista(array('hash' => $hash, 'id'=>$id))){
+					set_msg_pop('Lista foi excluida com sucesso!','success','normal');
+					redirect('turma/'.$hash,'refresh');
+				}else{
+					set_msg_pop('Não foi possivel excluir esta lista','error','normal');
+					redirect('turma/'.$hash,'refresh');
+				}
+				
+			}else{
+				set_msg_pop('Você não possui permissão para excluir essa lista!','warning','normal');
+				redirect('turma/'.$hash,'refresh');
+			}
+		}else{
+			set_msg_pop('Turma ou lista não encontrada','warning','normal');
+			redirect('dashboard','refresh');
+		}
+	}
 
 }
 

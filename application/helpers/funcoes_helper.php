@@ -126,20 +126,22 @@ if(!function_exists('get_msg')){
 if(!function_exists('verif_login')){
 	function verif_login($page ='site',$prof = 1,$redirect = TRUE){
 		$ci = & get_instance();
-		$logado = $ci->session->userdata('logged');
-		if($logado == TRUE){
+		$logado = $ci->session->userdata();
+		if($logado['logged'] == TRUE){
 			if($prof == 1){
 				return true;
 			}else{
-				if($ci->session->userdata('perm') == $prof or $ci->session->userdata('perm') == 0){
+				if($logado['perm'] == $prof){
+
 					return true;
 				}else{
 					
-					return false;
+					
 					if($redirect){
-						set_msg('Acesso restrito, apenas admins e professores são permitidos','info');
+						set_msg_pop('Acesso restrito, apenas admins e professores são permitidos','error','normal');
 						redirect($page,'refresh');
 					}
+					return 0;
 					
 				}
 			}
@@ -233,5 +235,21 @@ if(!function_exists('gerarHash')){
 			return $ids;
 		}
 
+	}
+
+	//return nota
+	if(!function_exists('respostal')){
+		function respostal($campo, $nota, $check = false){
+			if($campo == $nota){
+				if($check){
+					return "checked";
+				}else{
+					return 'active';
+				}
+				
+			}else{
+				return false;
+			}
+		}
 	}
 }

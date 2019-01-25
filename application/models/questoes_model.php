@@ -176,11 +176,11 @@ class Questoes_model extends CI_Model{
 				if ($this->db->trans_status() === FALSE) {
 				    # Something went wrong.
 				    set_msg_pop($this->db->trans_rollback(),'error','normal');
-				    return 1;
+				    return false;
 				}else{
 					set_msg('Resposta computada com sucesso','success');
 					set_msg_pop('Resposta computada com sucesso','success','normal');
-					return 2;
+					return true;
 				}
 
 			}else{
@@ -203,7 +203,7 @@ class Questoes_model extends CI_Model{
 				if ($this->db->trans_status() === FALSE) {
 				    # Something went wrong.
 				    set_msg_pop($this->db->trans_rollback(),'error','normal');
-				    return 3;
+				    return false;
 				}else{
 					set_msg('Resposta computada com sucesso pela primeira vez','success');
 					set_msg_pop('Resposta computada com sucesso pela primeira vez','success','normal');
@@ -212,7 +212,7 @@ class Questoes_model extends CI_Model{
 			}
 		}else{
 			set_msg_pop('Parametros incorretos para esta solicitação','error','normal');
-			return 5;
+			return false;
 		}
 	}
 
@@ -223,5 +223,98 @@ class Questoes_model extends CI_Model{
 		//$this->db->get();
 
 		return $this->db->get()->result_array();
+	}
+
+	public function corrigirLista($values){
+		$dados = array(
+			'rev_lis_id' => $values['id_lista'],
+			'rev_usu_id' => $values['id_aluno'],
+			'rev_nota' => $values['nota_lista']
+		);
+		$this->db->select('rev_id');
+		$this->db->from('tb_reviews');
+		$this->db->where('rev_lis_id',$values['id_lista']);
+		$this->db->where('rev_usu_id',$values['id_aluno']);
+
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			$this->db->set('rev_nota',$values['nota_lista']);
+			$this->db->where('rev_lis_id',$values['id_lista']);
+			$this->db->where('rev_usu_id',$values['id_aluno']);
+			$this->db->update('tb_reviews');
+
+			if($this->db->affected_rows() > 0){
+				set_msg_pop('Nota atualizada com sucesso','success','normal');
+				return true;
+			}else{
+				set_msg_pop('Nota não pode ser atualizada','error','normal');
+				return false;
+			}
+		}else{
+			$this->db->insert('tb_reviews',$dados);
+
+			if($this->db->insert_id()){
+				set_msg_pop('Nota cadastrada com sucesso','success','normal');
+				return true;
+			}else{
+				set_msg_pop('Nota não pode ser cadastrada','error','normal');
+				return false;
+			}
+		}
+
+		
+	}
+
+	public function getNotaLista($values){
+		$this->db->select('rev_nota');
+		$this->db->from('tb_reviews');
+		$this->db->where('rev_lis_id',$values['id_lista']);
+		$this->db->where('rev_usu_id',$values['id_aluno']);
+		$this->db->limit(1);
+		$query = $this->db->get();
+
+		if($query->num_rows() == 1){
+			return $query->row()->rev_nota;
+		}else{
+			return false;
+		}
+	}
+
+	public function excluirLista($values){
+		$this->db->trans_start();
+			$this->db->where('lis_id',$values['id']);
+			$this->db->where('lis_cla_hash',$values['hash']);
+			$this->db->delete('tb_lists');
+			$this->db->where('act_lis_id',$values['id']);
+			$this->db->where('act_cla_hash',$values['hash']);
+			$this->db->delete('tb_activities');
+			$this->db->where('ans_lis_id',$values['id']);
+			$this->db->where('ans_cla_hash',$values['hash']);
+			$this->db->delete('tb_answers');
+			$this->db->where('rev_lis_id',$values['id']);
+			$this->db->delete('tb_reviews');
+		$this->db->trans_complete();
+
+		if($this->db->trans_status() === FALSE){
+			set_msg_pop($this->db->trans_rollback(),'error','normal');
+			return false;
+		}else{
+			$this->db->trans_commit();
+			$pasta = "./assets/img/listas/".$values['id'];
+
+			if(is_dir($pasta)){
+				$dirr = dir($pasta);
+				while ($arquivo = $dirr->read()) {
+					if ($arquivo != '.' and $arquivo != '..') {
+						unlink($pasta.'/'.$arquivo);
+					}
+				}
+				$dirr->close();
+				rmdir($pasta);
+			}
+
+			return true;
+		}
 	}
 }

@@ -5,6 +5,7 @@
       <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
         <div class="profile-info-inner">
           <div class="profile-img">
+            <?php echo $this->session->userdata('perm');?>
             <img src="<?php echo base_url('assets/img/courses/turmas/1.jpg');?>" alt="" />
           </div>
           <div class="profile-details-hr">
@@ -50,14 +51,14 @@
       <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
         <div class="product-payment-inner-st res-mg-t-30 analysis-progrebar-ctn">
           <ul id="myTabedu1" class="tab-review-design">
-            <li class="active"><a href="#alunos">Alunos</a></li>
-            <li><a href="#listas"> Listas</a></li>
-            <?php if($usuario['perm'] == 2 or $usuario['perm'] == 0){ ?>
-            <li><a href="#pendentes">Cadastros pendentes<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
+            <li class="<?php echo respostal($aba,'alunos');?>"><a href="#alunos">Alunos</a></li>
+            <li class="<?php echo respostal($aba,'listas');?>"><a href="#listas"> Listas</a></li>
+            <?php if($profok or $usuario['perm'] == 0){ ?>
+            <li class="<?php echo respostal($aba,'pendentes');?>"><a href="#pendentes">Cadastros pendentes<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
           <?php } ?>
           </ul>
           <div id="myTabContent" class="tab-content custom-product-edit">
-            <div class="product-tab-list tab-pane fade in active" id="alunos">
+            <div class="product-tab-list tab-pane fade in <?php echo respostal($aba,'alunos');?>" id="alunos">
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="review-content-section">
@@ -78,9 +79,9 @@
                                 <b>Matrícula: </b><?php echo $linha->inf_registration;?>
                               </span>
                               <div class="m-t-md mg-t-10">
-                                <span class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="bottom" title="Status do Cadastro"><i class="fa fa-thumbs-up" style="color: #34a854;"></i> Cadastro efetivado </span>
-                                <span class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="bottom" title="Data do Cadastro"><i class="fa fa-calendar" style="color: #006DF0;"></i> <?php echo converter_data(explode(' ',$linha->reg_date)[0],3);?></span>
-                                <span class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="bottom" title="Hora do Cadastro"><i class="fa fa-clock-o" style="color: #ea4c89;"></i> <?php echo explode(' ',$linha->reg_date)[1];?></span>
+                                <span class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="bottom" title="Status do Cadastro" style="margin-bottom: 5px;"><i class="fa fa-thumbs-up" style="color: #34a854;"></i> Efetivado </span>
+                                <span class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="bottom" title="Data do Cadastro" style="margin-bottom: 5px;"><i class="fa fa-calendar" style="color: #006DF0;"></i> <?php echo converter_data(explode(' ',$linha->reg_date)[0],3);?></span>
+                                <span class="btn btn-xs btn-default" data-toggle="tooltip" data-placement="bottom" title="Hora do Cadastro" style="margin-bottom: 5px;"><i class="fa fa-clock-o" style="color: #ea4c89;"></i> <?php echo explode(' ',$linha->reg_date)[1];?></span>
 
                               </div>
                             </div>
@@ -98,7 +99,7 @@
                 </div>
               </div>
             </div>
-            <div class="product-tab-list tab-pane fade" id="listas">
+            <div class="product-tab-list tab-pane fade in <?php echo respostal($aba,'listas');?>" id="listas">
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="review-content-section">
@@ -109,13 +110,17 @@
                           <div  class="chat-message col-lg-12 col-md-12 col-sm-12 col-xs-12">
                            <div style="margin-left: 0;"class="message">
                             <a class="message-author" href="#"> <?php echo $linha->lis_name;?></a>
-                            <?php if($linha->lis_teacher == $usuario['perm'] or 0 == $usuario['perm']){?>
+                            <?php if($profok or 0 == $usuario['perm']){?>
                             <span class="message-date">
-                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/verlista/'.$linha->lis_id);?>" class="btn btn-md btn-info" data-toggle="tooltip" data-placement="bottom" title="Ver Lista"><i class="fa fa-eye" style="color: #fff;"></i> Ver </a>
-                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/editarlista/'.$linha->lis_id);?>"class="btn btn-md btn-default" data-toggle="tooltip" data-placement="bottom" title="Editar Lista"><i class="fa fa-edit" style="color: #000;"></i> Editar</a>
-                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/excluirlista/'.$linha->lis_id);?>"class="btn btn-md btn-danger" data-toggle="tooltip" data-placement="bottom" title="Excluir Lista"><i class="fa fa-close" style="color: #fff;"></i> Excluir</a>
+                              <!--a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/verlista/'.$linha->lis_id);?>" class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Ver Lista"><i class="fa fa-eye" style="color: #fff;"></i> Ver </a>
+                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/editarlista/'.$linha->lis_id);?>"class="btn btn-md btn-default btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Editar Lista"><i class="fa fa-edit" style="color: #000;"></i> Editar</a-->
+                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/excluir/'.$linha->lis_id);?>"class="btn btn-md btn-danger btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Excluir Lista"><i class="fa fa-close" style="color: #fff;"></i> Excluir</a>
                             </span>
-                          <?php }?>
+                          <?php }else{ ?>
+                            <span class="message-date">
+                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/responder/'.$linha->lis_id);?>"class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Excluir Lista"><i class="fa fa-close" style="color: #fff;"></i> Responder</a>
+                            </span>
+                            <?php } ?>
                             <span class="message-content">
                               <?php $dd = array('cla_hash' => $linha->lis_cla_hash, 'id_lista'=>$linha->lis_id);?>
                               <b>Questões: <?php echo $this->questao->countQuestoes($dd);?></b><br>
@@ -123,7 +128,16 @@
                             
                           </div>
                         </div>
-                      <?php }}?>
+                      <?php } }else{?>
+                        <div class="alert alert-warning alert-st-three" role="alert">
+                          <i class="fa fa-exclamation-triangle edu-checked-pro admin-check-pro" aria-hidden="true"></i>
+                          <p class="message-mg-rt"><strong>Ops!</strong> Esta turma ainda não possui listas!</p>
+                        </div>
+
+                      <?php }?>
+                      <?php if($profok){?>
+                      <a href="<?php echo base_url('criarlista/turma/'.$hashturma);?>" class="btn btn-lg btn-success btn-custon-four widget-btn-1 ">CRIAR LISTA</a>
+                    <?php } ?>
                     </div>
                   </div>
                 </div>
@@ -131,7 +145,7 @@
             </div>
           </div>
           <?php if($usuario['perm'] == 2 or $usuario['perm'] == 0){ ?>
-          <div class="product-tab-list tab-pane fade" id="pendentes">
+          <div class="product-tab-list tab-pane fade in <?php echo respostal($aba,'pendentes');?>" id="pendentes">
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="review-content-section">
@@ -158,7 +172,7 @@
 
                             </span>
                             <div class="mg-b-10 mg-t-10">
-                              <span class="btn btn-xs btn-default mg-t-10" data-toggle="tooltip" data-placement="bottom" title="Status do Cadastro"><i class="fa fa-exclamation-triangle" style="color: #e12503;"></i> Cadastro pendente </span>
+                              <span class="btn btn-xs btn-default mg-t-10" data-toggle="tooltip" data-placement="bottom" title="Status do Cadastro"><i class="fa fa-exclamation-triangle" style="color: #e12503;"></i>Pendente </span>
                               <a  class="pull-right btn-danger btn-md btn ap" data-toggle="tooltip" data-placement="bottom" title="Não Aprovar Cadastro"><i class="fa fa-thumbs-down"></i></a> 
                               <a href="<?php echo base_url('professor/aprovarcadastro/'.$linha->reg_cla_hash.'/'.$linha->usu_id)?>"class="pull-right btn-success btn-md btn ap" data-toggle="tooltip" data-placement="bottom" title="Aprovar Cadastro"><i class="fa fa-thumbs-up"></i></a>
                               

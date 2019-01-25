@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 23-Jan-2019 às 22:21
+-- Generation Time: 25-Jan-2019 às 00:40
 -- Versão do servidor: 10.1.37-MariaDB
 -- versão do PHP: 7.2.12
 
@@ -235,6 +235,13 @@ CREATE TABLE `tb_reviews` (
   `rev_nota` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `tb_reviews`
+--
+
+INSERT INTO `tb_reviews` (`rev_id`, `rev_lis_id`, `rev_usu_id`, `rev_nota`) VALUES
+(1, 2, 4, 'b');
+
 -- --------------------------------------------------------
 
 --
@@ -396,7 +403,7 @@ ALTER TABLE `tb_register_class`
 -- AUTO_INCREMENT for table `tb_reviews`
 --
 ALTER TABLE `tb_reviews`
-  MODIFY `rev_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rev_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tb_subjects`

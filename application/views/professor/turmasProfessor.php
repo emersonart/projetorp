@@ -3,7 +3,7 @@
                 <div class="row">
 
                     <?php 
-                        if(isset($turmas) && sizeof($turmas) > 0){ 
+                        if(!empty($turmas) && isset($turmas) && sizeof($turmas) > 0){ 
                           foreach ($turmas as $linha) {
                     ?>
                     <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 mg-b-15">
@@ -25,11 +25,16 @@
                                 <p><span><i class="fa fa-clock"></i></span> <b>Matéria:</b>  <?php echo $linha->sub_nome;?></p>
                             </div>
                             <div class="course-buttons">
-                                <a href="<?php echo base_url('turmas/view/'.$linha->cla_hash);?>" class="btn btn-custon-four btn-success">Ver Turma</a>
+                                <a href="<?php echo base_url('turma/'.$linha->cla_hash);?>" class="btn btn-custon-four btn-success">Ver Turma</a>
                             </div>
                         </div>
                     </div>
-                    <?php } } ?>
+                    <?php } }else{?>
+                        <div class="alert alert-warning alert-st-three" role="alert">
+                          <i class="fa fa-exclamation-triangle edu-checked-pro admin-check-pro" aria-hidden="true"></i>
+                          <p class="message-mg-rt"><strong>Ops!</strong> Não existem Turmas</p>
+                        </div>
+                    <?php }?>
                 
                 </div>
             </div>

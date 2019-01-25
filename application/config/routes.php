@@ -56,8 +56,12 @@ $route['login'] = 'usuarios/login';
 $route['registrar'] = 'usuarios/register';
 $route['sair'] = 'usuarios/logout';
 $route['dashboard'] = 'usuarios';
+$route['administrativo/novoprofessor'] = 'adms/criarprofessor';
 $route['perfil'] = 'usuarios/perfil';
 $route['turma/(:any)'] = 'turmas/view/$1';
+$route['turma/(:any)/(:any)'] = 'turmas/view/$1/$2';
+$route['turma/(:any)/excluir/(:num)'] = 'professor/excluirLista/$1/$2';
+$route['criarlista/turma/(:any)'] = 'professor/cadastrarQuestoes/$1';
 
 $route['turma/(:any)/corrigir/(:num)/(:num)'] = 'professor/corrigirlista/$1/$2/$3';
 $route['turma/(:any)/responder/(:num)'] = 'alunos/responderlista/$1/$2';
