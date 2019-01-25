@@ -76,7 +76,6 @@ class Professor extends CI_Controller {
 
 	public function cadastrarQuestoes($hashs){
 		verif_login('dashboard',2);
-		echo $ci->session->userdata('perm');
 		if($dados_hash = $this->turma->getTurma($hashs)){
 
 			$dados['h1'] = 'Cadastrar questões';
@@ -207,12 +206,12 @@ class Professor extends CI_Controller {
 	}
 
 	public function corrigirLista($hash,$id_lista,$id_aluno){
-		verif_login('',2,TRUE);
+		verif_login('dashboard',2);
 		$okhash = $this->turma->getTurma($hash);
 		$oklista = $this->questao->getListainfo(array('hash' => $hash, 'id'=>$id_lista));
 		//$okaluno = $this->turma->getAluno($id_aluno);
 		$lista = $this->questao->getRespostas(array('hash' => $hash, 'id_lista'=>$id_lista,'id_usuario'=>$id_aluno));
-		if(($lista ) and $oklista and $okhash){
+		if(($lista or $this->turma->verifAluno(array('id_usuario' => $id_aluno, 'hash'=>$hash))) and $oklista and $okhash){
 			if($no = $this->questao->getNotaLista(array('id_aluno' => $id_aluno, 'id_lista'=>$id_lista))){
 				$dados['nota'] = $no;
 			}else{
