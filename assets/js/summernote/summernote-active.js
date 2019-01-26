@@ -4,25 +4,36 @@ $(document).ready(function ($) {
 		lang: 'pt-BR',
 		disableDragAndDrop: true,
 		minHeight: 200,
+		shortcuts: false,
 		disableUpload: true,
+		codemirror: {
+			mode: 'text/html',
+			htmlMode: true,
+			lineNumbers: true,
+			theme: 'ambiance',
+			matchBrackets: true,
+					 styleActiveLine: true
+		},
 		fontNames: ['Roboto','Arial', 'Arial Black', 'Courier New'],
 		toolbar: [
 		    // [groupName, [list of button]]
 		    ['style', ['bold', 'italic', 'underline', 'clear']],
-		    ['font', ['strikethrough', 'superscript', 'subscript']],
+		    ['font', ['superscript', 'subscript']],
 		    ['fontsize', ['fontsize']],
 		    ['fontname',['fontname']],
 		    ['color', ['color']],
-		    [ 'insert', [ 'link','table'] ],
+		    [ 'insert', [ 'link','table','hr'] ],
 		    ['para', ['ul', 'ol', 'paragraph']],
-		    ['help',['help']],
+		    ['misc',['undo','redo','codeview']],
 		    
 		  ]
+		
 	});
 
 	$('.summernote1').summernote({
 		lang: 'pt-BR',
 		disableDragAndDrop: true,
+		shortcuts: true,
 		minHeight: 200,
 		disableUpload: true,
 		fontNames: ['Roboto','Arial', 'Arial Black', 'Courier New'],
@@ -32,12 +43,10 @@ $(document).ready(function ($) {
 		    ['font', ['fontname']],
 		    ['fontsize', ['fontsize']],
 		    ['color', ['color']],
-		    [ 'insert', [ 'link','table'] ],
+		    [ 'insert', ['table'] ],
 		    ['para', ['ul', 'ol', 'paragraph']],
-		    ['help',['help']],
 		    
 		  ]
 	});
-
   $('div.note-group-select-from-files').remove();
 }); 

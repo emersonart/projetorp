@@ -117,6 +117,7 @@ class Usuarios_model extends CI_Model{
 						$msg = set_msg('Professor Cadastrado com sucesso, use estas informações para acessar o sistema','success');
 					}else{
 						$msg = set_msg('Aluno Cadastrado com sucesso, use estas informações para acessar o sistema','success');
+						redirect('login','refresh');
 					}
 					
 					return TRUE;

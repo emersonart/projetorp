@@ -28,6 +28,16 @@
                                 <?php }?>
                             </ul>
                         </li>
+                        <?php if(verif_login('',0,false)){?>
+                        <li class="<?php echo menu_active('administrativo/novoprofessor');?>">
+                            <a class="has-arrow" href="all-professors.html" aria-expanded="false"><span class="educate-icon educate-settings icon-wrap"></span> <span class="mini-click-non">Administrativo</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li class="<?php echo menu_active('administrativo/novoprofessor');?>"><a title="Adicionar novo professor" href="<?php echo base_url('administrativo/novoprofessor');?>"><span class="mini-sub-pro">Add professor</span></a></li>
+                                <li class="<?php echo menu_active('professor/criarsala');?>"><a title="Excluir Usuários" href="<?php echo base_url('professor/criarsala')?>"><span class="mini-sub-pro">Excluir Usuarios</span></a></li>
+                                <li class="<?php echo menu_active('administrativo/configs');?>"><a title="Configurar Sistema" href="<?php echo base_url('administrativo/configs');?>"><span class="mini-sub-pro">Config sistema</span></a></li>
+                            </ul>
+                        </li>
+                        <?php }?>
                         <li>
                             <a href="<?php echo base_url('sair');?>"><span class="educate-icon educate-pages icon-wrap sub-icon-mg" aria-hidden="true"></span> <span class="mini-click-non">Sair</span></a>
                         </li>

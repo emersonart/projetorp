@@ -73,9 +73,16 @@
     <!-- chosen CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/chosen/bootstrap-chosen.css');?>">
-        <!-- summernote CSS
+    <!-- summernote CSS
         ============================================ -->
-        <link rel="stylesheet" href="<?php echo base_url('assets/css/summernote/summernote.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/summernote/summernote.css');?>">
+     <!-- codemirror CSS and JS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/code-editor/codemirror.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/code-editor/ambiance.css');?>">
+    <script src="<?php echo base_url('assets/js/code-editor/codemirror.js');?>"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js"></script>
     <!-- responsive CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/responsive.css');?>">

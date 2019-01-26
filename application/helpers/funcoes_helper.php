@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 //set a message popup
 if(!function_exists('set_msg_pop')){
-	function set_msg_pop($msg=NULL,$tipo='default',$size = 'mini'){
+	function set_msg_pop($msg=NULL,$tipo='default',$size = 'mini',$temp = TRUE){
 		$ci = & get_instance();
 		switch ($tipo) {
 			case 'success':
@@ -27,6 +27,11 @@ if(!function_exists('set_msg_pop')){
 				$title = ",
 					title: 'Aviso'";
 				break;
+		}
+		if($temp){
+			$time = 'true';
+		}else{
+			$time = 'false';
 		}
 		$finalMsg = "Lobibox.notify('";
 		$finalMsg .= $tipo;
@@ -131,7 +136,7 @@ if(!function_exists('verif_login')){
 			if($prof == 1){
 				return true;
 			}else{
-				if($logado == $prof or $ci->session->userdata('perm') == 0){
+				if($prof == $ci->session->userdata('perm') or $ci->session->userdata('perm') == 0){
 
 					return true;
 				}else{

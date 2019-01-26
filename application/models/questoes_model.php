@@ -79,6 +79,10 @@ class Questoes_model extends CI_Model{
 		}
 	}
 
+	public function editarQuestoes($values){
+
+	}
+
 	public function getListas($value){
 		$this->db->select('*');
 		$this->db->from('tb_lists');
@@ -178,8 +182,9 @@ class Questoes_model extends CI_Model{
 				    set_msg_pop($this->db->trans_rollback(),'error','normal');
 				    return false;
 				}else{
-					set_msg('Resposta computada com sucesso','success');
+
 					set_msg_pop('Resposta computada com sucesso','success','normal');
+					redirect('turma/'.$dados['hash'].'/responder/'.$dados['id_lista'],'refresh');
 					return true;
 				}
 

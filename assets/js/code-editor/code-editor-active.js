@@ -1,7 +1,7 @@
 (function ($) {
  "use strict";
 
-		var editor_one = CodeMirror.fromTextArea(document.getElementById("code1"), {
+		var editor_one = CodeMirror.fromTextArea(document.getElementByClassName("CodeMirror"), {
 					 lineNumbers: true,
 					 matchBrackets: true,
 					 styleActiveLine: true,

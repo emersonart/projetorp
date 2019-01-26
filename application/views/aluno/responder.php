@@ -7,7 +7,11 @@
           <!-- C O N T E U D O -->
           <div class="card" >
             <div class="card-header mg-b-30" id="dash-professor-card-title">
-              <?php echo get_msg();?>
+              <div class="row">
+                <div class="col-lg-10 col-lg-offset-1">
+                <?php echo get_msg();?>
+                </div>
+              </div>
             </div>
 
             <div class="card-body">
@@ -17,6 +21,7 @@
                   echo form_open();
                   foreach ($lista as $linha) {
                   $q+=1;
+
               ?>
               <div class="row mg-b-30">
                 <div class="col-lg-10 col-lg-offset-1 ">
@@ -35,7 +40,10 @@
                     <div class="alert-title resposta">
                       Resposta:
                     </div>
-                    <textarea id="q" class="summernote1" name="respostas[]"><?php echo set_value('respostas[]'); ?></textarea>
+                    <textarea id="q" class="summernote1" name="respostas[]">
+                      <?php if(!$respostaanterior): echo set_value('respostas[]');else:echo $linha['ans_resposta'];endif; ?>
+                        
+                      </textarea>
                   </div>
                   <div class="sub-pergunta" style="text-align: right;">
                     <button type="submit" class="btn btn-custon-four btn-lg btn-success">Salvar</button>

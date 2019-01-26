@@ -112,8 +112,8 @@
                             <a class="message-author" href="#"> <?php echo $linha->lis_name;?></a>
                             <?php if($profok or 0 == $usuario['perm']){?>
                             <span class="message-date">
-                              <!--a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/verlista/'.$linha->lis_id);?>" class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Ver Lista"><i class="fa fa-eye" style="color: #fff;"></i> Ver </a>
-                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/editarlista/'.$linha->lis_id);?>"class="btn btn-md btn-default btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Editar Lista"><i class="fa fa-edit" style="color: #000;"></i> Editar</a-->
+                              <!--a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/verlista/'.$linha->lis_id);?>" class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Ver Lista"><i class="fa fa-eye" style="color: #fff;"></i> Ver </a-->
+                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/editar/'.$linha->lis_id);?>"class="btn btn-md btn-default btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Editar Lista"><i class="fa fa-edit" style="color: #000;"></i> Editar</a-->
                               <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/excluir/'.$linha->lis_id);?>"class="btn btn-md btn-danger btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Excluir Lista"><i class="fa fa-close" style="color: #fff;"></i> Excluir</a>
                             </span>
                           <?php }else{ ?>

@@ -82,8 +82,8 @@ class Professor extends CI_Controller {
 			$dados['qtd'] = (int)$this->option->get_option('qtd_atv');
 
 			//parametros de validação
-			$this->form_validation->set_rules('nomeLista','Nome da Lista','trim|required|min_length[5]|is_unique[tb_lists.lis_name]', array('required' => 'É obrigatório inserir um nome para a lista','is_unique'=>'Nome da lista já em uso'));
-			$this->form_validation->set_rules('questoes[]','Questões','trim|required',array('required'=>'É obrigatório inserir todas as questões para esta lista'));
+			$this->form_validation->set_rules('nomeLista','Nome da Lista','trim|required|xss_clean|min_length[5]|is_unique[tb_lists.lis_name]', array('required' => 'É obrigatório inserir um nome para a lista','is_unique'=>'Nome da lista já em uso'));
+			$this->form_validation->set_rules('questoes[]','Questões','trim|required|xss_clean|min_length[12]',array('required'=>'É obrigatório inserir todas as questões para esta lista'));
 			$this->form_validation->set_rules('fotos[]','Fotos','trim');
 
 			//verifica validação
@@ -293,6 +293,25 @@ class Professor extends CI_Controller {
 			set_msg_pop('Turma ou lista não encontrada','warning','normal');
 			redirect('dashboard','refresh');
 		}
+	}
+
+	public function editarLista($hash, $id){
+		verif_login('turmas',2);
+		$values = array('id' => $id,'hash' => $hash);
+		$oklista = $this->questao->getListainfo($values);
+		if($oklista){
+			$dados['h1'] = 'Editar Lista: <b>'.$oklista['lis_name'].'</b>';
+			$lista = $this->questao->getQuestoes($values);
+			$dados['lista'] = $lista;
+			$dados['oklista'] = $oklista;
+
+			$dados['qtd'] = count($lista);
+			load_template('professor/editarQuestoes',$dados);
+		}else{
+			set_msg_pop('Turma ou lista não encontrada','warning','normal');
+			redirect('turmas','refresh');
+		}
+		
 	}
 
 }

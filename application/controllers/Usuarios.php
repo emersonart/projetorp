@@ -58,14 +58,14 @@ class Usuarios extends CI_Controller {
 	public function register(){
 
 		//parametros de validação
-		$this->form_validation->set_rules('login','Login','trim|required|min_length[5]|is_unique[tb_users.usu_login]');
-		$this->form_validation->set_rules('email','Email','trim|required|valid_email|is_unique[tb_info_users.inf_email]');
-		$this->form_validation->set_rules('senha','Senha','trim|required|min_length[6]');
-		$this->form_validation->set_rules('senha2','Repita a Senha','trim|required|min_length[6]|matches[senha]');
-		$this->form_validation->set_rules('nome','Nome','trim|required|min_length[4]');
-		$this->form_validation->set_rules('sobrenome','Sobrenome','trim|required|min_length[4]');
-		$this->form_validation->set_rules('codigoturma','Código da Turma','trim|required|min_length[6]');
-		$this->form_validation->set_rules('matricula','Matrícula','trim|required|min_length[11]|regex_match[/^[\d]+$/]|is_unique[tb_info_users.inf_registration]'); //|regex_match[/^[\d]+$/]
+		$this->form_validation->set_rules('login','Login','trim|required|xss_clean|min_length[5]|is_unique[tb_users.usu_login]|regex_match[/^[\s]?[\w]+$/]',array('regex_match' => 'Nome de usuário não pode conter espaços ou caracteres especiais'));
+		$this->form_validation->set_rules('email','Email','trim|required|xss_clean|valid_email|is_unique[tb_info_users.inf_email]');
+		$this->form_validation->set_rules('senha','Senha','trim|required|xss_clean|min_length[6]|regex_match[/^[^\s]+$/]',array('regex_match' => 'Senha não pode conter espaços'));
+		$this->form_validation->set_rules('senha2','Repita a Senha','trim|required|xss_clean|min_length[6]|matches[senha]|regex_match[/^[^\s]+$/]',array('regex_match' => 'Senha não pode conter espaços'));
+		$this->form_validation->set_rules('nome','Nome','trim|required|xss_clean|min_length[4]');
+		$this->form_validation->set_rules('sobrenome','Sobrenome','trim|required|xss_clean|min_length[4]');
+		$this->form_validation->set_rules('codigoturma','Código da Turma','trim|required|xss_clean|min_length[6]');
+		$this->form_validation->set_rules('matricula','Matrícula','trim|required|xss_clean|min_length[11]|regex_match[/^[\d]+$/]|is_unique[tb_info_users.inf_registration]'); //|regex_match[/^[\d]+$/]
 
 		//verifica validação
 		if($this->form_validation->run() == FALSE){
@@ -96,7 +96,7 @@ class Usuarios extends CI_Controller {
             }
 		*/
 			$valor = array(
-				'login' => $dados_form['login'],
+				'login' => strtolower($dados_form['login']),
 				'senha' => $dados_form['senha'],
 				'perm' => 1,
 				'nome' => $dados_form['nome'],

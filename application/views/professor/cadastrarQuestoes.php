@@ -75,7 +75,7 @@
                         <div class="alert-title">
                           
                         </div>
-                        <textarea id="q<?php echo $i;?>" class="summernote" name="questoes[]" required=""><?php echo set_value('questoes[]'); ?></textarea>
+                        <textarea id="q<?php echo $i;?>" class="summernote" name="questoes[]" ><?php echo set_value('questoes[]'); ?></textarea>
                       </div>
                     </div>
                   </div>
