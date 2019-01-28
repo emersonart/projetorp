@@ -12,7 +12,7 @@ $(document).ready(function ($) {
 			lineNumbers: true,
 			theme: 'ambiance',
 			matchBrackets: true,
-					 styleActiveLine: true
+			styleActiveLine: true
 		},
 		fontNames: ['Roboto','Arial', 'Arial Black', 'Courier New'],
 		toolbar: [

@@ -33,12 +33,21 @@ class Turmas extends CI_Controller {
 		verif_login();
 		$v['hash'] = $this->uri->segment(2);
 		if(!empty($hash) and $dados['getturma'] = $this->turma->getTurma($hash)){
+
 			$okhash = $this->turma->getTurma($hash);
 			if($okhash['cla_teacher'] == $this->session->userdata('id_usuario')){
 				$dados['profok'] = TRUE;
 			}else{
 				$dados['profok'] = FALSE;
 			}
+			if($okhash['cla_teacher'] == $this->session->userdata('id_usuario') or $this->session->userdata('perm') == 0){
+				$dados['profok2'] = TRUE;
+				$dados['del'] = TRUE;
+			}else{
+				$dados['del'] = FALSE;
+				$dados['profok2'] = FALSE;
+			}
+			$dados['hash'] = $hash;
 			$values['hash'] = $hash;
 			$dados['hashturma'] = $hash;
 			$dados['aba'] = $aba;
@@ -50,6 +59,7 @@ class Turmas extends CI_Controller {
 			$dados['getalunospend'] = $this->turma->getAlunos($values['hash'],FALSE);
 			$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash'],FALSE);
 			$dados['getlistas'] = $this->questao->getListas($values['hash']);
+			$dados['informativos'] = $this->turma->getInformativos($values['hash']);
 			$dados['h1'] = $dados['getturma']['cla_nome'];
 			load_template('professor/viewTurma',$dados);
 

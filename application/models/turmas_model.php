@@ -211,4 +211,50 @@ class Turmas_model extends CI_Model{
 		}
 	}
 
+	public function criarInformativo($values){
+		$existe = $this->getInformativos($values['hash']);
+		if($existe){
+			$this->db->set('not_message',$values['informativo']);
+			$this->db->set('not_date',date('d-m-Y G:i'));
+			$this->db->where('not_cla_hash',$values['hash']);
+			$this->db->update('tb_notify_class');
+			if($this->db->affected_rows() == 1){
+				set_msg_pop('Aviso atualizado com sucesso!','success','normal');
+				return true;
+			}else{
+				set_msg_pop('Não foi possível atualizar o aviso!','error','normal');
+				return false;
+			}
+			
+		}else{
+			$data = array(
+				'not_cla_hash' => $values['hash'], 
+				'not_message' => $values['informativo'],
+				'not_date' =>date('d-m-Y G:i')
+			);
+
+			$this->db->insert('tb_notify_class',$data);
+			if($this->db->insert_id()){
+				set_msg_pop('Aviso inserido com sucesso!','success','normal');
+				return true;
+			}else{
+				set_msg_pop('Não foi possível cadastrar o aviso!','error','normal');
+				return false;
+			}
+		}
+	}
+
+	public function getInformativos($hash){
+		$this->db->select('not_message, not_date');
+		$this->db->from('tb_notify_class');
+		$this->db->where('not_cla_hash',$hash);
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			return $query->result_array();
+		}else{
+			return false;
+		}
+	}
+
 }

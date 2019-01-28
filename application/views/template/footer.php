@@ -104,7 +104,6 @@
         <script src="<?php echo base_url('assets/js/summernote/summernote.min.js');?>"></script>
         <script src="<?php echo base_url('assets/js/summernote/summernote-active.js');?>"></script>
         <script src="<?php echo base_url('assets/js/summernote/lang/summernote-pt-BR.js');?>"></script>
-        <script src="<?php echo base_url('assets/js/summernote/lang/summernote-ko-KR.js');?>"></script>
     <!-- notification JS 
         ============================================ -->
         <script src="<?php echo base_url('assets/js/dropzone/dropzone.js');?>"></script>
@@ -120,6 +119,41 @@
                 <?php echo $show_message_pop;?>
             </script>
         <?php }?>
+        
+
+        <?php if(isset($del) and $del){?>
+        <script type="text/javascript">
+            $(document).ready(function() {
+              $('.deletelista').click(function () {
+                var delete_id = $(this).attr('data-value');
+                var nome_id = $(this).attr('nome-value');
+                $('#deletelista p[name="nomelista"]').text(nome_id);
+                $('#deletelista a[name="deletelista"]').attr("href", "<?php echo base_url('turma/'.$hash.'/excluir/');?>"+delete_id);
+              });
+          });
+        </script>
+
+
+   <div id="deletelista" class="modal modal-edu-general FullColor-popup-DangerModal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-close-area modal-close-df">
+                                        <a class="close" data-dismiss="modal" href="#"><i class="fa fa-close"></i></a>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span class="fa fa-exclamation-triangle modal-check-pro information-icon-pro"></span>
+                                        <h2>Cuidado!</h2>
+                                        <p>Deseja realmente excluir esta lista?</p>
+                                        <p style="font-weight:bolder;font-size: 1.7em;margin-top: 15px;"name="nomelista"></p>
+                                    </div>
+                                    <div class="modal-footer danger-md">
+                                        <a data-dismiss="modal" href="#">Cancelar</a>
+                                        <a href="#" name="deletelista">Excluir</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+<?php } ?>
 
         
 

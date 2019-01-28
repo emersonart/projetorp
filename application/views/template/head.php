@@ -60,9 +60,7 @@
     <!-- alerts CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/alerts.css');?>">
-    <!-- style CSS
-        ============================================ -->
-    <link rel="stylesheet" href="<?php echo base_url('assets/style.css');?>">
+    
     <!-- notifications CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/notifications/Lobibox.min.css');?>">
@@ -73,9 +71,15 @@
     <!-- chosen CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/chosen/bootstrap-chosen.css');?>">
+    <!-- cmodals CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/modals.css');?>">
     <!-- summernote CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/summernote/summernote.css');?>">
+    <!-- style CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/style.css');?>">
      <!-- codemirror CSS and JS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/code-editor/codemirror.css');?>">

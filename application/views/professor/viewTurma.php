@@ -5,7 +5,6 @@
       <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
         <div class="profile-info-inner">
           <div class="profile-img">
-            <?php echo $this->session->userdata('perm');?>
             <img src="<?php echo base_url('assets/img/courses/turmas/1.jpg');?>" alt="" />
           </div>
           <div class="profile-details-hr">
@@ -41,7 +40,7 @@
               </div>
               <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
                 <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
-                  <p><b>Email ID</b><br /> <?php echo $getturma['inf_email'];?></p>
+                  <p><b>Email:</b><br /> <?php echo $getturma['inf_email'];?></p>
                 </div>
               </div>
             </div>
@@ -53,6 +52,7 @@
           <ul id="myTabedu1" class="tab-review-design">
             <li class="<?php echo respostal($aba,'alunos');?>"><a href="#alunos">Alunos</a></li>
             <li class="<?php echo respostal($aba,'listas');?>"><a href="#listas"> Listas</a></li>
+            <li class="<?php echo respostal($aba,'infos');?>"><a href="#infos">Avisos</a></li>
             <?php if($profok or $usuario['perm'] == 0){ ?>
             <li class="<?php echo respostal($aba,'pendentes');?>"><a href="#pendentes">Cadastros pendentes<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
           <?php } ?>
@@ -113,8 +113,10 @@
                             <?php if($profok or 0 == $usuario['perm']){?>
                             <span class="message-date">
                               <!--a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/verlista/'.$linha->lis_id);?>" class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Ver Lista"><i class="fa fa-eye" style="color: #fff;"></i> Ver </a-->
-                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/editar/'.$linha->lis_id);?>"class="btn btn-md btn-default btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Editar Lista"><i class="fa fa-edit" style="color: #000;"></i> Editar</a-->
-                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/excluir/'.$linha->lis_id);?>"class="btn btn-md btn-danger btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Excluir Lista"><i class="fa fa-close" style="color: #fff;"></i> Excluir</a>
+                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/editar/'.$linha->lis_id);?>"class="btn btn-md btn-default btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Editar Lista"><i class="fa fa-edit" style="color: #000;"></i> Editar</a>
+                              <span data-toggle="tooltip" data-placement="bottom" title="Excluir Lista">
+                               <a href="#" nome-value="<?php echo $linha->lis_name;?>" data-toggle="modal" class="btn btn-md btn-danger btn-custon-four deletelista" data-value="<?php echo $linha->lis_id;?>" data-target="#deletelista"><i class="fa fa-close" style="color: #fff;"></i> Excluir</a>
+                             </span>
                             </span>
                           <?php }else{ ?>
                             <span class="message-date">
@@ -135,7 +137,7 @@
                         </div>
 
                       <?php }?>
-                      <?php if($profok){?>
+                      <?php if($profok2){?>
                       <a href="<?php echo base_url('criarlista/turma/'.$hashturma);?>" class="btn btn-lg btn-success btn-custon-four widget-btn-1 ">CRIAR LISTA</a>
                     <?php } ?>
                     </div>
@@ -144,6 +146,56 @@
               </div>
             </div>
           </div>
+          <div class="product-tab-list tab-pane fade in <?php echo respostal($aba,'infos');?>" id="infos">
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="review-content-section">
+                    <div class="chat-discussion" style="height: auto">
+                      <div class="row" style="margin: 0">
+                        <?php 
+                        if(!empty($informativos) && isset($informativos) && sizeof($informativos) > 0){
+                          foreach ($informativos as $linha) {?>
+                            <div class="chat-message col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                              <div class="profile-hdtc">
+                               <img class="message-avatar" title="<?php echo $getturma['inf_name'].' '.$getturma['inf_lastname'];?>" src="<?php echo base_url('assets/img/profile/'.rand(1,9).'.jpg');?>" alt="">
+                             </div>
+
+                             <div class="message">
+                              <span class="message-date">
+                              <i> Última atualização: 
+                                <?php echo converter_data(explode(' ',$linha['not_date'])[0],3);?>
+                                às 
+                                <?php echo explode(' ',$linha['not_date'])[1];?>
+                                </i>
+                             </span>
+                              <a class="message-author" href="#"> <?php echo $getturma['inf_name'].' '.$getturma['inf_lastname'];?></a><br>
+
+                              <span class="message-content">
+                                <?php echo $linha['not_message'];?>
+                              </span>
+
+                            </div>
+                          </div>
+                          <?php if($profok2){?>
+                          <a href="<?php echo base_url('aviso/turma/'.$hashturma);?>" class="btn btn-lg btn-success btn-custon-four widget-btn-1 ">ATUALIZAR AVISO</a>
+                        <?php } ?>
+                    <?php }}else{
+                           ?>
+                          <div class="alert alert-danger alert-st-four" role="alert">
+                            <i class="fa fa-exclamation-triangle edu-checked-pro admin-check-pro" aria-hidden="true"></i>
+                            <p class="message-mg-rt"><strong>Essa não!</strong> Não existem alunos com cadastros ativos para esta turma</p>
+                          </div>
+                          <?php if($profok2){?>
+                          <a href="<?php echo base_url('aviso/turma/'.$hashturma);?>" class="btn btn-lg btn-success btn-custon-four widget-btn-1 ">CRIAR AVISO</a>
+                        <?php } ?>
+                        <?php } ?>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           <?php if($usuario['perm'] == 2 or $usuario['perm'] == 0){ ?>
           <div class="product-tab-list tab-pane fade in <?php echo respostal($aba,'pendentes');?>" id="pendentes">
             <div class="row">

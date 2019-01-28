@@ -314,6 +314,53 @@ class Professor extends CI_Controller {
 		
 	}
 
+	public function avisos($hash){
+		verif_login('dashboard',2);
+		$okhash = $this->turma->getTurma($hash);
+		if($okhash){
+			$informativo = $this->turma->getInformativos($hash);
+			if($informativo){
+				$dados['informativos'] = $informativo[0]['not_message'];
+			}else{
+				$dados['informativos'] = "";
+			}
+			$dados['turma'] = $okhash;
+			if($okhash['cla_teacher'] == $this->session->userdata('id_usuario') or $this->session->userdata('perm') == 0){
+				$dados['profok'] = TRUE;
+			}else{
+				$dados['profok'] = FALSE;
+			}
+			//parametros post
+			$this->form_validation->set_rules('informativo','Nota da Lista','trim|min_length[11]', array('required' => 'Nota da lista não inserida'));
+
+			//verificar
+			if($this->form_validation->run() == FALSE){
+				if(validation_errors()){
+					set_msg(validation_errors(),'danger');
+				}
+			}else{
+				$dados_form = $this->input->post();
+				$data_post  = array(
+					'hash' => $hash,
+					'informativo' => $dados_form['informativo']
+				);
+
+				if($dados['profok']){
+					if($this->turma->criarInformativo($data_post)){
+						redirect('turma/'.$hash.'/infos','refresh');
+					}
+				}
+			}
+			load_template('professor/avisos',$dados);
+
+		}else{
+			set_msg_pop('Turma não encontrada','warning','normal');
+			redirect('turmas','refresh');
+		}
+
+
+	}
+
 }
 
 /*
