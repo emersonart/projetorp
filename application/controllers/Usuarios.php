@@ -10,6 +10,7 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function index(){
+
 		$dados['h1'] = 'Dashboard do Professor';
 		if(verif_login('dashboard',1,false) and $this->session->userdata('perm') == 1){
 			load_template('painel/teste',$dados);
@@ -21,7 +22,8 @@ class Usuarios extends CI_Controller {
 		
 	}
 	public function login(){
-
+		
+		
 		//regra de validação de form
 		$this->form_validation->set_rules('login','LOGIN','trim|required|min_length[5]');
 		$this->form_validation->set_rules('senha','SENHA','trim|required|min_length[6]');

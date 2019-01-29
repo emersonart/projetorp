@@ -31,7 +31,7 @@
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-message edu-chat-pro" aria-hidden="true"></i><span class="indicator-ms"></span></a>
                                             <div role="menu" class="author-message-top dropdown-menu animated fadeIn faster">
                                                 <div class="message-single-top">
-                                                    <h1>Message</h1>
+                                                    <h1>Mensagens</h1>
                                                 </div>
                                                 <ul class="message-menu">
                                                     <li>
@@ -40,58 +40,24 @@
                                                                 <img src="<?php echo base_url('assets/img/contact/1.jpg');?>" alt="">
                                                             </div>
                                                             <div class="message-content">
-                                                                <span class="message-date">16 Sept</span>
-                                                                <h2>Advanda Cro</h2>
-                                                                <p>Please done this project as soon possible.</p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <div class="message-img">
-                                                                <img src="<?php echo base_url('assets/img/contact/4.jpg');?>" alt="">
-                                                            </div>
-                                                            <div class="message-content">
-                                                                <span class="message-date">16 Sept</span>
-                                                                <h2>Sulaiman din</h2>
-                                                                <p>Please done this project as soon possible.</p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <div class="message-img">
-                                                                <img src="<?php echo base_url('assets/img/contact/3.jpg');?>" alt="">
-                                                            </div>
-                                                            <div class="message-content">
-                                                                <span class="message-date">16 Sept</span>
-                                                                <h2>Victor Jara</h2>
-                                                                <p>Please done this project as soon possible.</p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <div class="message-img">
-                                                                <img src="<?php echo base_url('assets/img/contact/2.jpg');?>" alt="">
-                                                            </div>
-                                                            <div class="message-content">
-                                                                <span class="message-date">16 Sept</span>
-                                                                <h2>Victor Jara</h2>
-                                                                <p>Please done this project as soon possible.</p>
+                                                                 <span class="message-date"></span>
+                                                                <div class="alert alert-warning alert-st-three" role="alert">
+                                                                    <i class="fa fa-exclamation-triangle edu-checked-pro admin-check-pro" aria-hidden="true"></i>
+                                                                    <p class="message-mg-rt"><strong>Aviso!</strong> Função ainda sendo implementada, botão de atualizar sem funcionar!</p>
+                                                                </div>
                                                             </div>
                                                         </a>
                                                     </li>
                                                 </ul>
                                                 <div class="message-view">
-                                                    <a href="#">View All Messages</a>
+                                                    <a href="#"></a>
                                                 </div>
                                             </div>
                                         </li>
                                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-bell" aria-hidden="true"></i><span class="indicator-nt"></span></a>
                                             <div role="menu" class="notification-author dropdown-menu animated fadeIn faster">
                                                 <div class="notification-single-top">
-                                                    <h1>Notifications</h1>
+                                                    <h1>Notificações</h1>
                                                 </div>
                                                 <ul class="notification-menu">
                                                     <li>
@@ -101,50 +67,17 @@
                                                             </div>
                                                             <div class="notification-content">
                                                                 <span class="notification-date">16 Sept</span>
-                                                                <h2>Advanda Cro</h2>
-                                                                <p>Please done this project as soon possible.</p>
+                                                               <div class="alert alert-warning alert-st-three" role="alert">
+                                                                    <i class="fa fa-exclamation-triangle edu-checked-pro admin-check-pro" aria-hidden="true"></i>
+                                                                    <p class="message-mg-rt"><strong>Aviso!</strong> Função ainda sendo implementada, botão de atualizar sem funcionar!</p>
+                                                                </div>
                                                             </div>
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <div class="notification-icon">
-                                                                <i class="fa fa-cloud edu-cloud-computing-down" aria-hidden="true"></i>
-                                                            </div>
-                                                            <div class="notification-content">
-                                                                <span class="notification-date">16 Sept</span>
-                                                                <h2>Sulaiman din</h2>
-                                                                <p>Please done this project as soon possible.</p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <div class="notification-icon">
-                                                                <i class="fa fa-eraser edu-shield" aria-hidden="true"></i>
-                                                            </div>
-                                                            <div class="notification-content">
-                                                                <span class="notification-date">16 Sept</span>
-                                                                <h2>Victor Jara</h2>
-                                                                <p>Please done this project as soon possible.</p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <div class="notification-icon">
-                                                                <i class="fa fa-line-chart edu-analytics-arrow" aria-hidden="true"></i>
-                                                            </div>
-                                                            <div class="notification-content">
-                                                                <span class="notification-date">16 Sept</span>
-                                                                <h2>Victor Jara</h2>
-                                                                <p>Please done this project as soon possible.</p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
+
                                                 </ul>
                                                 <div class="notification-view">
-                                                    <a href="#">View All Notification</a>
+                                                    <a href="#"></a>
                                                 </div>
                                             </div>
                                         </li>
@@ -155,15 +88,9 @@
                                              <i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
                                          </a>
                                          <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated fadeIn faster">
-                                            <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a>
+                                            <li><a href="<?php echo base_url('perfil');?>"><span class="edu-icon edu-user-rounded author-log-ic"></span>Meu perfil</a>
                                             </li>
-                                            <li><a href="#"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a>
-                                            </li>
-                                            <li><a href="#"><span class="edu-icon edu-money author-log-ic"></span>User Billing</a>
-                                            </li>
-                                            <li><a href="#"><span class="edu-icon edu-settings author-log-ic"></span>Settings</a>
-                                            </li>
-                                            <li><a href="<?php echo base_url('sair');?>"><span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
+                                            <li><a href="<?php echo base_url('sair');?>"><span class="edu-icon edu-locked author-log-ic"></span>Sair</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -194,7 +121,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <div class="breadcome-heading">
                                 <form role="search" class="sr-input-func">
-                                    <input type="text" placeholder="Search..." class="search-int form-control">
+                                    <input type="text" placeholder="Procurar..." class="search-int form-control">
                                     <a href="#"><i class="fa fa-search"></i></a>
                                 </form>
                             </div>

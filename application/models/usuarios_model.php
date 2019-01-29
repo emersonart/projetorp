@@ -21,38 +21,80 @@ class Usuarios_model extends CI_Model{
 
 	public function login($values){
 
-		$q = array('USU_login' => $values['login'], 'USU_senha' => $values['senha']);
-		$this->db->select('*');
+		//pegar a key para descriptografar
+		$this->db->select('usu_session');
 		$this->db->from('tb_users');
-		$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id and tb_users.usu_login = "'.$values["login"].'" OR tb_info_users.inf_registration = "'.$values["login"].'" and tb_users.usu_password = "'.$values["senha"].'"','inner');
+		$this->db->where('usu_login',$values['login']);
 		$this->db->limit(1);
-		$query = $this->db->get();
+		$user = $this->db->get();
 
-		if($query->num_rows() == 1){
-			$row = $query->row();
-			if(isset($values['save']) and !empty($values['save'])){
-				set_cookie('userLogin',$values['login'],3600*24);
+		if($user->num_rows() != 1){
+			$nameuser = FALSE;
+			$this->db->select('usu_session');
+			$this->db->from('tb_users');
+			$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id and tb_info_users.inf_registration = "'.$values['login'].'"');
+			$this->db->limit(1);
+			$matric = $this->db->get();
+			if($matric->num_rows() != 1){
+				set_msg('login e/ou senhas inválidos <i>erro: ul01</i>','danger');
+				return false;
 			}else{
-				delete_cookie('userLogin');
-			}
-			$arg = array(
-					'usuario' => $row->usu_login,
-					'id_usuario' => $row->usu_id,
-					'perm' => $row->usu_perm,
-					'nome' => $row->inf_name,
-					'sobrenome' => $row->inf_lastname,
-					'matricula' => $row->inf_registration,
-					'email' => $row->inf_email,
-					'logged' => TRUE
+				$matricu = array(
+					'matricula' => 'tb_info_users.inf_registration',
+					'key' => $matric->row_array()['usu_session']
 				);
-			$this->session->set_userdata($arg);
-
-			
-			redirect('dashboard','refresh');
+			}
 		}else{
-			return set_msg('login e/ou senhas inválidos','danger');
+			$nameuser = array(
+					'login' => 'tb_users.usu_login',
+					'key' =>  $user->row_array()['usu_session']
+				);
 		}
+		if(!$nameuser and !$matric){
+			set_msg('login e/ou senhas inválidos <i>erro: ul02</i>','danger');
+			return false;
+		}else{
+			if($nameuser){
+				$enter = $nameuser['login'];
+				$key = $nameuser['key'];
+			}else{
+				$enter = $matricu['matricula'];
+				$key = $matricu['key'];
+			}
+			$resul = $user->row_array();
+			$password = returnBcrypt($values['senha'],$key);
+			//$q = array('USU_login' => $values['login'], 'USU_senha' => $password, );
+			$this->db->select('*');
+			$this->db->from('tb_users');
+			$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id and '.$enter.' = "'.$values["login"].'" and tb_users.usu_password = "'.$password.'"','inner');
+			$this->db->limit(1);
+			$query = $this->db->get();
 
+			if($query->num_rows() == 1){
+				$row = $query->row();
+				if(isset($values['save']) and !empty($values['save'])){
+					set_cookie('userLogin',$values['login'],3600*24);
+				}else{
+					delete_cookie('userLogin');
+				}
+				$arg = array(
+						'usuario' => $row->usu_login,
+						'id_usuario' => $row->usu_id,
+						'perm' => $row->usu_perm,
+						'nome' => $row->inf_name,
+						'sobrenome' => $row->inf_lastname,
+						'matricula' => $row->inf_registration,
+						'email' => $row->inf_email,
+						'logged' => TRUE
+					);
+				$this->session->set_userdata($arg);
+
+				redirect('dashboard','refresh');
+			}else{
+				set_msg('login e/ou senhas inválidos <i>erro: ul03</i>','danger');
+				return false;
+			}
+		}
 	}
 
 	public function cadastrar($values){
@@ -81,10 +123,12 @@ class Usuarios_model extends CI_Model{
 				set_msg('Nome de usuário já em utilização, por favor escolha outro.','warning');
 				redirect('register','refresh');
 			}else{
+				$password = createBcrypt($values['senha']);
 				$info_login = array(
 					'usu_login' => $values['login'],
-					'usu_password' => $values['senha'],
-					'usu_perm' => $values['perm']
+					'usu_password' => $password['cript'],
+					'usu_perm' => $values['perm'],
+					'usu_session' => $password['hskey'],
 				);
 
 				$this->db->insert('tb_users',$info_login);

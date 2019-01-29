@@ -79,10 +79,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="panel-body">
                         <?php echo get_msg();?>
                         <?php echo form_open();?>
-                        
                             <div class="form-group">
                                 <label class="control-label" for="username">Usuário ou Matrícula</label>
-                                <input type="text" placeholder="example@gmail.com" title="Please enter you username" required="" value="" name="login" id="username" class="form-control">
+                                <input type="text" placeholder="Nome de usuário ou matrícula" title="Please enter you username" required="" value="" name="login" id="username" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="password">Senha</label>

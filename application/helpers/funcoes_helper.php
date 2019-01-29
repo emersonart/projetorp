@@ -257,4 +257,34 @@ if(!function_exists('gerarHash')){
 			}
 		}
 	}
+
+	//bcrypt
+	if(!function_exists('bcrypt')){
+		function createBcrypt($senha){
+			$custo = '08';
+			$ci = & get_instance();
+			$s = bin2hex($ci->encryption->create_key(11));
+			$cript['cript'] = crypt($senha,'$2a$'.$custo.'$'.$s.'$');
+			$cript['hskey'] = $s;
+			return $cript;
+		}
+	}
+	//match bcrypt
+	if(!function_exists('matchbcrypt')){
+		function returnBcrypt($senha,$key,$cr = FALSE){
+			$custo = '08';
+			$ci = & get_instance();
+			$s = $key;
+			$cript['cript'] = crypt($senha,'$2a$'.$custo.'$'.$s.'$');
+			if($cr){
+				if($cript['cript'] == $cr){
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return $cript['cript'];
+			}
+		}
+	}
 }
