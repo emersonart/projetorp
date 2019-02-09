@@ -52,10 +52,11 @@
           <ul id="myTabedu1" class="tab-review-design">
             <li class="<?php echo respostal($aba,'alunos');?>"><a href="#alunos">Alunos</a></li>
             <li class="<?php echo respostal($aba,'listas');?>"><a href="#listas"> Listas</a></li>
-            <li class="<?php echo respostal($aba,'infos');?>"><a href="#infos">Avisos</a></li>
             <?php if($profok or $usuario['perm'] == 0){ ?>
-            <li class="<?php echo respostal($aba,'pendentes');?>"><a href="#pendentes">Cadastros pendentes<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
-          <?php } ?>
+             <li class="<?php echo respostal($aba,'pendentes');?>"><a href="#pendentes">Cadastros pendentess<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
+            <?php } ?>
+            <li class="<?php echo respostal($aba,'infos');?>"><a href="#infos">Avisos</a></li>
+            
           </ul>
           <div id="myTabContent" class="tab-content custom-product-edit">
             <div class="product-tab-list tab-pane fade in <?php echo respostal($aba,'alunos');?>" id="alunos">
@@ -112,7 +113,7 @@
                             <a class="message-author" href="#"> <?php echo $linha->lis_name;?></a>
                             <?php if($profok or 0 == $usuario['perm']){?>
                             <span class="message-date">
-                              <!--a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/verlista/'.$linha->lis_id);?>" class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Ver Lista"><i class="fa fa-eye" style="color: #fff;"></i> Ver </a-->
+                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/respostas/'.$linha->lis_id);?>" class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Ver Respostas"><i class="fa fa-eye" style="color: #fff;"></i> Respostas </a>
                               <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/editar/'.$linha->lis_id);?>"class="btn btn-md btn-default btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Editar Lista"><i class="fa fa-edit" style="color: #000;"></i> Editar</a>
                               <span data-toggle="tooltip" data-placement="bottom" title="Excluir Lista">
                                <a href="#" nome-value="<?php echo $linha->lis_name;?>" data-toggle="modal" class="btn btn-md btn-danger btn-custon-four deletelista" data-value="<?php echo $linha->lis_id;?>" data-target="#deletelista"><i class="fa fa-close" style="color: #fff;"></i> Excluir</a>

@@ -55,7 +55,7 @@ class Turmas extends CI_Controller {
 
 
 			$dados['getalunos'] = $this->turma->getAlunos($values['hash']);
-			$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash']);
+			$dados['countlistapend'] = $this->turma->countAlunosTurma($values['hash']);
 			$dados['getalunospend'] = $this->turma->getAlunos($values['hash'],FALSE);
 			$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash'],FALSE);
 			$dados['getlistas'] = $this->questao->getListas($values['hash']);

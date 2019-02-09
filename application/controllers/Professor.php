@@ -361,6 +361,15 @@ class Professor extends CI_Controller {
 
 	}
 
+	public function listaResposta($hash, $idlista){
+		verif_login('dashboard',2);
+		$dados['hash'] = $hash;
+		$dados['idlista'] = $idlista;
+		$v  = array('hash' => $hash, 'idlista' => $idlista);
+		$dados['aluno'] = $this->turma->getAlunos($hash);
+		load_template('professor/respostaslista',$dados);
+	}
+
 }
 
 /*

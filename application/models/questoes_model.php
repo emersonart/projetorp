@@ -83,6 +83,7 @@ class Questoes_model extends CI_Model{
 
 	}
 
+
 	public function getListas($value){
 		$this->db->select('*');
 		$this->db->from('tb_lists');
@@ -170,6 +171,7 @@ class Questoes_model extends CI_Model{
 					$try = (int)$query->row()->ans_tries+1;
 					$this->db->set('ans_tries',$try);
 					$this->db->set('ans_date',date('d-m-Y G:i'));
+					$this->db->set('ans_status',2);
 					$this->db->where('ans_usu_id',$dados['id_usuario']);
 					$this->db->where('ans_lis_id',$dados['id_lista']);
 					$this->db->where('ans_act_id',$idq[$i]);
@@ -201,6 +203,7 @@ class Questoes_model extends CI_Model{
 					$dados1['ans_act_id'] = $idq[$i];
 					$dados1['ans_date'] = date('d-m-Y G:i');
 					$dados1['ans_resposta'] = $respostas[$i];
+					$dados1['ans_status'] = 0;
 					$this->db->insert('tb_answers',$dados1);
 				}
 				$this->db->trans_complete();
@@ -250,6 +253,10 @@ class Questoes_model extends CI_Model{
 			$this->db->update('tb_reviews');
 
 			if($this->db->affected_rows() > 0){
+				$this->db->set('ans_status',1);
+				$this->db->where('ans_usu_id',$values['id_aluno']);
+				$this->db->where('ans_lis_id',$values['id_lista']);
+				$this->db->update('tb_answers');
 				set_msg_pop('Nota atualizada com sucesso','success','normal');
 				return true;
 			}else{

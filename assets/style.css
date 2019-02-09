@@ -1285,6 +1285,7 @@ ul.breadcome-menu li a:hover{
 }
 ul.tab-custon-design li, ul.tab-review-design li {
     display: inline-block;
+    margin-bottom: 30px;
 }
 #myTab3.tab-review-design li a, #myTabedu1.tab-review-design li a {
     padding-right: 40px;
@@ -4790,8 +4791,13 @@ div#sparklinehome canvas {
 .chosen-container .chosen-results li small{
 	font-size: 8px!important;
 }
-
+.product-tab-list{
+	margin-top: -30px;
+}
 @media (max-width: 1169px) and (min-width: 992px){
+	#myTab3.tab-review-design li.active a:before, #myTab4.tab-review-design li.active a:before, #myTabedu1.tab-review-design li.active a:before{
+		bottom: 0!important;
+	}
 .col-lg-1.col-md-0.col-sm-1.col-xs-12 {
 display: block!important;
 }
@@ -4928,7 +4934,8 @@ display: block!important;
 }
 
 #myTab3.tab-review-design li a, #myTabedu1.tab-review-design li a {
-	padding: 15px 25px;
+	padding: 8px 15px;
+	padding-right: 15px!important;
 }
 #myTab3.tab-review-design li.active a:before, #myTab4.tab-review-design li.active a:before, #myTabedu1.tab-review-design li.active a:before,#myTab3.tab-review-design li a:before, #myTab4.tab-review-design li a:before, #myTabedu1.tab-review-design li a:before{
 	bottom: -2px;
@@ -5037,4 +5044,17 @@ hr.divis{
 	hr.divis{
 		display: block;
 	}
+}
+.exnota{
+	padding: .3em 1.1em .4em;
+	font-size: 1.2em;
+	display: block;
+}
+.fxlb{
+	padding:  .3em 1.1em .4em;
+	display: inline-block;
+}
+
+.label-dark{
+	background: #8d9498;
 }
