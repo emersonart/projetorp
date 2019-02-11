@@ -11,10 +11,11 @@ class Usuarios extends CI_Controller {
 
 	public function index(){
 
-		$dados['h1'] = 'Dashboard do Professor';
 		if(verif_login('dashboard',1,false) and $this->session->userdata('perm') == 1){
-			load_template('painel/teste',$dados);
+			$dados['h1'] = 'Dashboard do Aluno';
+			load_template('aluno/inicioAluno',$dados);
 		}else if(verif_login('dashboard',2,false)){
+			$dados['h1'] = 'Dashboard do Professor';
 			load_template('professor/inicioProfessor',$dados);
 		}else{
 			verif_login();
