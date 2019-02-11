@@ -267,6 +267,10 @@ class Questoes_model extends CI_Model{
 			$this->db->insert('tb_reviews',$dados);
 
 			if($this->db->insert_id()){
+				$this->db->set('ans_status',1);
+				$this->db->where('ans_usu_id',$values['id_aluno']);
+				$this->db->where('ans_lis_id',$values['id_lista']);
+				$this->db->update('tb_answers');
 				set_msg_pop('Nota cadastrada com sucesso','success','normal');
 				return true;
 			}else{
