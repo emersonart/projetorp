@@ -13,8 +13,35 @@ class Adms extends CI_Controller {
 		redirect('dashboard','refresh');
 	}
 
-	public function excluirUsuarios(){
+	public function criarMateria(){
 		verif_login('site',0);
+		$dados['h1'] = 'Criar Matéria';
+		$dados['titulo'] = 'Criar Matéria';
+
+		$this->form_validation->set_rules('nome_materia','Matéria','trim|required|min_length[5]|is_unique[tb_subjects.sub_nome]');
+		$this->form_validation->set_rules('desc_materia','Descrição da Matéria','trim|min_length[5]');
+
+		if($this->form_validation->run() == FALSE){
+			if(validation_errors()){
+				set_msg(validation_errors(),'danger');
+			}
+		}else{
+			$dados_form = $this->input->post();
+
+			$value = array(
+				'nome_materia' => $dados_form['nome_materia'], 
+				'desc_materia' => $dados_form['desc_materia']
+				);
+
+			$this->option->setMateria($value);
+		}
+
+
+		load_template('painel/criarmateria',$dados);
+	}
+
+	public function excluirUsuarios(){
+		verif_login('dashboard',0);
 		load_template('painel/excluirUsuarios');
 	}
 
