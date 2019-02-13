@@ -13,7 +13,19 @@ class Usuarios extends CI_Controller {
 
 		if(verif_login('dashboard',1,false) and $this->session->userdata('perm') == 1){
 			$dados['h1'] = 'Bem vindo, '.$this->session->userdata('nome');
+
+		/*
+			if($this->session->userdata('perm') == 1){
+			$dados['h1'] = "Turmas no sistema";
+			$dados['turmas'] = $this->turma->getTurmasDetalhes($this->session->userdata('id_usuario'));
+		}else if($this->session->userdata('perm') == 2) {
+			$dados['h1'] = "Minhas turmas";
+			$dados['turmas'] = $this->turma->getTurmasDetalhes($this->session->userdata('id_usuario'));
+		}
+		*/
+
 			load_template('aluno/inicioAluno',$dados);
+
 		}else if(verif_login('dashboard',2,false)){
 			$dados['h1'] = 'Dashboard do Professor';
 			load_template('professor/inicioProfessor',$dados);
