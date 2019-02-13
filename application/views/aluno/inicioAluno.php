@@ -15,7 +15,7 @@
                                             ?>
 
                                     <ul class="basic-list">
-                                        <li><?php echo $linha->cla_nome?><span class="pull-right btn btn-xs btn-default label-success label-1 label" href="#"><?php echo $linha->sub_nome?></span></li>
+                                        <li><?php echo $linha->cla_nome?><span class="pull-right btn btn-xs label-success label-1 label" href="#">Acessar turma</span></li>
                                     </ul>
 
                                     <?php } } ?>
