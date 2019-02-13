@@ -33,7 +33,7 @@
                             <a class="has-arrow" href="all-professors.html" aria-expanded="false"><span class="educate-icon educate-settings icon-wrap"></span> <span class="mini-click-non">Administrativo</span></a>
                             <ul class="submenu-angle" aria-expanded="false">
                                 <li class="<?php echo menu_active('administrativo/novoprofessor');?>"><a title="Adicionar novo professor" href="<?php echo base_url('administrativo/novoprofessor');?>"><span class="mini-sub-pro">Add professor</span></a></li>
-                                <li class="<?php echo menu_active('professor/criarsala');?>"><a title="Excluir Usuários" href="<?php echo base_url('professor/criarsala')?>"><span class="mini-sub-pro">Excluir Usuarios</span></a></li>
+                                <li class="<?php echo menu_active('administrativo/novamateria');?>"><a title="Adicionar nova matéria" href="<?php echo base_url('administrativo/novamateria')?>"><span class="mini-sub-pro">Add Matéria</span></a></li>
                                 <li class="<?php echo menu_active('administrativo/configs');?>"><a title="Configurar Sistema" href="<?php echo base_url('administrativo/configs');?>"><span class="mini-sub-pro">Config sistema</span></a></li>
                             </ul>
                         </li>

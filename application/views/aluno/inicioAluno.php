@@ -32,7 +32,7 @@
                                     <p class="small mg-t-box">
                                         Aqui, é possível acessar todas as suas salas de aula cadastradas no sistema.
                                     </p>
-                                    <a href="<?php echo base_url('professor/criarsala');?>" class="btn btn-custon-four btn-success widget-btn-1 btn-sm" style="color:white;">Ver salas</a>
+                                    <a href="<?php echo base_url('turmas');?>" class="btn btn-custon-four btn-success widget-btn-1 btn-sm" style="color:white;">Ver salas</a>
                                 </div>
                             </div>
                         </div>

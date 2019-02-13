@@ -49,6 +49,21 @@ class Option_model extends CI_Model{
 		}
 	}
 
+	public function setMateria($values){
+		$dados  = array(
+			'sub_nome' => $values['nome_materia'], 
+			'sub_description' => $values['desc_materia']
+			);
+		$this->db->insert('tb_subjects',$dados);
+
+		if($this->db->insert_id()){
+			set_msg_pop('Matéria cadastrada com sucesso!','success','normal');
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 
 	public function getMateria($id,$tipo = 0){
 		$this->db->select('*');

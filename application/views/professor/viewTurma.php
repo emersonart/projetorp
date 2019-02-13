@@ -53,7 +53,7 @@
             <li class="<?php echo respostal($aba,'alunos');?>"><a href="#alunos">Alunos</a></li>
             <li class="<?php echo respostal($aba,'listas');?>"><a href="#listas"> Listas</a></li>
             <?php if($profok or $usuario['perm'] == 0){ ?>
-             <li class="<?php echo respostal($aba,'pendentes');?>"><a href="#pendentes">Cadastros pendentess<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
+             <li class="<?php echo respostal($aba,'pendentes');?>"><a href="#pendentes">Cadastros pendentes<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
             <?php } ?>
             <li class="<?php echo respostal($aba,'infos');?>"><a href="#infos">Avisos</a></li>
             

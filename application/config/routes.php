@@ -57,6 +57,7 @@ $route['registrar'] = 'usuarios/register';
 $route['sair'] = 'usuarios/logout';
 $route['dashboard'] = 'usuarios';
 $route['administrativo/novoprofessor'] = 'adms/criarprofessor';
+$route['administrativo/novamateria'] = 'adms/criarmateria';
 $route['perfil'] = 'usuarios/perfil';
 $route['turma/(:any)'] = 'turmas/view/$1';
 $route['turma/(:any)/(:any)'] = 'turmas/view/$1/$2';
