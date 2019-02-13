@@ -7,6 +7,7 @@ class Usuarios extends CI_Controller {
 		parent::__construct();
 		$this->load->model('usuarios_model','usuario');
 		$this->load->model('option_model','option');
+		$this->load->model('turmas_model','turma');
 	}
 
 	public function index(){
@@ -14,7 +15,6 @@ class Usuarios extends CI_Controller {
 		if(verif_login('dashboard',1,false) and $this->session->userdata('perm') == 1){
 			$dados['h1'] = 'Bem vindo, '.$this->session->userdata('nome');
 
-		/*
 			if($this->session->userdata('perm') == 1){
 			$dados['h1'] = "Turmas no sistema";
 			$dados['turmas'] = $this->turma->getTurmasDetalhes($this->session->userdata('id_usuario'));
@@ -22,7 +22,8 @@ class Usuarios extends CI_Controller {
 			$dados['h1'] = "Minhas turmas";
 			$dados['turmas'] = $this->turma->getTurmasDetalhes($this->session->userdata('id_usuario'));
 		}
-		*/
+
+
 
 			load_template('aluno/inicioAluno',$dados);
 

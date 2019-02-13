@@ -15,7 +15,7 @@
                                             ?>
 
                                     <ul class="basic-list">
-                                        <li><?php echo $this->turma->getTurmasDetalhes($linha->cla_nome);?><a class="pull-right label-success label-3 label" href="#">Acessar Turma</a></li>
+                                        <li><?php echo $linha->cla_nome?><span class="pull-right btn btn-xs btn-default label-success label-1 label" href="#"><?php echo $linha->sub_nome?></span></li>
                                     </ul>
 
                                     <?php } } ?>
