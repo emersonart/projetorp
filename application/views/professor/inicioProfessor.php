@@ -17,7 +17,13 @@
                                                     ?>
 
                                                     <li>
-                                                        <?php echo $linha->cla_nome?><a style="display: inline-block;color:white;margin-top: 0"class="pull-right btn btn-custon-four btn-success widget-btn-1 btn-sm" href="?php echo base_url('turma/'.$linha->cla_hash);?>">Acessar turma</a>
+                                                        <?php echo $linha->cla_nome?>
+                                                        <span class="pull-right">
+                                                            <a data-toggle="tooltip" data-placement="top" title="Ver Avisos" style="margin-top: 0;color:white"class="btn-custon-four btn btn-md btn-info" href="<?php echo base_url('turma/'.$linha->cla_hash.'/infos');?>"><i class="fa fa-exclamation-circle"></i></a>
+                                                            <a data-toggle="tooltip" data-placement="top" title="Aprovar cadastro" style="margin-top: 0;color:white" class="btn-custon-four btn-info widget-btn-2 btn btn-sm" href="<?php echo base_url('turma/'.$linha->cla_hash);?>"><i class="fa fa-user-plus"></i></a>
+                                                            <a data-toggle="tooltip" data-placement="top" title="Ver Listas" style="margin-top: 0"class="btn-custon-four btn btn-md btn-default" href="<?php echo base_url('turma/'.$linha->cla_hash.'/listas');?>"><i class="fa fa-edit"></i></a>
+                                                            <a data-toggle="tooltip" data-placement="top" title="Acessar turma" style="margin-top: 0;color:white" class="btn-custon-four btn-success btn btn-md" href="<?php echo base_url('turma/'.$linha->cla_hash);?>"><i class="fa fa-external-link"></i></a>
+                                                        </span>
                                                     </li>
 
                                                     <?php } } ?>
