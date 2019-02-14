@@ -6,14 +6,14 @@
                         <div class="hpanel widget-int-shape responsive-mg-b-30">
                             <div class="panel-body">
                                 <div class="white-box">
-                                    <h3 class="box-title">Salas de aula cadastradas:</h3>
+                                    <h3 class="box-title">Professores cadastrados:</h3>
                                     <?php 
                                         if(!empty($turmas) && isset($turmas) && sizeof($turmas) > 0){ 
                                           foreach ($turmas as $linha) {
                                             ?>
 
                                     <ul class="basic-list">
-                                        <li><?php echo $linha->cla_nome?><a style="display: inline-block;color:white;margin-top: 0"class="pull-right btn btn-custon-four btn-success widget-btn-1 btn-sm" href="#">Acessar turma</a></li>
+                                        <li><?php echo $linha->cla_nome?><a style="display: inline-block;color:white;margin-top: 0"class="pull-right btn btn-custon-four btn-success widget-btn-1 btn-sm" href="<#">Acessar turma</a></li>
                                     </ul>
 
                                     <?php } } ?>

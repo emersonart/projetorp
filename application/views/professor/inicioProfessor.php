@@ -2,45 +2,54 @@
             <div class="container-fluid">
                 <div class="row mg-b-15">
                     
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mg-b-15">
-                        <div class="hpanel widget-int-shape responsive-mg-b-30">
-                            <div class="panel-body">
-                                <div class="white-box">
-                                    <h3 class="box-title">Salas de aula cadastradas:</h3>
-                                    <?php 
-                                        if(!empty($turmas) && isset($turmas) && sizeof($turmas) > 0){ 
-                                          foreach ($turmas as $linha) {
-                                            ?>
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <div class="col-lg-12 mg-b-15">
+                                <div class="hpanel widget-int-shape responsive-mg-b-30">
+                                    <div class="panel-body">
+                                        <div class="white-box">
+                                            <h3 class="box-title">Salas de aula cadastradas:</h3>
 
-                                    <ul class="basic-list">
-                                        <li><?php echo $linha->cla_nome?><a style="display: inline-block;color:white;margin-top: 0"class="pull-right btn btn-custon-four btn-success widget-btn-1 btn-sm" href="#">Acessar turma</a></li>
-                                    </ul>
+                                            <ul class="basic-list">
+                                                <?php 
+                                                if(!empty($turmas) && isset($turmas) && sizeof($turmas) > 0){ 
+                                                  foreach ($turmas as $linha) {
+                                                    ?>
 
-                                    <?php } } ?>
+                                                    <li>
+                                                        <?php echo $linha->cla_nome?><a style="display: inline-block;color:white;margin-top: 0"class="pull-right btn btn-custon-four btn-success widget-btn-1 btn-sm" href="?php echo base_url('turma/'.$linha->cla_hash);?>">Acessar turma</a>
+                                                    </li>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                                    <?php } } ?>
+                                                </ul>
 
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mg-b-15">
-                        <div class="hpanel widget-int-shape responsive-mg-b-30">
-                            <div class="panel-body">
-                                <div class="text-center content-box">
-                                    <div class="m icon-box">
-                                        <i class="fa fa-users"></i>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <h2 class="m-b-xs">Criar sala</h2>
-                                    <p class="small mg-t-box">
-                                        Crie uma sala, adicione uma descrição e ponha um tempo limite para o seus alunos se cadastrarem.
-                                    </p>
-                                    <a href="<?php echo base_url('professor/criarsala');?>" class="btn btn-custon-four btn-success widget-btn-1 btn-sm" style="color:white;">Criar sala</a>
                                 </div>
                             </div>
-                        </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mg-b-15">
+                <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-lg-4 mg-b-15">
+                                    <div class="hpanel widget-int-shape responsive-mg-b-30">
+                                        <div class="panel-body">
+                                            <div class="text-center content-box">
+                                                <div class="m icon-box">
+                                                    <i class="fa fa-users"></i>
+                                                </div>
+                                                <h2 class="m-b-xs">Criar sala</h2>
+                                                <p class="small mg-t-box">
+                                                    Crie uma sala, adicione uma descrição e ponha um tempo limite para o seus alunos se cadastrarem.
+                                                </p>
+                                                <a href="<?php echo base_url('professor/criarsala');?>" class="btn btn-custon-four btn-success widget-btn-1 btn-sm" style="color:white;">Criar sala</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                    <div class="col-lg-4 mg-b-15">
                         <div class="hpanel widget-int-shape responsive-mg-b-30">
                             <div class="panel-body">
                                 <div class="text-center content-box">
@@ -57,7 +66,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mg-b-15">
+                    <div class="col-lg-4 mg-b-15">
                         <div class="hpanel widget-int-shape responsive-mg-b-30">
                             <div class="panel-body">
                                 <div class="text-center content-box">
@@ -74,7 +83,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mg-b-15">
+                    <div class="col-lg-4 mg-b-15">
                         <div class="hpanel widget-int-shape responsive-mg-b-30">
                             <div class="panel-body">
                                 <div class="text-center content-box">
@@ -91,7 +100,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mg-b-15">
+                    <div class="col-lg-4 mg-b-15">
                         <div class="hpanel widget-int-shape responsive-mg-b-30">
                             <div class="panel-body">
                                 <div class="text-center content-box">
@@ -107,6 +116,8 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+                </div>
 
             </div>
 </div>

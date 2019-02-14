@@ -2,7 +2,8 @@
             <div class="container-fluid">
                 <div class="row mg-b-15">
                     
-
+                <div class="col-lg-4">
+                    <div class="row">
                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mg-b-15">
                         <div class="hpanel widget-int-shape responsive-mg-b-30">
                             <div class="panel-body">
@@ -25,6 +26,8 @@
                             </div>
                         </div>
                     </div>
+                    </div>
+                </div>
 
                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 mg-b-15">
                         <div class="hpanel widget-int-shape responsive-mg-b-30">
