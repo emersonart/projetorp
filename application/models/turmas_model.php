@@ -51,7 +51,8 @@ class Turmas_model extends CI_Model{
 		$this->db->select('*');
 		$this->db->from('tb_register_class');
 		$this->db->join('tb_class','tb_class.cla_hash = tb_register_class.reg_cla_hash and tb_register_class.reg_usu_id = "'.$aluno.'"');
-		$this->db->join('tb_subjects','tb_subjects.sub_teacher = tb_class.cla_teacher','inner');
+		$this->db->join('tb_teacher_subject','tb_teacher_subject.tea_usu_id = tb_class.cla_teacher','inner');
+		$this->db->join('tb_subjects','tb_subjects.sub_id = tb_teacher_subject.tea_sub_id','inner');
 		$query = $this->db->get();
 
 		if($query->num_rows() > 0){
@@ -75,11 +76,12 @@ class Turmas_model extends CI_Model{
  	}
 
 	public function getTurma($values){
-		$this->db->select('usu_id, usu_login, usu_perm, inf_name, inf_lastname, inf_email, inf_registration, cla_teacher,cla_hash, cla_id, cla_nome, cla_descricao, sub_id, sub_nome, sub_description, sub_teacher');
+		$this->db->select('usu_id, usu_login, usu_perm, inf_name, inf_lastname, inf_email, inf_registration, cla_teacher,cla_hash, cla_id, cla_nome, cla_descricao, sub_id, sub_nome, sub_description');
 		$this->db->from('tb_class');
 		$this->db->join('tb_users','tb_users.usu_id = tb_class.cla_teacher','inner');
 		$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id and tb_class.cla_hash = "'.$values.'"','inner');
-		$this->db->join('tb_subjects','tb_subjects.sub_teacher = tb_users.usu_id','inner');
+		$this->db->join('tb_teacher_subject','tb_teacher_subject.tea_usu_id = tb_class.cla_teacher','inner');
+		$this->db->join('tb_subjects','tb_subjects.sub_id = tb_teacher_subject.tea_sub_id','inner');
 
 		$this->db->limit(1);
 
@@ -98,7 +100,8 @@ class Turmas_model extends CI_Model{
 			$this->db->from('tb_class');
 			$this->db->join('tb_users','tb_users.usu_id = tb_class.cla_teacher','inner');
 			$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id','inner');
-			$this->db->join('tb_subjects','tb_subjects.sub_teacher = tb_users.usu_id','inner');
+			$this->db->join('tb_teacher_subject','tb_teacher_subject.tea_usu_id = tb_class.cla_teacher','inner');
+			$this->db->join('tb_subjects','tb_subjects.sub_id = tb_teacher_subject.tea_sub_id','inner');
 			
 			if($perm != 0){
 				$this->db->where('tb_class.cla_teacher',$perm);

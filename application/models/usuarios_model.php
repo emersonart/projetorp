@@ -155,10 +155,19 @@ class Usuarios_model extends CI_Model{
 
 				if($this->db->insert_id()){
 					if(!empty($values['materia']) and isset($values['materia'])){
-						$this->db->set('sub_teacher',$id_usuario);
-						$this->db->where('sub_id',$values['materia']);
-						$this->db->update('tb_subjects');
-						$msg = set_msg('Professor Cadastrado com sucesso, use estas informações para acessar o sistema','success');
+						$newprof = array(
+							'tea_usu_id' => $id_usuario,
+							'tea_sub_id' => $values['materia']
+							);
+						$this->db->insert('tb_teacher_subject',$newprof);
+						if($this->db->insert_id()){
+							set_msg_pop('Professor Cadastrado com sucesso, use estas informações para acessar o sistema','success','normal');
+							return TRUE;
+						}else{
+							set_msg_pop('Não foi possível cadastrar este professor<br>erro: np01','error','normal');
+							return FALSE;
+						}
+						
 					}else{
 						$msg = set_msg('Aluno Cadastrado com sucesso, use estas informações para acessar o sistema','success');
 						redirect('login','refresh');
@@ -166,14 +175,14 @@ class Usuarios_model extends CI_Model{
 					
 					return TRUE;
 				}else{
-					set_msg('Não foi possível cadastrar o usuário!','danger');
+					set_msg('Não foi possível cadastrar o usuário!<br>erro: np02','danger');
 					return FALSE;
 				}
 			}
 		}
 	}
 
-	public function transformProf($values,$f=FALSE){
+	public function transformProf($values){
 		$this->db->select('*');
 		$this->db->from('tb_users');
 		$this->db->where('usu_id',$values['login']);
@@ -184,33 +193,46 @@ class Usuarios_model extends CI_Model{
 		$this->db->select('*');
 		$this->db->from('tb_subjects');
 		$this->db->where('sub_id',$values['materia']);
-		if(!$f){
-			$this->db->where('sub_teacher',0);
-		}
 		$this->db->limit(1);
 		$query2 = $this->db->get();
 
 		if($query->num_rows() > 0 and $query2->num_rows() > 0){
-			$this->db->set('usu_perm',2);
-			$this->db->where('usu_id',$query->row()->usu_id);
-			$update = $this->db->update('tb_users');
-			if($this->db->affected_rows()>0){
-				$this->db->set('sub_teacher',$query->row()->usu_id);
-				$this->db->where('sub_id',$query2->row()->sub_id);
-				$update2 = $this->db->update('tb_subjects');
-				if($this->db->affected_rows()>0){
-					set_msg('Cadastro atualizado com sucesso! '.$query->row()->usu_login.' agora é um professor');
-					return TRUE;
+			$this->db->select('*');
+			$this->db->from('tb_teacher_subject');
+			$this->db->where('tea_usu_id',$values['login']);
+			$this->db->where('tea_sub_id',$values['materia']);
+			$jaexiste = $this->db->get();
+
+			if($jaexiste->num_rows() == 0){
+				$newprof = array(
+						'tea_usu_id' => $values['login'], 
+						'tea_sub_id' => $values['materia']
+						);
+				$this->db->insert('tb_teacher_subject',$newprof);
+				if($this->db->insert_id()){
+					$this->db->set('usu_perm',2);
+					$this->db->where('usu_id',$values['login']);
+					$this->db->update('tb_users');
+					if($this->db->affected_rows()>0){
+						$this->db->where('reg_usu_id',$values['login']);
+						$this->db->delete('tb_register_class');
+						set_msg_pop('Cadastro atualizado com sucesso! '.$query->row()->usu_login.' agora é um professor');
+						return TRUE;
+					}else{
+						set_msg_pop('Não foi possível alterar o professor desta matéria<br>erro: tp01','error','normal');
+						return FALSE;
+					}
 				}else{
-					set_msg('Não foi possível alterar o professor desta matéria');
+					set_msg_pop('Não foi possível adicionar este professor<br>erro: tp02','error','normal');
 					return FALSE;
 				}
+				
 			}else{
-				set_msg('Não foi possível alterar a permissão deste usuário');
-				return FALSE;
+					set_msg_pop('Este usuário já é professor desta matéria<br>erro: tp03','warning','normal');
+					return FALSE;
 			}
 		}else{
-			set_msg('Não foi possível alterar este usuário, contate um administrador para mais informações','danger');
+			set_msg('Não foi possível alterar este usuário, contate um administrador para mais informações<br>erro: tp04','danger');
 			return FALSE;
 		}
 	}
