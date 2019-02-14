@@ -11,27 +11,23 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function index(){
-
+		$id_usuario = $this->session->userdata('id_usuario');
 		if(verif_login('dashboard',1,false) and $this->session->userdata('perm') == 1){
+			
 			$dados['h1'] = 'Bem vindo, '.$this->session->userdata('nome');
-
-			if($this->session->userdata('perm') == 1){
-			$dados['h1'] = "Turmas no sistema";
-			$dados['turmas'] = $this->turma->getTurmasDetalhes($this->session->userdata('id_usuario'));
-		}else if($this->session->userdata('perm') == 2) {
-			$dados['h1'] = "Minhas turmas";
-			$dados['turmas'] = $this->turma->getTurmasDetalhes($this->session->userdata('id_usuario'));
-		}
-
+			$dados['turmas'] = $this->turma->getTurmas($id_usuario);
 
 
 			load_template('aluno/inicioAluno',$dados);
 
-		}else if(verif_login('dashboard',2,false)){
+		}else if(verif_login('dashboard',2,false) and $this->session->userdata('perm') == 2){
 			$dados['h1'] = 'Dashboard do Professor';
+			$dados['turmas'] = $this->turma->getTurmasDetalhes($id_usuario);
 			load_template('professor/inicioProfessor',$dados);
 		}else{
 			verif_login();
+			$dados['h1'] = 'Dashboard do Administrador';
+			load_template('painel/inicioAdm',$dados);
 		}
 		
 	}
@@ -111,21 +107,21 @@ class Usuarios extends CI_Controller {
             	$local = 'assets/images/users/'.$this->upload->data('file_name');
             }
 		*/
-			$valor = array(
-				'login' => strtolower($dados_form['login']),
-				'senha' => $dados_form['senha'],
-				'perm' => 1,
-				'nome' => $dados_form['nome'],
-				'sobrenome' => $dados_form['sobrenome'],
-				'email' => $dados_form['email'],
-				'codigoturma' => $dados_form['codigoturma'],
+            $valor = array(
+            	'login' => strtolower($dados_form['login']),
+            	'senha' => $dados_form['senha'],
+            	'perm' => 1,
+            	'nome' => $dados_form['nome'],
+            	'sobrenome' => $dados_form['sobrenome'],
+            	'email' => $dados_form['email'],
+            	'codigoturma' => $dados_form['codigoturma'],
 				'matricula' => $dados_form['matricula']/*,
 				'foto' => $local*/
-			);
-			$this->usuario->cadastrar($valor);
-		}
+				);
+            $this->usuario->cadastrar($valor);
+        }
 
-		$this->load->view('register');
-	}
+        $this->load->view('register');
+    }
 
 }
