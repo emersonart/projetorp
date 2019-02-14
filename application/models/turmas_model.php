@@ -160,6 +160,7 @@ class Turmas_model extends CI_Model{
 		$this->db->from('tb_register_class');
 		$this->db->where('reg_cla_hash',$values['hash']);
 		$this->db->where('reg_usu_id',$values['id_usuario']);
+		$this->db->where('reg_status',1);
 		$query = $this->db->get();
 		if($query->num_rows() > 0){
 			return true;

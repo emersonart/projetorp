@@ -62,6 +62,9 @@ class Alunos extends CI_Controller {
 			}	
 
 			load_template('aluno/responder',$dados);
+		}else{
+			set_msg_pop('Questões não encontradas ou você não possui permissão para acessar essa lista','warning','normal');
+			redirect('dashboard','refresh');
 		}
 		
 	}
