@@ -7,7 +7,7 @@
                         <div class="hpanel widget-int-shape responsive-mg-b-30">
                             <div class="panel-body">
                                 <div class="white-box">
-                                    <h3 class="box-title">Salas de aula cadastradas:</h3>
+                                    <h3 class="box-title">Minhas Turmas:</h3>
                                 <ul class="basic-list">
                                     <?php 
                                         if(!empty($turmas) && isset($turmas) && sizeof($turmas) > 0){ 
@@ -15,7 +15,14 @@
                                             ?>
 
                                     
-                                        <li><?php echo $linha->cla_nome?><a style="display: inline-block;color:white;margin-top: 0"class="pull-right btn btn-custon-four btn-success widget-btn-1 btn-sm" href="<?php echo base_url('turma/'.$linha->cla_hash);?>">Acessar turma</a></li>
+                                        <li>
+                                            <?php echo $linha->cla_nome?>
+                                            <span class="pull-right">
+                                            <a data-toggle="tooltip" data-placement="top" title="Ver Avisos" style="margin-top: 0;color:white"class="btn-custon-four btn btn-md btn-info" href="<?php echo base_url('turma/'.$linha->cla_hash.'/infos');?>"><i class="fa fa-exclamation-circle"></i></a>
+                                            <a data-toggle="tooltip" data-placement="top" title="Ver Listas" style="margin-top: 0"class="btn-custon-four btn btn-md btn-default" href="<?php echo base_url('turma/'.$linha->cla_hash.'/listas');?>"><i class="fa fa-edit"></i></a>
+                                            <a data-toggle="tooltip" data-placement="top" title="Acessar turma" style="margin-top: 0;color:white" class="btn-custon-four btn-success btn btn-md" href="<?php echo base_url('turma/'.$linha->cla_hash);?>"><i class="fa fa-external-link"></i></a>
+                                            </span>
+                                        </li>
                                     
 
                                     <?php } } ?>
