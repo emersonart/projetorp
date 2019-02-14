@@ -33,7 +33,7 @@ class Turmas extends CI_Controller {
 		verif_login();
 		$v['hash'] = $this->uri->segment(2);
 		$c = array('hash' => $hash, 'id_usuario' => $this->session->userdata('id_usuario'));
-		if(!empty($hash) and $dados['getturma'] = $this->turma->getTurma($hash) and ($this->turma->verifAluno($c) or $this->turma->verifProf($c))){
+		if(!empty($hash) and $dados['getturma'] = $this->turma->getTurma($hash) and ($this->turma->verifAluno($c) or $this->turma->verifProf($c) or verif_login('',2,false))){
 
 			$okhash = $this->turma->getTurma($hash);
 			if($okhash['cla_teacher'] == $this->session->userdata('id_usuario')){
