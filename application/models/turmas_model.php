@@ -169,6 +169,20 @@ class Turmas_model extends CI_Model{
 		}
 	}
 
+	public function verifProf($values){
+		$this->db->select('cla_id');
+		$this->db->from('tb_class');
+		$this->db->join('tb_teacher_subject','tb_teacher_subject.tea_usu_id = tb_class.cla_teacher','inner');
+		$this->db->where('tb_class.cla_hash',$values['hash']);
+		$this->db->where('tb_class.cla_teacher',$values['id_usuario']);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public function getAluno($id){
 		$this->db->select('usu_id,inf_name, inf_email, inf_lastname, inf_registration, usu_login');
 		$this->db->from('tb_users');
