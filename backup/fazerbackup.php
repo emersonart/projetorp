@@ -112,7 +112,7 @@ function backup_tables($host,$user,$pass,$name,$tables = '*')
 	}
 	$return .= "COMMIT;";
 	//save file
-	$handle = fopen('db-backup-'.time().'-'.(md5(implode(',',$tables))).'.sql','w+');
+	$handle = fopen('backup-koala-'.date('d-m-Y-G-i').'.sql','w+');
 	fwrite($handle,$return);
 	fclose($handle);
 
