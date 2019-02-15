@@ -64,7 +64,7 @@
                                              </div>
                                              <h2 class="m-b-xs">Acessar Atividades</h2>
                                              <p class="small mg-t-box">
-                                                Acesse as listas de exercício disponíveis para responder.
+                                                Acesse as listas de exercício disponíveis para você responder.
                                             </p>
                                             <a class="btn btn-custon-four btn-danger widget-btn-2 btn-sm" style="color:white;">Acessar Atividades</a>
                                         </div>
