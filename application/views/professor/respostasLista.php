@@ -52,7 +52,7 @@
                                                             }else{
                                                                 $res = FALSE;
                                                         ?>      
-                                                                <span class="label label-danger fxlb">Aluno ainda respondeu</span>
+                                                                <span class="label label-danger fxlb">Aluno ainda não respondeu</span>
                                                         <?php 
                                                             }
                                                         ?>
