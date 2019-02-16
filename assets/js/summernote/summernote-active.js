@@ -14,7 +14,7 @@ $(document).ready(function ($) {
 			matchBrackets: true,
 			styleActiveLine: true
 		},
-		fontNames: ['Roboto','Arial', 'Arial Black', 'Courier New'],
+		fontNames: ['Roboto','Arial', 'Arial Black', 'Courier New','Symbol'],
 		toolbar: [
 		    // [groupName, [list of button]]
 		    ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -36,7 +36,7 @@ $(document).ready(function ($) {
 		shortcuts: true,
 		minHeight: 200,
 		disableUpload: true,
-		fontNames: ['Roboto','Arial', 'Arial Black', 'Courier New'],
+		fontNames: ['Roboto','Arial', 'Arial Black', 'Courier New','Symbol'],
 		toolbar: [
 		    // [groupName, [list of button]]
 		    ['style', ['bold', 'italic', 'underline', 'clear']],

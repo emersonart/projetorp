@@ -155,6 +155,17 @@ class Questoes_model extends CI_Model{
 	public function regResposta($dados,$respostas,$idq){
 
 		if(count($idq) == count($respostas) and count($dados) == 3){
+			$this->db->select('*');
+			$this->db->from('tb_reviews');
+			$this->db->where('rev_usu_id',$dados['id_usuario']);
+			$this->db->where('rev_lis_id',$dados['id_lista']);
+			$respondida = $this->db->get();
+			if($respondida->num_rows() > 0){
+				set_msg_pop('Sua Resposta já foi corrigida, portanto não poderá mais alterar sua resposta','error','large');
+				redirect('turma/'.$dados['hash'],'refresh');
+				return false;
+			}
+
 			$hash = $dados['hash'];
 			$this->db->select('*');
 			$this->db->from('tb_answers');
@@ -171,7 +182,7 @@ class Questoes_model extends CI_Model{
 					$try = (int)$query->row()->ans_tries+1;
 					$this->db->set('ans_tries',$try);
 					$this->db->set('ans_date',date('d-m-Y G:i'));
-					$this->db->set('ans_status',2);
+					$this->db->set('ans_status',0);
 					$this->db->where('ans_usu_id',$dados['id_usuario']);
 					$this->db->where('ans_lis_id',$dados['id_lista']);
 					$this->db->where('ans_act_id',$idq[$i]);

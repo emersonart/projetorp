@@ -243,6 +243,7 @@ class Professor extends CI_Controller {
 
 					if($this->questao->corrigirLista($dados_model)){
 						$dados['nota'] = $dados_form['notaLista'];
+						redirect('turma/'.$hash.'/respostas/'.$id_lista,'refresh');
 					}
 				}
 			}else{
