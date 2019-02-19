@@ -66,12 +66,16 @@ class Option_model extends CI_Model{
 
 
 	public function getMateria($id,$tipo = 0){
-		$this->db->select('*');
-		$this->db->from('tb_subjects');
+		
 
 		if($tipo == 0){
+			$this->db->select('*');
+			$this->db->from('tb_teacher_subject');
+			$this->db->join('tb_subjects','tb_subjects.sub_id = tb_teacher_subject.tea_sub_id and tb_teacher_subject.tea_usu_id','join')
 			$this->db->where('sub_teacher',$id);
 		}else{
+			$this->db->select('*');
+			$this->db->from('tb_subjects');
 			$this->db->where('sub_id',$id);
 		}
 		
