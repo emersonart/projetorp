@@ -146,6 +146,7 @@ class Turmas_model extends CI_Model{
 		$this->db->from('tb_register_class');
 		$this->db->join('tb_users','tb_users.usu_id = tb_register_class.reg_usu_id and tb_register_class.reg_cla_hash = "'.$hash.'"'.$condicao ,'inner');
 		$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id','inner');
+		$this->db->order_by('tb_info_users.inf_name','asc');
 		$query = $this->db->get();
 
 		if($query->num_rows() > 0){

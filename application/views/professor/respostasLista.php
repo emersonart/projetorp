@@ -11,7 +11,7 @@
                             </div>
                             <div class="sparkline8-graph">
                                 <div class="static-table-list">
-                                    <table class="table">
+                                    <table id="listaresposta" class="table table-responsive table-striped">
                                         <thead>
                                             <tr>
                                                 <th>#</th>

@@ -5067,3 +5067,8 @@ hr.divis{
 .enunciado ul li{
     margin-bottom: 8px;
 }
+
+table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after{
+	color: #29c75f!important;
+	opacity: 1!important;
+}

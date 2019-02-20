@@ -114,6 +114,10 @@
     <!-- modernizr JS
         ============================================ -->
         <script src="<?php echo base_url('assets/js/vendor/modernizr-2.8.3.min.js');?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/js/data-table/datatables.min.js')?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('assets/js/data-table/datatablesactive.js')?>"></script>
+
+       
         <?php if($show_message_pop = get_msg_pop()){?>
             <script type="text/javascript">
                 <?php echo $show_message_pop;?>

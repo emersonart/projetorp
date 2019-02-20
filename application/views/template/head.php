@@ -77,6 +77,10 @@
     <!-- summernote CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/summernote/summernote.css');?>">
+     <!-- datatable CSS
+        ============================================ -->
+        <link rel="stylesheet" href="<?php echo base_url('assets/css/data-table/bootstrap-table.css');?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/data-table/datatables.css');?>">
     <!-- style CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/style.css');?>">
