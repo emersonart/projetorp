@@ -148,8 +148,10 @@
                                     				<div class="charts-single-pro responsive-mg-b-15">
                                     					<div class="alert-title" style="position: relative;">
                                     						<h2> (Questão <?php echo $q; ?>)<br style="line-height: 30px;">
-                                                                <?php echo $linha['act_enunciado'];?>
                                                             </h2>
+                                                            <div class="enunciado">
+                                                                <?php echo $linha['act_enunciado'];?>
+                                                            </div>
                                                             <?php if($linha['act_foto'] != ''){?>
                                                               <div class="img-pergunta">
                                                                 
