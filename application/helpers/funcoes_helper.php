@@ -241,6 +241,7 @@ if(!function_exists('gerarHash')){
 		}
 
 	}
+}
 
 	//return nota
 	if(!function_exists('respostal')){
@@ -333,4 +334,3 @@ if(!function_exists('gerarHash')){
             }
 		}
 	}
-}

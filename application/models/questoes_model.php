@@ -79,7 +79,16 @@ class Questoes_model extends CI_Model{
 		}
 	}
 
-	public function editarQuestoes($values){
+	public function editarQuestoes($infos,$values){
+
+		alterar_imagem_lista($infos['hash'],$infos['id_lista'],$)
+		$this->db->select('*');
+		$this->db->from('tb_activities');
+		$this->db->;
+
+		$this->db->trans_start();
+			//parei aqui
+		$this->db->trans_complete();
 
 	}
 

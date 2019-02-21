@@ -101,8 +101,32 @@ class Professor extends CI_Controller {
 				$dados_lista['id_professor'] = $dados_hash['cla_teacher'];
 				$dados_lista['subject'] = $dados_hash['sub_id'];
 				$dados_lista['class_hash'] =  $dados_hash['cla_hash'];
+
+
+
 				//verificando se a lista foi criada
 				if($id_lista = $this->questao->criarLista($dados_lista)){
+					if(!empty($fotos['name'])){
+
+						//$url_crop_foto = inserir_imagem_lista($hashs, $id_lista,$fotos);
+						$dados_lista['id_lista'] = $id_lista;
+
+						if($url_crop_foto = inserir_imagem_lista($hashs, $id_lista,$fotos)){
+							//cadastrar questoes na lista
+							$criarq = $this->questao->criarQuestoes($dados_form['questoes'],$dados_lista,$url_crop_foto);
+							if($criarq){
+								redirect('turma/'.$dados_hash['cla_hash'],'refresh');
+							}
+							print_r($url_crop_foto);
+							set_msg_pop('entrou na parte que passou pelo url_crop_foto','success','normal');
+							//fim cadastrar questoes na lista
+						}else{
+							set_msg_pop('erro ao cadastrar lista','error','normal');
+						}
+					}
+
+					 /*parte que comentei pra nao modificar!
+
 					if(!empty($fotos['name'])){
 					//carregar library de upload
 						$this->load->library('upload');
@@ -170,20 +194,23 @@ class Professor extends CI_Controller {
 						}
 					//final loop de upload de foto
 
-					}
-						$dados_lista['id_lista'] = $id_lista;
-						//cadastrar questoes na lista
-						$criarq = $this->questao->criarQuestoes($dados_form['questoes'],$dados_lista,$url_crop_foto);
-						if($criarq){
-							redirect('turma/'.$dados_hash['cla_hash'],'refresh');
-						}
+					} fim parte que comentei! */
 
-						//fim cadastrar questoes na lista
+					//inicio parte que to editando
+
+					//fim parte que to editando
+
+						
+						
+						
+						
+
+						
 				}
 				//final verificando se foi criada a lista
 				//var_dump($dados_form['questoes'])."<br><br>";
 				//var_dump(count($dados_form['questoes']))."<br><br>";
-				print_r(count($_FILES['fotos']))."<br><br>";
+				//print_r(count($_FILES['fotos']))."<br><br>";
 
 
 				//$valor = array(
