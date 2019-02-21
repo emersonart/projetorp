@@ -5055,8 +5055,17 @@ hr.divis{
 	display: inline-block;
 }
 
-.label-dark{
+.label-dark, .btn-dark{
 	background: #8d9498;
+}
+.btn-dark{
+	color: white;
+	border: solid 1px #7c8286;
+}
+.btn-dark:hover{
+	background: #747a7d;
+	color: white;
+	border: solid 1px #606467;
 }
 .enunciado{
     font-weight: bold;

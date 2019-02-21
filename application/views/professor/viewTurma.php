@@ -119,9 +119,19 @@
                                <a href="#" nome-value="<?php echo $linha->lis_name;?>" data-toggle="modal" class="btn btn-md btn-danger btn-custon-four deletelista" data-value="<?php echo $linha->lis_id;?>" data-target="#deletelista"><i class="fa fa-close" style="color: #fff;"></i> Excluir</a>
                              </span>
                             </span>
-                          <?php }else{ ?>
+                          <?php }else{ 
+                            $nota = $this->questao->getNotaLista(array('id_lista' => $linha->lis_id, 'id_aluno'=>$id_aluno));?>
                             <span class="message-date">
-                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/responder/'.$linha->lis_id);?>"class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Excluir Lista"><i class="fa fa-close" style="color: #fff;"></i> Responder</a>
+                              <span style="padding-left: 10px;padding-right: 20px;" class="btn btn-md btn-<?php echo showNota($nota,1);?> btn-custon-four" data-toggle="tooltip" data-placement="top" title="Minha Nota"><i class="fa fa-check" style="color: #fff;margin-right: 7px;"></i>  
+                                <?php 
+                                  if($nota){
+                                    echo " ".showNota($nota)." ";
+                                  }else{
+                                    echo "S/N";
+                                  }
+                                ?>
+                              </span>
+                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/responder/'.$linha->lis_id);?>"class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="top" title="Responder Lista"><i class="fa fa-pencil" style="color: #fff;margin-right: 7px;"></i> Responder</a>
                             </span>
                             <?php } ?>
                             <span class="message-content">

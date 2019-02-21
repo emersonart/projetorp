@@ -287,4 +287,50 @@ if(!function_exists('gerarHash')){
 			}
 		}
 	}
+
+	//Mostrar nota
+	if(!function_exists('showNota')){
+		function showNota($nota,$tipo = 0){
+			$nota = strtoupper($nota);
+            switch ($nota) {
+                case 'A':
+                	if($tipo != 0){
+                		return 'success';
+                	}else{
+                		return $nota;
+                	}
+                    
+                    break;
+                case 'B':
+                   if($tipo != 0){
+                		return 'primary';
+                	}else{
+                		return $nota;
+                	}
+                    break;
+                case 'C':
+                    if($tipo != 0){
+                		return 'warning';
+                	}else{
+                		return $nota;
+                	}
+                    break;
+                case 'D':
+                if($tipo != 0){
+                		return 'danger';
+                	}else{
+                		return $nota;
+                	}
+                    break;
+                default:
+                	if($tipo != 0){
+                		return 'dark';
+                	}else{
+                		return $nota;
+                	}
+                   
+                    break;
+            }
+		}
+	}
 }

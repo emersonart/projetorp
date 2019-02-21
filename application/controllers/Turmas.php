@@ -44,15 +44,18 @@ class Turmas extends CI_Controller {
 			if($okhash['cla_teacher'] == $this->session->userdata('id_usuario') or $this->session->userdata('perm') == 0){
 				$dados['profok2'] = TRUE;
 				$dados['del'] = TRUE;
+				$dados['id_aluno'] = FALSE;
 			}else{
 				$dados['del'] = FALSE;
 				$dados['profok2'] = FALSE;
+				$dados['id_aluno'] = $this->session->userdata('id_usuario');
 			}
 			$dados['hash'] = $hash;
 			$values['hash'] = $hash;
 			$dados['hashturma'] = $hash;
 			$dados['aba'] = $aba;
 			$values['professor'] = $this->session->userdata('id_usuario');
+
 
 
 			$dados['getalunos'] = $this->turma->getAlunos($values['hash']);
