@@ -110,6 +110,23 @@
                                     <div class="panel-body">
                                         <div class="text-center content-box">
                                             <div class="m icon-box">
+                                                <i class="fa fa-bell"></i>
+                                            </div>
+                                            <h2 class="m-b-xs">Registrar Avisos</h2>
+                                            <p class="small mg-t-box">
+                                                Avisos sobre o sistema: novas uncionalidades ou atualizações.
+                                            </p>
+                                            <a class="btn btn-custon-four btn-info widget-btn-2 btn-sm" style="color:white;">Registrar avisos.</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 mg-b-15">
+                                <div class="hpanel widget-int-shape responsive-mg-b-30">
+                                    <div class="panel-body">
+                                        <div class="text-center content-box">
+                                            <div class="m icon-box">
                                                 <i class="fa fa-cog"></i>
                                             </div>
                                             <h2 class="m-b-xs">Configurar sistema</h2>

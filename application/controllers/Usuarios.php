@@ -58,8 +58,9 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function perfil($outro = FALSE){
-		set_msg_pop('A página solicitada ainda está em construção!','info','normal');
-		redirect('dashboard','refresh');
+		load_template('perfil');
+		//set_msg_pop('A página solicitada ainda está em construção!','info','normal');
+		//redirect('dashboard','refresh');
 	}
 
 
