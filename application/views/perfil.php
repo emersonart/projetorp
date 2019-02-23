@@ -34,22 +34,27 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="address-hr">
-                                            <p><b>Sala para CA:</b><br> DIATINF - Sala 2</p>
+                                            <p><b>Onde me encontrar:</b><br> DIATINF - Sala 2</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
                                         <div class="address-hr">
                                             <a href="#"><i class="fa fa-facebook"></i></a>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
                                         <div class="address-hr">
                                             <a href="#"><i class="fa fa-twitter"></i></a>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
+                                        <div class="address-hr">
+                                            <a href="#"><i class="fa fa-instagram"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
                                         <div class="address-hr">
                                             <a href="#"><i class="fa fa-google"></i></a>
                                         </div>
@@ -183,7 +188,7 @@
                                                                 <option>Qual gênero você se identifica?</option>
                                                                 <option>Masculino</option>
                                                                 <option>Feminino</option>
-                                                                <option></option>
+                                                                <option>Prefiro não dizer</option>
                                                             </select>
                                                         </div>
                                                         <div class="form-group">
@@ -208,6 +213,37 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
+                                                <label> Redes:</label>
+                                                <div class="row mg-b-15">
+                                                        <div class="col-lg-3">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-google"></i></span>
+                                                              <input type="text" class="form-control" placeholder="Google class" aria-describedby="basic-addon1">
+                                                            </div>
+                                                            <small> ex: ze@escolar.ifrn.edu.br</small>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-instagram"></i></span>
+                                                              <input type="text" class="form-control" placeholder="Instagram" aria-describedby="basic-addon1">
+                                                            </div>
+                                                            <small> ex: @aluno1</small>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="input-group">
+                                                              <span class="input-group-addon" id="basic-addon1"><i class="fa fa-twitter"></i></span>
+                                                              <input type="text" class="form-control" placeholder="Twitter" aria-describedby="basic-addon1">
+                                                            </div>
+                                                            <small> ex: @aluno1</small>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="input-group">
+                                                              <span class="input-group-addon" id="basic-addon1"><i class="fa fa-facebook"></i></span>
+                                                              <input type="text" class="form-control" placeholder="Facebook" aria-describedby="basic-addon1">
+                                                            </div>
+                                                            <small> ex: facebook.com/aluno.123</small>
+                                                        </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-12">

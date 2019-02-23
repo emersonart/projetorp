@@ -116,7 +116,7 @@
                                             <p class="small mg-t-box">
                                                 Avisos sobre o sistema: novas uncionalidades ou atualizações.
                                             </p>
-                                            <a class="btn btn-custon-four btn-info widget-btn-2 btn-sm" style="color:white;">Registrar avisos.</a>
+                                            <a class="btn btn-custon-four btn-info widget-btn-2 btn-sm" style="color:white;">Registrar avisos</a>
                                         </div>
                                     </div>
                                 </div>

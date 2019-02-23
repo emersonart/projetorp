@@ -115,4 +115,10 @@ class Adms extends CI_Controller {
 
 		
 	}
+
+	public function avisos(){
+		verif_login('dashboard',0);
+		load_template('painel/avisos');
+	}
+
 }
