@@ -38,4 +38,7 @@ Projeto iniciado para a bolsa de residência pedagógica pelo IFRN Campus Natal 
   * Versão, usando como base [SemVer](http://semver.org/);
   * Summernote [Summernote](https://github.com/summernote/summernote)
    * Summernote br [Summernote-br](https://github.com/covistefan/summernote-br)
-  
+   
+## Criadores:
+  * Emerson Bruno [Emerson](https://github.com/emersonart/)
+  * Tiago Coutinho [Tiago](https://github.com/BudgetSole)
