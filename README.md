@@ -32,7 +32,7 @@ Projeto iniciado para a bolsa de residência pedagógica pelo IFRN Campus Natal 
     * and more :D
     
 ## Terceiros
-  * Framework utilizado [CodeIgniter 3.x](https://codeigniter.com/);
+  * Framework utilizado [CodeIgniter 3.x](https://github.com/bcit-ci/CodeIgniter);
   * Plugins, js e afins usados são os nativos do template [Kiaalap](https://github.com/puikinsh/kiaalap);
   * Template base por [Colorlib](https://colorlib.com/wp/templates/);
   * Versão, usando como base [SemVer](http://semver.org/);
