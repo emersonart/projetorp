@@ -332,6 +332,41 @@ class Professor extends CI_Controller {
 			$lista = $this->questao->getQuestoes($values);
 			$dados['lista'] = $lista;
 			$dados['oklista'] = $oklista;
+			$v = 0;
+			foreach ($lista as $linha) {
+				$fotos[$v] = $linha['act_foto'];
+				$v++;
+			}
+
+			//parametros post
+				$this->form_validation->set_rules('questoes[]','Questão','trim' );
+				$this->form_validation->set_rules('nomeLista','Questão','trim|required' );
+				$this->form_validation->set_rules('id_questao[]','Id questão','trim|required|is_natural_no_zero', array('is_natural_no_zero' => 'Questão inválida','required'=>'é preciso ter uma questão para atualizar'));
+
+				//verificar
+				if($this->form_validation->run() == FALSE){
+					if(validation_errors()){
+						set_msg(validation_errors(),'danger');
+					}
+				}else{
+					$dados_form = $this->input->post();
+					$dados_form['nomeLista'] = html_escape($dados_form['nomeLista']);
+
+					$infos = array(
+						'hash' => $hash, 
+						'id_lista' => $oklista['lis_id']
+					);
+
+					$valores = array(
+						'fotos' => $fotos, 
+						'new_fotos' => $_FILES['fotos'],
+						'nome_lista' => $dados_form['nomeLista'],
+						'questoes' => $dados_form['questoes'],
+						'id_questoes' => $dados_form['id_questao']
+					);
+
+					print_r($this->questao->editarQuestoes($infos,$valores));
+				}
 
 			$dados['qtd'] = count($lista);
 			load_template('professor/editarQuestoes',$dados);

@@ -10,7 +10,7 @@
               </div>
           <?php if($me = get_msg()){ ?>
             <div class="bg-site col-lg-12 col-md-12 col-sm-12 col-xs-12 mg-b-15">
-              <?php echo $me;?>
+              <?php print_r($me);?>
 
             </div>
           <?php } ?>
@@ -20,7 +20,7 @@
             <?php echo form_open_multipart();?>
             <div class="form-group-inner">
              <label>Defina um nome para essa lista</label>
-             <input type="text" class="form-control" placeholder="Nome da Lista" name="nomeLista" required="" value="<?php echo $oklista['lis_name']; ?>">
+             <input type="text" class="form-control" placeholder="Nome da Lista" name="nomeLista" required="" value="<?php echo html_escape($oklista['lis_name']); ?>">
             </div>
             <div class="row">
           <div class="col-lg-8 col-lg-offset-2 mg-t-30">
@@ -86,7 +86,8 @@
                         <div class="alert-title">
                           
                         </div>
-                        <textarea id="q<?php echo $q;?>" class="summernote" name="questoes[]"><?php echo $linha['act_enunciado']; ?></textarea>
+                        <textarea id="q<?php echo $q;?>" class="summernote" name="questoes[]"><?php echo html_escape($linha['act_enunciado']); ?></textarea>
+                        <input type="hidden" name="id_questao[]" value="<?php echo $linha['act_id'];?>">
                       </div>
                     </div>
                   </div>
@@ -104,6 +105,7 @@
                           </div>
                         </div>
                         <div class="col-lg-6" style="padding:10px 35px 35px 35px;">
+                         
                             <img src="<?php echo base_url($linha['act_foto']);?>">
                         </div>
                       <?php }else{ ?>

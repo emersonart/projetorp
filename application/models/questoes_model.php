@@ -17,7 +17,7 @@ class Questoes_model extends CI_Model{
 			'lis_teacher' => $values['id_professor'],
 			'lis_cla_hash' => $values['class_hash']
 		);
-				
+
 		$this->db->insert('tb_lists',$info_lista);
 		$id_lista = $this->db->insert_id();
 		if($id_lista){
@@ -25,20 +25,18 @@ class Questoes_model extends CI_Model{
 		}else{
 			return false;
 		}
-
-
 	}
 
 	public function criarQuestoes($dados,$lista,$fotos){
 		if(count($dados) != count($fotos)){
-			 for($j = 0; $j < count($fotos);$j++){
-			 		if($fotos[$j] != ''){
-			 			unlink('./'.$fotos[$j]);
-			 		}
-			 		
-			    }
-			    $this->db->where('lis_id',$lista['id_lista']);
-			    $this->db->delete('tb_lists');
+			for($j = 0; $j < count($fotos);$j++){
+				if($fotos[$j] != ''){
+					unlink('./'.$fotos[$j]);
+				}
+
+			}
+			$this->db->where('lis_id',$lista['id_lista']);
+			$this->db->delete('tb_lists');
 			return false;
 		}else{
 			$dados1 = array(
@@ -57,22 +55,22 @@ class Questoes_model extends CI_Model{
 
 			if ($this->db->trans_status() === FALSE) {
 			    # Something went wrong.
-			    set_msg_pop($this->db->trans_rollback(),'error','normal');
-			    for($j = 0; $j < count($fotos);$j++){
-			    	if($fotos[$i] != ''){
-			 			unlink('./'.$fotos[$j]);
-			 		}
-			    }
-			    $this->db->where('lis_id',$lista['id_lista']);
-			    $this->db->delete('tb_lists');
-			    return $this->db->trans_rollback();
+				set_msg_pop($this->db->trans_rollback(),'error','normal');
+				for($j = 0; $j < count($fotos);$j++){
+					if($fotos[$i] != ''){
+						unlink('./'.$fotos[$j]);
+					}
+				}
+				$this->db->where('lis_id',$lista['id_lista']);
+				$this->db->delete('tb_lists');
+				return $this->db->trans_rollback();
 			} 
 			else {
 			    # Everything is Perfect. 
 			    # Committing data to the database.
-			    $this->db->trans_commit();
-			    set_msg_pop('Lista Criada com sucesso','success','normal');
-			    return TRUE;
+				$this->db->trans_commit();
+				set_msg_pop('Lista Criada com sucesso','success','normal');
+				return TRUE;
 			}
 
 			
@@ -81,16 +79,96 @@ class Questoes_model extends CI_Model{
 
 	public function editarQuestoes($infos,$values){
 
-		alterar_imagem_lista($infos['hash'],$infos['id_lista'],$)
+		$this->db->select('*');
+		$this->db->from('tb_lists');
+		$this->db->where('lis_id',$infos['id_lista']);
+		$this->db->limit(1);
+		$query = $this->db->get();
+		if($query->num_rows() > 0){
+			if($query->row_array()['lis_name'] != $values['nome_lista'] and !empty($values['nome_lista'])){
+				$this->db->set('lis_name',$values['nome_lista']);
+				$this->db->where('lis_id',$infos['id_lista']);
+				$this->db->update('tb_lists');
+			}
+		}else{
+			set_msg_pop('Lista não encontrada lista: '.$infos['id_lista'],'error','normal');
+			return false;
+		}
+
 		$this->db->select('*');
 		$this->db->from('tb_activities');
-		$this->db->;
+		$this->db->where('act_lis_id',$infos['id_lista']);
+		$query = $this->db->get();
+		
+		if($fot = atualizar_imagem_lista($infos['hash'],$infos['id_lista'],$values['fotos'],$values['new_fotos'])){
+			
+			if($query->num_rows() > 0){
+				$c = 0;
+				$result = $query->result();
+				foreach ($result as $linha) {
+					$this->db->trans_start();
+					if($linha->act_enunciado != $values['questoes'] and !empty($values['questoes'][$c])){
+						$this->db->set('act_enunciado',$values['questoes'][$c]);
+						$this->db->where('act_lis_id',$infos['id_lista']);
+						$this->db->where('act_id',$values['id_questoes'][$c]);
+						$this->db->update('tb_activities');
+					}
+					if($fot[$c] != ''){
+						$this->db->set('act_foto',$fot[$c]);
+						$this->db->where('act_id',$values['id_questoes'][$c]);
+						$this->db->where('act_lis_id',$infos['id_lista']);
+						$this->db->update('tb_activities');
+					}
 
-		$this->db->trans_start();
-			//parei aqui
-		$this->db->trans_complete();
+					$this->db->trans_complete();
+					
+
+					if ($this->db->trans_status() === FALSE) {
+		    # Something went wrong.
+						set_msg($this->db->trans_rollback(),'warning');
+		    //for($j = 0; $j < count($fotos);$j++){
+		    //	if($fotos[$i] != ''){
+		 	//		unlink('./'.$fotos[$j]);
+		 	//	}
+		    //}
+		    //$this->db->where('lis_id',$lista['id_lista']);
+		    //$this->db->delete('tb_lists');
+
+						return $this->db->trans_rollback();
+					}else {
+		    # Everything is Perfect. 
+		    # Committing data to the database.
+						$this->db->trans_commit();
+				//set_msg_pop('Lista Criada com sucesso','success','normal');
+						for($i = 0; $i < count($fot);$i++){
+							$fotoq = explode('.', $values['fotos'][$i]);
+							if(isset($fotoq[0]) and isset($fotoq[1])){
+								$fotoq = $fotoq[0].'-rename.'.$fotoq[1];
+
+								if(file_exists('./'.$fotoq)){
+
+									unlink('./'.$fotoq);
+								}
+							}
+
+
+						}
+						redirect('turma/'.$infos['hash'].'/editar/'.$infos['id_lista'],'refresh');
+						return true;
+					}
+				}
+			}
+			
+
+			
+		}
+
+
+		
+
 
 	}
+
 
 
 	public function getListas($value){
@@ -201,8 +279,8 @@ class Questoes_model extends CI_Model{
 
 				if ($this->db->trans_status() === FALSE) {
 				    # Something went wrong.
-				    set_msg_pop($this->db->trans_rollback(),'error','normal');
-				    return false;
+					set_msg_pop($this->db->trans_rollback(),'error','normal');
+					return false;
 				}else{
 
 					set_msg_pop('Resposta computada com sucesso','success','normal');
@@ -230,8 +308,8 @@ class Questoes_model extends CI_Model{
 
 				if ($this->db->trans_status() === FALSE) {
 				    # Something went wrong.
-				    set_msg_pop($this->db->trans_rollback(),'error','normal');
-				    return false;
+					set_msg_pop($this->db->trans_rollback(),'error','normal');
+					return false;
 				}else{
 					set_msg('Resposta computada com sucesso pela primeira vez','success');
 					set_msg_pop('Resposta computada com sucesso pela primeira vez','success','normal');
@@ -319,17 +397,17 @@ class Questoes_model extends CI_Model{
 
 	public function excluirLista($values){
 		$this->db->trans_start();
-			$this->db->where('lis_id',$values['id']);
-			$this->db->where('lis_cla_hash',$values['hash']);
-			$this->db->delete('tb_lists');
-			$this->db->where('act_lis_id',$values['id']);
-			$this->db->where('act_cla_hash',$values['hash']);
-			$this->db->delete('tb_activities');
-			$this->db->where('ans_lis_id',$values['id']);
-			$this->db->where('ans_cla_hash',$values['hash']);
-			$this->db->delete('tb_answers');
-			$this->db->where('rev_lis_id',$values['id']);
-			$this->db->delete('tb_reviews');
+		$this->db->where('lis_id',$values['id']);
+		$this->db->where('lis_cla_hash',$values['hash']);
+		$this->db->delete('tb_lists');
+		$this->db->where('act_lis_id',$values['id']);
+		$this->db->where('act_cla_hash',$values['hash']);
+		$this->db->delete('tb_activities');
+		$this->db->where('ans_lis_id',$values['id']);
+		$this->db->where('ans_cla_hash',$values['hash']);
+		$this->db->delete('tb_answers');
+		$this->db->where('rev_lis_id',$values['id']);
+		$this->db->delete('tb_reviews');
 		$this->db->trans_complete();
 
 		if($this->db->trans_status() === FALSE){
