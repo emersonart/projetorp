@@ -1,4 +1,4 @@
-# projetorp
+# Koala Educational
 
 Sistema para criação de lista de atividades e aplicação em diversas turmas
 
