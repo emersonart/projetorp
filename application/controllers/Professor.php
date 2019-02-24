@@ -323,6 +323,22 @@ class Professor extends CI_Controller {
 		}
 	}
 
+	public function excluirfotolista($hash, $id_lista,$id_act){
+		verif_login('dashboard','2');
+		$values = array('id' => $id_lista,'hash' => $hash,'id_act'=>$id_act);
+		$oklista = $this->questao->getListainfo($values);
+		$okact = $this->questao->getQuestoes($values);
+		if($oklista and $okact and ($oklista['lis_teacher'] == $this->session->userdata('id_usuario') or $this->session->userdata('perm') == 0)){
+
+			$this->questao->excluirfotolista($id_act);
+			redirect('turma/'.$hash.'/editar/'.$id_lista, 'refresh');
+
+		}else{
+			set_msg_pop('você não possui autorização para acessar esta página','error','normal');
+			redirect('dashboard','refresh');
+		}
+	}
+
 	public function editarLista($hash, $id){
 		verif_login('turmas',2);
 		$values = array('id' => $id,'hash' => $hash);
@@ -365,7 +381,11 @@ class Professor extends CI_Controller {
 						'id_questoes' => $dados_form['id_questao']
 					);
 
-					print_r($this->questao->editarQuestoes($infos,$valores));
+					if($this->questao->editarQuestoes($infos,$valores)){
+						set_msg_pop('deu true','success','normal');
+					}else{
+						set_msg_pop('deu false','error','normal');
+					}
 				}
 
 			$dados['qtd'] = count($lista);

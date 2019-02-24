@@ -104,8 +104,8 @@
                             <p class="message-mg-rt"><strong>Lembre-se!</strong> Ao enviar uma novo foto, a atual será removida dos nossos servidores e nova imagem ficará no lugar!</p>
                           </div>
                         </div>
-                        <div class="col-lg-6" style="padding:10px 35px 35px 35px;">
-                         
+                        <div class="col-lg-6" style="padding:10px 35px 35px 35px; text-align: center;" >
+                            <a data-toggle="tooltip" data-placement="top" title="Excluir Foto" href="<?php echo base_url('turma/'.$oklista['lis_cla_hash'].'/lista/'.$oklista['lis_id'].'/delfoto/'.$linha['act_id']);?>" class="removefoto"><i class="fa fa-close"></i></a>
                             <img src="<?php echo base_url($linha['act_foto']);?>">
                         </div>
                       <?php }else{ ?>

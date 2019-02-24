@@ -5081,3 +5081,19 @@ table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:af
 	color: #29c75f!important;
 	opacity: 1!important;
 }
+
+.removefoto{
+	position: absolute;
+    background: #8080808f;
+    border-radius: 100%;
+    padding: 6px 13px;
+    color: #1a1818;
+        right: 22px;
+    top: -5px;
+    font-size: 1.7em;
+}
+
+.removefoto:hover{
+	background: #ec4445;
+	color: white;
+}

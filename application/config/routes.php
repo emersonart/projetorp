@@ -64,6 +64,7 @@ $route['turma/(:any)/(:any)'] = 'turmas/view/$1/$2';
 $route['turma/(:any)/excluir/(:num)'] = 'professor/excluirLista/$1/$2';
 $route['criarlista/turma/(:any)'] = 'professor/cadastrarQuestoes/$1';
 $route['turma/(:any)/editar/(:num)'] = 'professor/editarLista/$1/$2';
+$route['turma/(:any)/lista/(:num)/delfoto/(:num)'] = 'professor/excluirfotolista/$1/$2/$3';
 $route['aviso/turma/(:any)'] = 'professor/avisos/$1';
 $route['turma/(:any)/corrigir/(:num)/(:num)'] = 'professor/corrigirlista/$1/$2/$3';
 $route['turma/(:any)/responder/(:num)'] = 'alunos/responderlista/$1/$2';

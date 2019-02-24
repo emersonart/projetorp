@@ -76,7 +76,32 @@ class Questoes_model extends CI_Model{
 			
 		}
 	}
+	public function excluirfotolista($id){
+		$this->db->select('*');
+		$this->db->from('tb_activities');
+		$this->db->where('act_id',$id);
+		$this->db->limit(1);
+		$query = $this->db->get();
 
+		if($query->num_rows() == 1 ){
+			$foto = $query->row_array()['act_foto'];
+			$this->db->set('act_foto','');
+			$this->db->where('act_id',$id);
+			$this->db->update('tb_activities');
+
+			if($this->db->affected_rows() > 0){
+				unlink('./'.$foto);
+				set_msg_pop('Foto excluída com sucesso, continue a edição da lista','success','normal');
+				return true;
+			}else{
+				set_msg_pop('Não foi possível excluir a foto','error','normal');
+				return false;
+			}
+		}else{
+			set_msg_pop('Atividade não encontrada, portanto não possível excluir a foto','error','normal');
+			return false;
+		}
+	}
 	public function editarQuestoes($infos,$values){
 
 		$this->db->select('*');
@@ -105,25 +130,30 @@ class Questoes_model extends CI_Model{
 			if($query->num_rows() > 0){
 				$c = 0;
 				$result = $query->result();
+				$this->db->trans_start();
 				foreach ($result as $linha) {
-					$this->db->trans_start();
+					$bbb[$c] = $linha->act_foto;
 					if($linha->act_enunciado != $values['questoes'] and !empty($values['questoes'][$c])){
 						$this->db->set('act_enunciado',$values['questoes'][$c]);
 						$this->db->where('act_lis_id',$infos['id_lista']);
 						$this->db->where('act_id',$values['id_questoes'][$c]);
 						$this->db->update('tb_activities');
 					}
-					if($fot[$c] != ''){
+					if($fot[$c] != '' and ($linha->act_foto != $fot[$c] or $linha->act_foto == '')){
 						$this->db->set('act_foto',$fot[$c]);
 						$this->db->where('act_id',$values['id_questoes'][$c]);
 						$this->db->where('act_lis_id',$infos['id_lista']);
 						$this->db->update('tb_activities');
+						$vv[$c] = 'entrou';
 					}
 
-					$this->db->trans_complete();
+				$c++;
 					
 
-					if ($this->db->trans_status() === FALSE) {
+					
+				}
+				$this->db->trans_complete();
+				if ($this->db->trans_status() === FALSE) {
 		    # Something went wrong.
 						set_msg($this->db->trans_rollback(),'warning');
 		    //for($j = 0; $j < count($fotos);$j++){
@@ -133,8 +163,8 @@ class Questoes_model extends CI_Model{
 		    //}
 		    //$this->db->where('lis_id',$lista['id_lista']);
 		    //$this->db->delete('tb_lists');
-
-						return $this->db->trans_rollback();
+						set_msg_pop('deu erro no transaction','error','normal');
+						return false;
 					}else {
 		    # Everything is Perfect. 
 		    # Committing data to the database.
@@ -153,14 +183,17 @@ class Questoes_model extends CI_Model{
 
 
 						}
+						set_msg_pop('deu bom, pelo menos na logica: '.$bbb[4],'success','normal');
 						redirect('turma/'.$infos['hash'].'/editar/'.$infos['id_lista'],'refresh');
 						return true;
 					}
-				}
 			}
 			
 
 			
+		}else{
+			set_msg_pop('error na imagem?','error','normal');
+			return false;
 		}
 
 
@@ -210,6 +243,7 @@ class Questoes_model extends CI_Model{
 			return false;
 		}
 	}
+
 	public function getQuestoes($values){
 		//$this->db->select('lis_id, lis_cla_hash');
 		//$this->db->from('tb_lists');
@@ -224,9 +258,21 @@ class Questoes_model extends CI_Model{
 			$this->db->from('tb_activities');
 			$this->db->where('act_cla_hash',$query['lis_cla_hash']);
 			$this->db->where('act_lis_id',$query['lis_id']);
+			if(isset($values['id_act']) and !empty($values['id_act'])){
+				$this->db->where('act_id',$values['id_act']);
+				$this->db->limit(1);
+				$q = TRUE;
+			}else{
+				$q = FALSE;
+			}
 			$query2 = $this->db->get();
 			if($query2->num_rows() > 0){
-				return $id = $query2->result_array();
+				if($q){
+					return $id = $query2->row_array();
+				}else{
+					return $id = $query2->result_array();
+				}
+				
 			}else{
 				set_msg_pop('Questões não encontradas.','error','normal');
 				return false;
