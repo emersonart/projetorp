@@ -116,7 +116,7 @@ class Questoes_model extends CI_Model{
 				$this->db->update('tb_lists');
 			}
 		}else{
-			set_msg_pop('Lista não encontrada lista: '.$infos['id_lista'],'error','normal');
+			set_msg_pop('Lista não encontrada lista, error: li01','error','normal');
 			return false;
 		}
 
@@ -163,7 +163,7 @@ class Questoes_model extends CI_Model{
 		    //}
 		    //$this->db->where('lis_id',$lista['id_lista']);
 		    //$this->db->delete('tb_lists');
-						set_msg_pop('deu erro no transaction','error','normal');
+						set_msg_pop('deu erro no transaction erro: tr01','error','normal');
 						return false;
 					}else {
 		    # Everything is Perfect. 
@@ -183,7 +183,7 @@ class Questoes_model extends CI_Model{
 
 
 						}
-						set_msg_pop('deu bom, pelo menos na logica: '.$bbb[4],'success','normal');
+						set_msg_pop('Lista atualizada com sucesso','success','normal');
 						redirect('turma/'.$infos['hash'].'/editar/'.$infos['id_lista'],'refresh');
 						return true;
 					}
@@ -192,7 +192,7 @@ class Questoes_model extends CI_Model{
 
 			
 		}else{
-			set_msg_pop('error na imagem?','error','normal');
+			set_msg_pop('error na imagem erro: im02','error','normal');
 			return false;
 		}
 

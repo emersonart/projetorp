@@ -4,10 +4,6 @@
       <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
         <div class="row" style="margin: 0;">
 
-             <div class="alert alert-warning alert-st-three" role="alert">
-                <i class="fa fa-exclamation-triangle edu-checked-pro admin-check-pro" aria-hidden="true"></i>
-                <p class="message-mg-rt"><strong>Aviso!</strong> Função ainda sendo implementada, botão de atualizar sem funcionar!</p>
-              </div>
           <?php if($me = get_msg()){ ?>
             <div class="bg-site col-lg-12 col-md-12 col-sm-12 col-xs-12 mg-b-15">
               <?php print_r($me);?>
@@ -19,7 +15,7 @@
 
             <?php echo form_open_multipart();?>
             <div class="form-group-inner">
-             <label>Defina um nome para essa lista</label>
+             <label>Novo nome da lista</label>
              <input type="text" class="form-control" placeholder="Nome da Lista" name="nomeLista" required="" value="<?php echo html_escape($oklista['lis_name']); ?>">
             </div>
             <div class="row">
