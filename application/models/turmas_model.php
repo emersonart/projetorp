@@ -232,12 +232,33 @@ class Turmas_model extends CI_Model{
 
 	public function criarInformativo($values){
 		$existe = $this->getInformativos($values['hash']);
+		
 		if($existe){
 			$this->db->set('not_message',$values['informativo']);
 			$this->db->set('not_date',date('d-m-Y G:i'));
 			$this->db->where('not_cla_hash',$values['hash']);
 			$this->db->update('tb_notify_class');
 			if($this->db->affected_rows() == 1){
+				$emails = $this->getAlunos($values['hash']);
+				$alunos = array();
+				foreach ($emails as $linha) {
+					$alunos[] = $linha->inf_email;
+				}
+				$this->load->library('email');
+
+				
+
+				//$this->email->initialize();
+
+				$this->email->subject('teste');
+				$this->email->message($values['informativo']);
+				$this->email->from('koala-no-reply@fisicainvertida.com', 'Não Responder - Koala Educational');
+				$this->email->to($alunos);
+				 $this->email->send();
+  echo $this->email->print_debugger();
+
+				 print_r($alunos);
+
 				set_msg_pop('Aviso atualizado com sucesso!','success','normal');
 				return true;
 			}else{
@@ -254,6 +275,23 @@ class Turmas_model extends CI_Model{
 
 			$this->db->insert('tb_notify_class',$data);
 			if($this->db->insert_id()){
+				$emails = $this->getAlunos($values['hash']);
+				$alunos = array();
+				foreach ($emails as $linha) {
+					$alunos[] = $linha->inf_email;
+				}
+				$this->load->library('email');
+
+				
+
+				$this->email->initialize($config_email);
+
+				$this->email->subject('Email Test');
+				$this->email->message('Testing the email class2');
+				$this->email->from('koala-no-reply@fisicainvertida.com', 'Não Responder - Koala Educational','koala-no-reply@fisicainvertida.com');
+				$this->email->to($alunos);
+				 $this->email->send();
+
 				set_msg_pop('Aviso inserido com sucesso!','success','normal');
 				return true;
 			}else{

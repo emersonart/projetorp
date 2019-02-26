@@ -430,7 +430,8 @@ class Professor extends CI_Controller {
 
 				if($dados['profok']){
 					if($this->turma->criarInformativo($data_post)){
-						redirect('turma/'.$hash.'/infos','refresh');
+
+						//redirect('turma/'.$hash.'/infos','refresh');
 					}
 				}
 			}
