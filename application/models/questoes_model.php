@@ -401,6 +401,16 @@ class Questoes_model extends CI_Model{
 				$this->db->where('ans_usu_id',$values['id_aluno']);
 				$this->db->where('ans_lis_id',$values['id_lista']);
 				$this->db->update('tb_answers');
+
+				$email = $this->turma->getAluno($values['id_aluno'])['inf_email'];
+				$lista = $this->getListainfo(array('hash' => $values['hash'], 'id' => $values['id_lista']))['lis_name'];
+				$send_email = array(
+					'subject' => 'Lista "'.$lista.'" foi recorrigida!', 
+					'message' => '<h1>UHU!</h1><p>Olha só! A nota da sua respota na lista "'.$lista.'" foi atualizada!</p><p>Para ver acesse o <a href="'.base_url('turma/'.$values['hash'].'/listas').'" target="_blank">sistema</a> ou cole no seu navegador: '.base_url('turma/'.$values['hash'].'/listas').'<br><br>Não Responda este email!<br><a href="'.base_url('login').'" target="_blank">Koala Educational</a>',
+					'emails' => $email
+					);
+				send_email($send_email);
+
 				set_msg_pop('Nota atualizada com sucesso','success','normal');
 				return true;
 			}else{
@@ -415,6 +425,15 @@ class Questoes_model extends CI_Model{
 				$this->db->where('ans_usu_id',$values['id_aluno']);
 				$this->db->where('ans_lis_id',$values['id_lista']);
 				$this->db->update('tb_answers');
+
+				$email = $this->turma->getAluno($values['id_aluno'])['inf_email'];
+				$lista = $this->getListainfo(array('hash' => $values['hash'], 'id' => $values['id_lista']))['lis_name'];
+				$send_email = array(
+					'subject' => 'Lista "'.$lista.'" foi corrigida!', 
+					'message' => '<h1>UHU!</h1><p>Olha só! Sua resposta na lista "'.$lista.'" foi corrigida!</p><p>Para ver acesse o <a href="'.base_url('turma/'.$values['hash'].'/listas').'" target="_blank">sistema</a> ou cole no seu navegador: '.base_url('turma/'.$values['hash'].'/listas').'<br><br>Não Responda este email!<br><a href="'.base_url('login').'" target="_blank">Koala Educational</a>',
+					'emails' => $email
+					);
+				send_email($send_email);
 				set_msg_pop('Nota cadastrada com sucesso','success','normal');
 				return true;
 			}else{

@@ -265,13 +265,14 @@ class Professor extends CI_Controller {
 					$dados_model = array(
 						'id_aluno' => $id_aluno,
 						'id_lista' => $id_lista,
-						'nota_lista' => $dados_form['notaLista']
+						'nota_lista' => $dados_form['notaLista'],
+						'hash' => $hash
 					);
 
 					if($this->questao->corrigirLista($dados_model)){
 						$dados['nota'] = $dados_form['notaLista'];
 						//continuar aqui pra enviar o email pros alunos
-						redirect('turma/'.$hash.'/respostas/'.$id_lista,'refresh');
+						//redirect('turma/'.$hash.'/respostas/'.$id_lista,'refresh');
 					}
 				}
 			}else{
