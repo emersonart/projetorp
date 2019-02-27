@@ -253,5 +253,13 @@ class Usuarios_model extends CI_Model{
 		}
 	}
 
+	public function getPerfil($id){
+		$this->db->select('*');
+		$this->db->from('tb_users');
+		$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id','inner');
+		$this->db->limit(1);
+		$query = $this->db->get();
+	}
+
 
 }

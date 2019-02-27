@@ -10,6 +10,7 @@ $config['smtp_host'] = 'ssl://smtp.gmail.com';
 $config['smtp_user'] = 'kaola.no.reply@gmail.com';
 $config['smtp_pass'] = 'ifrn2019';
 $config['smtp_port'] = '465';
+$config['validate']  = TRUE;
 $config['mailtype'] = 'html';
 $config['crlf'] = "\r\n";
 $config['newline'] = "\r\n";

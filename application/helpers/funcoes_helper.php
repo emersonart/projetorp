@@ -342,8 +342,8 @@ if(!function_exists('gerarHash')){
 			$ci->load->library('email');
 			$ci->email->subject('Koala - '.$values['subject']);
 			$ci->email->message($values['message']);
-			$ci->email->from('koala-no-reply@fisicainvertida.com', 'Não Responder - Koala Educational');
-			$ci->email->to($values['emails']);
+			$ci->email->from('koala-no-reply@fisicainvertida.com', 'Koala Educational - Não Responder','koala-no-reply@fisicainvertida.');
+			$ci->email->bcc($values['emails']);
 			if($ci->email->send()){
 				return TRUE;
 			}else{
