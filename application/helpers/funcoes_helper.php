@@ -334,3 +334,20 @@ if(!function_exists('gerarHash')){
             }
 		}
 	}
+
+	if(!function_exists('send_email')){
+		function send_email($values){
+
+			$ci = & get_instance();
+			$ci->load->library('email');
+			$ci->email->subject('Koala - '.$values['subject']);
+			$ci->email->message($values['message']);
+			$ci->email->from('koala-no-reply@fisicainvertida.com', 'Não Responder - Koala Educational');
+			$ci->email->to($values['emails']);
+			if($ci->email->send()){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}
+	}

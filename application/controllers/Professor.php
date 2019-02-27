@@ -270,6 +270,7 @@ class Professor extends CI_Controller {
 
 					if($this->questao->corrigirLista($dados_model)){
 						$dados['nota'] = $dados_form['notaLista'];
+						//continuar aqui pra enviar o email pros alunos
 						redirect('turma/'.$hash.'/respostas/'.$id_lista,'refresh');
 					}
 				}
@@ -431,7 +432,7 @@ class Professor extends CI_Controller {
 				if($dados['profok']){
 					if($this->turma->criarInformativo($data_post)){
 
-						//redirect('turma/'.$hash.'/infos','refresh');
+						redirect('turma/'.$hash.'/infos','refresh');
 					}
 				}
 			}

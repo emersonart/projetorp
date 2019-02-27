@@ -207,13 +207,22 @@ class Turmas_model extends CI_Model{
 			$query = $this->db->get();
 
 			if($query->num_rows() > 0){
+				$emails = $this->getAluno($values['id'])['inf_email'];
 				
+
 				$this->db->set('reg_status',1);
 				$this->db->where('reg_cla_hash',$values['hash']);
 				$this->db->where('reg_usu_id',$values['id']);
 				$this->db->update('tb_register_class');
 
 				if($this->db->affected_rows()>0){
+					$turma = $this->getTurma($values['hash'])['cla_nome'];
+					$send_email = array(
+						'subject' => 'Cadastro confirmado na turma ['.$turma.']', 
+						'emails' => $emails,
+						'message' => '<h1>Olá! Seu Cadastro foi confirmado pelo professor na turma '.$turma.'!</h1><br><br>Não Responda este email.<br><a href="'.base_url('login').'" target="_blank">Koala Educational</a>'
+					);
+					send_email($send_email);
 					set_msg_pop('Confirmação do aluno nesta turma realizado com sucesso','success','normal');
 					return true;
 				}else{
@@ -244,20 +253,26 @@ class Turmas_model extends CI_Model{
 				foreach ($emails as $linha) {
 					$alunos[] = $linha->inf_email;
 				}
-				$this->load->library('email');
+				//$this->load->library('email');
+				$turma = $this->getTurma($values['hash'])['cla_nome'];
+				$send_email = array(
+					'emails' => $alunos, 
+					'message' => $values['informativo'],
+					'subject' => 'Aviso Turma ['.$turma.']'
+				);
 
-				
+				send_email($send_email);
 
 				//$this->email->initialize();
 
-				$this->email->subject('teste');
-				$this->email->message($values['informativo']);
-				$this->email->from('koala-no-reply@fisicainvertida.com', 'Não Responder - Koala Educational');
-				$this->email->to($alunos);
-				 $this->email->send();
-  echo $this->email->print_debugger();
+				//$this->email->subject('teste');
+				//$this->email->message($values['informativo']);
+				//$this->email->from('koala-no-reply@fisicainvertida.com', 'Não Responder - Koala Educational');
+				//$this->email->to($alunos);
+				// $this->email->send();
+  //echo $this->email->print_debugger();
 
-				 print_r($alunos);
+				
 
 				set_msg_pop('Aviso atualizado com sucesso!','success','normal');
 				return true;
