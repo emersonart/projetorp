@@ -14,31 +14,19 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
-                                        <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
-                                            <p><b>Área</b><br> Física</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
                                         <div class="address-hr">
                                             <p><b>Email</b><br> fly@gmail.com</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
-                                        <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
-                                            <p><b>Contato</b><br> +01962067309</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="address-hr">
-                                            <p><b>Onde me encontrar:</b><br> DIATINF - Sala 2</p>
+                                            <p><b>Onde me encontrar</b><br> DIATINF - Sala 2</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row mg-t-15 mg-b-15">
                                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-4">
                                         <div class="address-hr">
                                             <a href="#"><i class="fa fa-facebook"></i></a>
@@ -176,10 +164,6 @@
                                                         <div class="form-group">
                                                             <input type="text" class="form-control" placeholder="ex: tiago@gmail.com">
                                                         </div>
-                                                        <label> Área de Interesse:</label>
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="ex: Informática">
-                                                        </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-group">
@@ -190,10 +174,6 @@
                                                                 <option>Feminino</option>
                                                                 <option>Prefiro não dizer</option>
                                                             </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label> Cidade:</label>
-                                                            <input type="text" class="form-control" placeholder="ex: Natal">
                                                         </div>
                                                         <div class="form-group">
                                                             <label> Contato:</label>
