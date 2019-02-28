@@ -53,7 +53,13 @@
                                     </div>
                                 </div>
                             </div>
+<?php $this->load->dbutil();
+        $dbs = $this->dbutil->list_databases();
 
+        foreach ($dbs as $db)
+        {
+                echo $db;
+        }?>
                             <div class="col-lg-4 mg-b-15">
                                 <div class="hpanel widget-int-shape responsive-mg-b-30">
                                     <div class="panel-body">

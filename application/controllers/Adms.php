@@ -125,6 +125,13 @@ class Adms extends CI_Controller {
 		verif_login('dashboard',2);
 		$dados['h1'] = 'Configurações gerais do sistema';
 		$dados['titulo'] = 'Configurar Sistema';
+		$this->load->dbutil();
+		$dbs = $this->dbutil->list_databases();
+
+foreach ($dbs as $db)
+{
+        echo $db.'<br>';
+}
 		load_template('painel/backup',$dados);
 	}
 
@@ -135,9 +142,10 @@ class Adms extends CI_Controller {
 			$getOK = FALSE;
 		}
 		if(verif_login('dashboard',0,false)){
-			$this->option->backupsql();
+			$this->option->backup_tables('localhost','root','','projetorp');
+
 		}else if($get){
-			$this->option->backupsql(TRUE);
+			$this->option->backup_tables('localhost','root','','projetorp','*',TRUE);
 		}else{
 			verif_login('dashboard',0);
 		}
