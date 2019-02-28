@@ -9,7 +9,10 @@
                                 <div class="panel-body">
                                     <div class="white-box">
                                         <h3 class="box-title">Professores cadastrados:</h3>
-                                        
+                                        <?php 
+                                       
+
+print_r($this->db->get('tb_activities')->result_array());?>
                                         <ul class="basic-list">
                                         <?php 
                                             if(!empty($turmas) && isset($turmas) && sizeof($turmas) > 0){ 
@@ -53,13 +56,7 @@
                                     </div>
                                 </div>
                             </div>
-<?php $this->load->dbutil();
-        $dbs = $this->dbutil->list_databases();
 
-        foreach ($dbs as $db)
-        {
-                echo $db;
-        }?>
                             <div class="col-lg-4 mg-b-15">
                                 <div class="hpanel widget-int-shape responsive-mg-b-30">
                                     <div class="panel-body">

@@ -125,13 +125,7 @@ class Adms extends CI_Controller {
 		verif_login('dashboard',2);
 		$dados['h1'] = 'Configurações gerais do sistema';
 		$dados['titulo'] = 'Configurar Sistema';
-		$this->load->dbutil();
-		$dbs = $this->dbutil->list_databases();
-
-foreach ($dbs as $db)
-{
-        echo $db.'<br>';
-}
+		
 		load_template('painel/backup',$dados);
 	}
 

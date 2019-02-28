@@ -87,30 +87,12 @@ class Option_model extends CI_Model{
 			return false;
 		}
 	}
-	public function backupsql($rotina = FALSE){
-		$this->load->dbutil();
-		$prefs = array(
-	        'format'        => 'zip',                             // File name - NEEDED ONLY WITH ZIP FILES
-	        'add_drop'      => TRUE,                        // Whether to add DROP TABLE statements to backup file
-	        'add_insert'    => TRUE,                        // Whether to add INSERT data to backup file
-	        'newline'       => "\n"                         // Newline character used in backup file
-	    );
-		$backup = $this->dbutil->backup($prefs);
-		$this->load->helper('file');
-		$db_name = 'backup-koala-'. date("Y-m-d-H-i-s") .'.zip';
-		$save = 'assets/teste/'.$db_name;
-		write_file($save, $backup);
-		$this->load->helper('download');
-		force_download($db_name,$backup);
-	}
-
-
 
 
 	public function backup_tables($host,$user,$pass,$name,$tables = '*',$rotina = false){
-
-		$conn = mysqli_connect($host,$user,$pass,$name);
-		$conn->set_charset('utf8');
+		
+		//$conn = mysqli_connect($host,$user,$pass,$name);
+		//$conn->set_charset('utf8');
 		$return = "\n\n";
 		$return .= 'SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";';
 		$return .= "\n";
@@ -118,40 +100,52 @@ class Option_model extends CI_Model{
 		$return .= "\n";
 		$return .= 'START TRANSACTION;';
 		$return .= "\n";
-		$return .= 'SET time_zone = "+00:00";';
+		$return .= 'SET time_zone = "-03:00";';
 		$return .= "\n\n\n";
 
 
 	//get all of the tables
-		if($tables == '*')
-		{
+		if($tables == '*'){
 			$tables = array();
-			$result = mysqli_query($conn,'SHOW TABLES');
-			while($row = mysqli_fetch_row($result))
+			//$result = mysqli_query($conn,'SHOW TABLES');
+			//while($row = mysqli_fetch_row($result))
+			//{
+			//	$tables[] = $row[0];
+			//}
+			$this->db->db_set_charset('utf8');
+			$tabless = $this->db->list_tables();
+
+			foreach ($tabless as $table)
 			{
-				$tables[] = $row[0];
+			        $tables[] = $table;
 			}
 		}
-		else
-		{
+		else{
 			$tables = is_array($tables) ? $tables : explode(',',$tables);
 		}
 
 	//cycle through
-		foreach($tables as $table)
-		{
-			$contador = 0;
-			$result = mysqli_query($conn,'SELECT * FROM '.$table);
-			$result2 = mysqli_query($conn,'SELECT * FROM '.$table);
 
-			$cc =  mysqli_num_rows($result2);
+		foreach($tables as $table){
 
-			$num_fields = mysqli_num_fields($result);
+			
+			//$result = mysqli_query($conn,'SELECT * FROM '.$table);
+			$this->db->db_set_charset('utf8');
+			$result = $this->db->get($table);
+
+
+			$res = $result->result_array();
+
+			$cc =  $result->num_rows();
+
+			$num_fields = $result->num_fields();
+			//echo "<br>".$num_fields."------------------------<br><br>";
 			$return.= 'DROP TABLE IF EXISTS '.$table.';';
 			$return.= "\n\n";
 						//$return.= "-- inicio tabela ".$table."\n\n";
-			$row2 = mysqli_fetch_row(mysqli_query($conn,'SHOW CREATE TABLE '.$table));
-			$return.= "\n\n".$row2[1].";\n\n";
+			$row2 = $this->db->query('SHOW CREATE TABLE '.$table)->row_array();
+			//$row2 = mysqli_fetch_row(mysqli_query($conn,'SHOW CREATE TABLE '.$table));
+			$return.= "\n\n".$row2['Create Table'].";\n\n";
 		//$return.= "ALTER TABLE `".$table."`\n";
 		//$inicial = explode('_', $table)[1];
 		//$inicial = substr($inicial, 0, 3);
@@ -161,57 +155,38 @@ class Option_model extends CI_Model{
 		//$return.= $idd['AUTO_INCREMENT']."\n\n";
 
 			$return.= 'INSERT INTO '.$table.' VALUES'."\n";
-		//for ($i = 0; $i < $num_fields; $i++) 
-		//{
+			$c2 = 0;
+			foreach($res as $key => $value){
+				$c2 += 1;
+				$return .= "(";
+				$contador = 0;
+				foreach ($value as $key1 => $value1) {
+					$contador += 1;
+						$value1 = addslashes($value1);
+						$value1 = str_replace('\n',"\\n",$value1);
+						$return .= '"'.$value1.'"';
 
-			while($row = mysqli_fetch_row($result))
-			{
-				//$return.="--comeco while row\n";
-				$contador += 1;
-				$return.='(';
-				for($j=0; $j < $num_fields; $j++) 
-				{
-
-					//$return.="--comeco for j\n";
-					$row[$j] = addslashes($row[$j]);
-					$row[$j] = str_replace('\n',"\\n",$row[$j]);
-					if(isset($row[$j])){
-						$gg = $row[$j];
-						$gg = intval($gg);
-						if($j < ($num_fields-1)){
-							
-
-							$return.= '"'.$row[$j].'",' ; 
-
-						}else{
-
-							$return.= '"'.$row[$j].'"' ; 
+						if($contador < $num_fields){
+							$return .= ",";
 						}
 
-					} else { 
-						if($j < ($num_fields-1)){
-							$return.= '"",' ; 
-						}else{
-							$return.= '""' ; 
-						}
-					}
+					//print_r($value);
 					
-					
-					//$return.="--fim for j\n";
 				}
-				if ($contador == $cc) {
-					$return.= ');'; 
-					$return.= "\n\n";
-						//$return.= "--fim tabela ".$table."\n\n";
+				if($c2 < count($res)){
+					//echo $key.'<br><br><br>';
+					$return .= "),\n";
 				}else{
-					$return.= '),'; 
-					$return.= "\n";
+					//echo $key.'<br><br><br>';
+					$return .= ");\n\n";
 				}
-				//
-				//$return.= ");\n";
-					//$return.="--fim while row\n";
+				
+				
+				
+				
+				//echo $value['act_id'].'<br>';
 			}
-		//}
+
 			$return.="\n\n\n";
 		}
 		$return .= "COMMIT;";
@@ -222,21 +197,55 @@ class Option_model extends CI_Model{
 		//fclose($handle);
 
 		$this->load->library('zip');
-		$this->load->dbutil();
-		$dbs = $this->dbutil->list_databases();
 
-		foreach ($dbs as $db)
-		{
-		        echo $db;
-		}
 		$this->zip->add_data($name.'.sql',$return);
 		$this->zip->compression_level = 3;
 		$this->zip->archive('backup/'.$name.'.zip');
 		if(!$rotina){
-			$this->zip->download($name.'.zip');
+			//$this->zip->download($name.'.zip');
 		}
-		
+
+		//diretório que deseja listar os arquivos
+			$path = "backup/";
+
+		//le os arquivos do diretorio
+			$diretorio = dir($path);
+				$diretorios = scandir("./backup/");
+				$diretorios = count($diretorios) - 2;
+		//loop para listar os arquivos do diretório, guardando na variável $arquivo
+			while( $arquivo = $diretorio -> read() ){
+				
+				if($arquivo != '.' ){
+					if($arquivo != '..'){
+						if (file_exists($path.$arquivo) and $arquivo != $name) {
+							if($diretorios > 7){
+								if(filectime($path.$arquivo) < strtotime('-7 days')){
+									unlink('./'.$path.$arquivo);
+									echo 'excluiu um<br>';
+								}
+								
+								
+							}else{
+								echo "$arquivo foi modificado em: " . date ("F d Y H:i:s.", filectime($path.$arquivo)).'<br>';
+							}
+					    	
+						}
+						
+					
+					}
+					
+					
+				}
+			//gera um link para o arquivo
+			}
+			$diretorio -> close();
+
+		echo $return;
 	}
 
 
 }
+
+
+
+
