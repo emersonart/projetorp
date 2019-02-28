@@ -87,7 +87,22 @@ class Option_model extends CI_Model{
 			return false;
 		}
 	}
-
+	public function backupsql($rotina = FALSE){
+		$this->load->dbutil();
+		$prefs = array(
+	        'format'        => 'zip',                             // File name - NEEDED ONLY WITH ZIP FILES
+	        'add_drop'      => TRUE,                        // Whether to add DROP TABLE statements to backup file
+	        'add_insert'    => TRUE,                        // Whether to add INSERT data to backup file
+	        'newline'       => "\n"                         // Newline character used in backup file
+		);
+		$backup = $this->dbutil->backup($prefs);
+		$this->load->helper('file');
+		$db_name = 'backup-koala-'. date("Y-m-d-H-i-s") .'.zip';
+$save = 'assets/teste/'.$db_name;
+		write_file($save, $backup);
+		$this->load->helper('download');
+		force_download($db_name,$backup);
+	}
 
 
 }

@@ -121,4 +121,28 @@ class Adms extends CI_Controller {
 		load_template('painel/avisos');
 	}
 
+	public function config_site(){
+		verif_login('dashboard',2);
+		$dados['h1'] = 'Configurações gerais do sistema';
+		$dados['titulo'] = 'Configurar Sistema';
+		load_template('painel/backup',$dados);
+	}
+
+	public function fazerbackup(){
+		if($get = $this->input->get('rotina') == 'rotinako@l@'){
+			$getOK = TRUE;
+		}else{
+			$getOK = FALSE;
+		}
+		if(verif_login('dashboard',0,false)){
+			$this->option->backupsql();
+		}else if($get){
+			$this->option->backupsql(TRUE);
+		}else{
+			verif_login('dashboard',0);
+		}
+
+	
+	}
+
 }
