@@ -202,7 +202,7 @@ class Option_model extends CI_Model{
 		$this->zip->compression_level = 3;
 		$this->zip->archive('backup/'.$name.'.zip');
 		if(!$rotina){
-			//$this->zip->download($name.'.zip');
+			$this->zip->download($name.'.zip');
 		}
 
 		//diretório que deseja listar os arquivos
@@ -219,7 +219,7 @@ class Option_model extends CI_Model{
 					if($arquivo != '..'){
 						if (file_exists($path.$arquivo) and $arquivo != $name) {
 							if($diretorios > 7){
-								if(filectime($path.$arquivo) < strtotime('-7 days')){
+								if(filectime($path.$arquivo) < strtotime('-7 days') and explode('.',$arquivo)[1] == 'zip'){
 									unlink('./'.$path.$arquivo);
 									echo 'excluiu um<br>';
 								}
@@ -240,7 +240,7 @@ class Option_model extends CI_Model{
 			}
 			$diretorio -> close();
 
-		echo $return;
+		//echo $return;
 	}
 
 
