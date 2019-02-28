@@ -89,7 +89,7 @@ class Option_model extends CI_Model{
 	}
 
 
-	public function backup_tables($host,$user,$pass,$name,$tables = '*',$rotina = false){
+	public function backup_tables($tables = '*',$rotina = false){
 		
 		//$conn = mysqli_connect($host,$user,$pass,$name);
 		//$conn->set_charset('utf8');

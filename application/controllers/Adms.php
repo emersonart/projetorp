@@ -96,6 +96,7 @@ class Adms extends CI_Controller {
 						set_msg(validation_errors(),'danger');
 					}
 				}else{
+					
 					$dados_form = $this->input->post();
 					$valor = array(
 						'login' => $dados_form['login'],

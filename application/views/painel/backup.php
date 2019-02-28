@@ -9,10 +9,7 @@
                                 <div class="panel-body">
                                     <div class="white-box">
                                         <h3 class="box-title">Professores cadastrados:</h3>
-                                        <?php 
-                                       
 
-print_r($this->db->get('tb_activities')->result_array());?>
                                         <ul class="basic-list">
                                         <?php 
                                             if(!empty($turmas) && isset($turmas) && sizeof($turmas) > 0){ 
