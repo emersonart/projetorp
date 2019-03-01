@@ -217,7 +217,7 @@ class Option_model extends CI_Model{
 					if($arquivo != '..'){
 						if (file_exists($path.$arquivo) and $arquivo != $name) {
 							if($diretorios > 7){
-								if(filectime($path.$arquivo) < strtotime('-1 minute') and explode('.',$arquivo)[1] == 'zip'){
+								if(filectime($path.$arquivo) < strtotime('-7 days') and explode('.',$arquivo)[1] == 'zip'){
 									unlink($path.$arquivo);
 									echo 'excluiu um<br>';
 								}
@@ -248,6 +248,39 @@ class Option_model extends CI_Model{
 					'arquivo' => './backup_sys/'.$name.'.zip'
 					);
 			send_email($send_email);
+
+
+
+			$this->load->library('ftp');
+
+			$config['hostname'] = 'ftp.fisicainvertida.com';
+			$config['username'] = 'fisicainvertida';
+			$config['password'] = 'natal1010';
+			$config['debug']        = TRUE;
+			$config['port']     = 21;
+
+			$this->ftp->connect($config);
+
+			$list = $this->ftp->list_files('/public_html/koalaeducational/');
+
+			for($i=0;$i<count($list);$i++){
+				if($list[$i] != "." or $list[$i] != ".."){
+					echo '-'.$list[$i];
+					if(is_dir($list[$i]) and ($list[$i] != "." or $list[$i] != "..")){
+					
+					$dentro = $this->ftp->list_files('/public_html/koalaeducational/'.$list[$i]);
+					foreach ($dentro as $key => $value) {
+						echo '--'.$value.'<br>';
+					}
+					
+				}
+				}
+				
+				
+				echo '<br>';
+			}
+
+			$this->ftp->close();
 		}
 		//echo $return;
 	}
