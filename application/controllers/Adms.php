@@ -137,10 +137,10 @@ class Adms extends CI_Controller {
 			$getOK = FALSE;
 		}
 		if(verif_login('dashboard',0,false)){
-			$this->option->backup_tables('localhost','root','','projetorp');
+			$this->option->backup_tables();
 
 		}else if($get){
-			$this->option->backup_tables('localhost','root','','projetorp','*',TRUE);
+			$this->option->backup_tables('*',TRUE);
 		}else{
 			verif_login('dashboard',0);
 		}

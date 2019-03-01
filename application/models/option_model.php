@@ -200,17 +200,15 @@ class Option_model extends CI_Model{
 
 		$this->zip->add_data($name.'.sql',$return);
 		$this->zip->compression_level = 3;
-		$this->zip->archive('backup/'.$name.'.zip');
-		if(!$rotina){
-			$this->zip->download($name.'.zip');
-		}
+		$this->zip->archive('backup_sys/'.$name.'.zip');
+		
 
 		//diretório que deseja listar os arquivos
-			$path = "backup/";
+			$path = "./backup_sys/";
 
 		//le os arquivos do diretorio
 			$diretorio = dir($path);
-				$diretorios = scandir("./backup/");
+				$diretorios = scandir("./backup_sys/");
 				$diretorios = count($diretorios) - 2;
 		//loop para listar os arquivos do diretório, guardando na variável $arquivo
 			while( $arquivo = $diretorio -> read() ){
@@ -219,8 +217,8 @@ class Option_model extends CI_Model{
 					if($arquivo != '..'){
 						if (file_exists($path.$arquivo) and $arquivo != $name) {
 							if($diretorios > 7){
-								if(filectime($path.$arquivo) < strtotime('-7 days') and explode('.',$arquivo)[1] == 'zip'){
-									unlink('./'.$path.$arquivo);
+								if(filectime($path.$arquivo) < strtotime('-1 minute') and explode('.',$arquivo)[1] == 'zip'){
+									unlink($path.$arquivo);
 									echo 'excluiu um<br>';
 								}
 								
@@ -240,6 +238,17 @@ class Option_model extends CI_Model{
 			}
 			$diretorio -> close();
 
+		if(!$rotina){
+			$this->zip->download($name.'.zip');
+		}else{
+			$send_email = array(
+					'subject' => 'Backup '.date('d/m/Y'), 
+					'message' => '<h1>Backup diário do banco de dados: '.date('d/m/Y H:i').'</h1><p>Esta mensagem foi gerada automaticamente pelo  sistema de backup diário</p><p>caso deseje baixar diretamente do site <a href="'.base_url('backup_sys/'.$name.'.zip').'" target="_blank"> CLIQUE AQUI </a>',
+					'emails' => 'emersonbruno_@hotmail.com',
+					'arquivo' => './backup_sys/'.$name.'.zip'
+					);
+			send_email($send_email);
+		}
 		//echo $return;
 	}
 

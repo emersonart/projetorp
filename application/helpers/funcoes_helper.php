@@ -344,6 +344,16 @@ if(!function_exists('gerarHash')){
 			$ci->email->message($values['message']);
 			$ci->email->from('koala-no-reply@fisicainvertida.com', 'Koala Educational - Não Responder','koala-no-reply@fisicainvertida.');
 			$ci->email->bcc($values['emails']);
+			if(isset($values['arquivo'])){
+				if(is_array($values['arquivo'])){
+					for($i=0;count($values['arquivo']);$i++){
+						$ci->email->attach($values['arquivo'][$i]); 
+					}
+				}else{
+					$ci->email->attach($values['arquivo']); 
+				}
+				
+			}
 			if($ci->email->send()){
 				return TRUE;
 			}else{
