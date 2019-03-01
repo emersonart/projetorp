@@ -58,7 +58,28 @@ class Usuarios extends CI_Controller {
 	}
 
 	public function perfil($outro = FALSE){
-		load_template('perfil');
+		verif_login();
+		$id_usuario = $this->session->userdata('id_usuario');
+		if($outro){
+			$perfil = $this->usuario->getPerfil($outro);			
+		}else{
+			$perfil = $this->usuario->getPerfil($id_usuario);
+		}
+		
+		$dados['nick'] = $perfil['usu_login'];	
+		if($perfil and $perfil['usu_id'] == $id_usuario){
+			$dados['perfil'] = $perfil;
+			$dados['donoperfil'] = TRUE;
+
+		}else if($perfil and $perfil['usu_id'] != $id_usuario){
+			$dados['donoperfil'] = FALSE;
+			$dados['perfil'] = $perfil;
+		}else{
+			set_msg_pop('Perfil não encontrado','warning','normal');
+			redirect('dashboard','refresh');
+		}
+		
+		load_template('perfil',$dados);
 		//set_msg_pop('A página solicitada ainda está em construção!','info','normal');
 		//redirect('dashboard','refresh');
 	}
