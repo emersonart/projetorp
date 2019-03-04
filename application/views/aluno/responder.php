@@ -53,7 +53,9 @@
                       </textarea>
                   </div>
                   <div class="sub-pergunta" style="text-align: right;">
+                    <?php if(!isset($listavencida)){ ?>
                     <button type="submit" class="btn btn-custon-four btn-lg btn-success">Salvar</button>
+                  <?php } ?>
                   </div>
                 </div>
               </div>
