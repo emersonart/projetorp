@@ -106,6 +106,13 @@
         <script src="<?php echo base_url('assets/js/summernote/br.summernote.js');?>"></script>
         <script src="<?php echo base_url('assets/js/summernote/summernote-active.js');?>"></script>
         <script src="<?php echo base_url('assets/js/summernote/lang/summernote-pt-BR.js');?>"></script>
+        <?php if(isset($listavencida)){?>
+            <script type="text/javascript">
+                $('.summernote1').each(function() {
+        $(this).summernote('disable');
+    });
+            </script>
+        <?php } ?>
     <!-- notification JS 
         ============================================ -->
         <script src="<?php echo base_url('assets/js/dropzone/dropzone.js');?>"></script>

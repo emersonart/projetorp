@@ -115,6 +115,32 @@ class Questoes_model extends CI_Model{
 				$this->db->set('lis_name',$values['nome_lista']);
 				$this->db->where('lis_id',$infos['id_lista']);
 				$this->db->update('tb_lists');
+			}else{
+				$fff = "<strong>Nome da lista</strong> não foi alterado.";
+			}
+			$cropdate = explode(' ', $values['final_date']);
+			$date = converter_data($cropdate[0],4);
+			$finaldate = $date.' '.$cropdate[1];
+
+			if($query->row_array()['lis_endtime'] == '' or empty($query->row_array()['lis_endtime'])){
+				$finaldatedb = "1900-01-01 00:00";
+			}else{
+				$cropdatedb = explode(' ', $query->row_array()['lis_endtime']);
+				$datedb = converter_data($cropdatedb[0],4);
+				$finaldatedb = $datedb.' '.$cropdatedb[1];
+			}
+			
+			if(strtotime($finaldate) > strtotime($finaldatedb)){
+				$this->db->set('lis_endtime',$values['final_date']);
+				$this->db->where('lis_id',$infos['id_lista']);
+				$this->db->update('tb_lists');
+			}else{
+				if(isset($fff)){
+					$fff .= "<br><strong>Data e hora</strong> igual ou menor que a cadastrada anteriormente, portanto não foi atualizada";
+				}else{
+					$fff = '<strong>Data e hora</strong> igual ou menor que a cadastrada anteriormente, portanto não foi atualizada';
+				}
+				
 			}
 		}else{
 			set_msg_pop('Lista não encontrada lista, error: li01','error','normal');
@@ -184,7 +210,12 @@ class Questoes_model extends CI_Model{
 
 
 						}
-						set_msg_pop('Lista atualizada com sucesso','success','normal');
+						$msg = 'Lista atualizada com sucesso';
+						$tam = "normal";
+						if(isset($fff)){
+							$msg .= '<br>'.$fff;
+							$tam = "large";						}
+						set_msg_pop($msg,'success',$tam);
 						redirect('turma/'.$infos['hash'].'/editar/'.$infos['id_lista'],'refresh');
 						return true;
 					}
@@ -290,13 +321,14 @@ class Questoes_model extends CI_Model{
 		$this->db->select('lis_endtime');
 		$this->db->from('tb_lists');
 		$this->db->where('lis_id',$dados['id_lista']);
+		$this->db->limit(1);
 		$qq = $this->db->get();
-		if($qq->num_rows == 1){
+		if($qq->num_rows() == 1){
 			$qq1 = $qq->row_array()['lis_endtime'];
 			$qq2 = explode(' ',$qq1);
 			$qq3 = converter_data($qq2[0],4);
 			$timee = $qq3.' '.$qq2[1];
-			if(strtotime(date('Y-m-d H:i')) >= strtotime($endtime)){
+			if(strtotime(date('Y-m-d H:i')) > strtotime($timee)){
 				$data = converter_data($qq2[0],3);
 				set_msg_pop('O período para responder esta lista expirou!<br>A data era até '.$data.' às '.$qq2[1].'!','error','normal');
 				return false;
@@ -383,6 +415,9 @@ class Questoes_model extends CI_Model{
 				set_msg_pop('Parametros incorretos para esta solicitação','error','normal');
 				return false;
 			}
+			set_msg_pop('achou','success','normal');
+		}else{
+			set_msg_pop('nao achou!?','warning','normal');
 		}
 	}
 

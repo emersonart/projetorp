@@ -142,7 +142,7 @@ class Professor extends CI_Controller {
 	}
 	public function regex_check($str){
 	    if (!preg_match('/^(2[0-3]|[0-1][0-9]):[0-5][0-9]$/', $str)){
-	        $this->form_validation->set_message('regex_check', '%s deu ruim!');
+	        $this->form_validation->set_message('regex_check', 'Formato inválido de hora');
 	        return FALSE;
 	    }else{
 	        return TRUE;
@@ -274,8 +274,10 @@ class Professor extends CI_Controller {
 			}
 
 			//parametros post
-				$this->form_validation->set_rules('questoes[]','Questão','trim' );
+				$this->form_validation->set_rules('questoes[]','Questão','trim|required' );
 				$this->form_validation->set_rules('nomeLista','Questão','trim|required' );
+				$this->form_validation->set_rules('enddate','Data final para a lista','trim|required|regex_match[/^([2-9][0-9][0-9][0-9])-([0-1][0-9])-([0-3][0-9])$/]',array('regex_match' => 'Formato inválido de data'));
+				$this->form_validation->set_rules('endtime','Hora final para a lista','trim|required|callback_regex_check');
 				$this->form_validation->set_rules('id_questao[]','Id questão','trim|required|is_natural_no_zero', array('is_natural_no_zero' => 'Questão inválida','required'=>'é preciso ter uma questão para atualizar'));
 
 				//verificar
@@ -286,6 +288,8 @@ class Professor extends CI_Controller {
 				}else{
 					$dados_form = $this->input->post();
 					$dados_form['nomeLista'] = html_escape($dados_form['nomeLista']);
+					$date = converter_data($dados_form['enddate'],4);
+					$finaldate = $date.' '.$dados_form['endtime'];
 
 					$infos = array(
 						'hash' => $hash, 
@@ -297,7 +301,8 @@ class Professor extends CI_Controller {
 						'new_fotos' => $_FILES['fotos'],
 						'nome_lista' => $dados_form['nomeLista'],
 						'questoes' => $dados_form['questoes'],
-						'id_questoes' => $dados_form['id_questao']
+						'id_questoes' => $dados_form['id_questao'],
+						'final_date' => $finaldate
 					);
 
 					if($this->questao->editarQuestoes($infos,$valores)){
