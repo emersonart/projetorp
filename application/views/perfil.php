@@ -10,12 +10,12 @@
                                 <div class="row">
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
                                         <div class="address-hr">
-                                            <p><b>Nome</b><br> Fly Zend</p>
+                                            <p><b>Nome</b><br> <?php echo $perfil['inf_name']?></p>
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
                                         <div class="address-hr">
-                                            <p><b>Email</b><br> fly@gmail.com</p>
+                                            <p><b>Email</b><br> <?php echo $perfil['inf_email']?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -68,17 +68,34 @@
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                                         <div class="address-hr biography">
-                                                            <p><b>Nome completo:</b><br> Fly Zend</p>
+                                                            <p><b>Nome completo:</b><br> <?php echo $perfil['inf_name'].' '.$perfil['inf_lastname'];?></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                                         <div class="address-hr biography">
-                                                            <p><b>Contato</b><br> 01962067309</p>
+                                                            <p><b>Contato:</b><br> 01962067309</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                                         <div class="address-hr biography">
-                                                            <p><b>Email</b><br> fly@gmail.com</p>
+                                                            <p><b>Email:</b><br><?php echo $perfil['inf_email']?></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                 <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                                        <div class="address-hr biography">
+                                                            <p><b>Matrícula:</b><br> <?php echo $perfil['inf_registration']?></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                                        <div class="address-hr biography">
+                                                            <p><b>Tipo:</b><br> <?php echo $perfil['usu_perm'];?></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                                                        <div class="address-hr biography">
+                                                            <p><b>Nome de Usuário:</b><br><?php echo $perfil['usu_login'];?></p>
                                                         </div>
                                                     </div>
                                                 </div>

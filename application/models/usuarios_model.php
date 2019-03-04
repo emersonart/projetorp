@@ -253,12 +253,54 @@ class Usuarios_model extends CI_Model{
 		}
 	}
 
-	public function getPerfil($id){
+	public function getPerfil($dado){
+
+		$this->db->select('usu_id');
+		$this->db->from('tb_users');
+		$this->db->limit(1);
+		$this->db->where('usu_login',$dado);
+
+		$query = $this->db->get();
+
+		if($query->num_rows() == 1){
+			$nomeusuario = TRUE;
+			$idusuario = FALSE;
+			$id = $query->row_array()['usu_id'];
+		}else{
+			$this->db->select('usu_id');
+			$this->db->from('tb_users');
+			$this->db->limit(1);
+			$this->db->where('usu_id',$dado);
+
+			$query1 = $this->db->get();
+			if($query1->num_rows() == 1){
+				$nomeusuario = FALSE;
+				$idusuario = TRUE;
+				$id = $query1->row_array()['usu_id'];
+			}else{
+				$nomeusuario = FALSE;
+				$idusuario = FALSE;
+			}
+		}
+
+		if(!$nomeusuario and !$idusuario){
+			set_msg_pop('usuário não encontrado','error','normal');
+			return false;
+		}
+
+
 		$this->db->select('*');
 		$this->db->from('tb_users');
 		$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id','inner');
+		$this->db->where('tb_users.usu_id',$id);
 		$this->db->limit(1);
 		$query = $this->db->get();
+
+		if($query->num_rows() == 1){
+			return $query->row_array();
+		}else{
+			return false;
+		}
 	}
 
 

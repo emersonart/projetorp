@@ -61,6 +61,7 @@ $route['administrativo/novamateria'] = 'adms/criarmateria';
 $route['administrativo/configs'] = 'adms/config_site';
 $route['administrativo/fazerbackup'] = 'adms/fazerbackup';
 $route['perfil'] = 'usuarios/perfil';
+$route['perfil/(:any)'] = 'usuarios/perfil/$1';
 $route['turma/(:any)'] = 'turmas/view/$1';
 $route['turma/(:any)/(:any)'] = 'turmas/view/$1/$2';
 $route['turma/(:any)/excluir/(:num)'] = 'professor/excluirLista/$1/$2';
