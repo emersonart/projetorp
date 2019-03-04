@@ -134,3 +134,74 @@ if(!function_exists('excluir_imagem_pasta')){
 
 	}
 }
+
+if(!function_exists('zipData')){
+	function zipData($source, $destination) {
+		$ci = & get_instance();
+		$ci->load->library('zip');
+		
+		
+		$ci->zip->compression_level = 4;
+		
+
+		ini_set('max_execution_time', 600);
+		ini_set('memory_limit','1024M');
+    //$ppasta = 'projetorp/';
+		//if (extension_loaded('zip')) {
+			if (file_exists($source)) {
+				//$zip = new ZipArchive();
+				//if ($zip->open($destination, ZIPARCHIVE::CREATE)) {
+
+
+                    //$source = realpath($source);
+
+                //$source = '../'.explode('projetorp', $source)[1];
+
+                //echo $source.'<br>';
+
+					if (is_dir($source) === true) {
+						$source = str_replace('\\', '/', $source);
+						$iterator = new \RecursiveDirectoryIterator($source);
+                // skip dot files while iterating
+						$iterator->setFlags(RecursiveDirectoryIterator::SKIP_DOTS);
+						$files = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::SELF_FIRST);
+						foreach ($files as $file) {
+        //$file = realpath($file);
+
+
+							$vars = "/"."."."git|user_guide|kiaalap-master|sistemabckp/i";
+							$pos = strpos( $file, '.git' );
+							$pos1 = strpos( $file, 'user_guide' );
+							$pos2 = strpos( $file, 'kiaalp-master' );
+
+                        //echo $f."<br>";
+                        //$pattern = '/^' . $file . '$/';//Padrão a ser encontrado na string $tags
+							if (!preg_match($vars,$file)) {
+								//echo $file."<br>";
+								if (is_dir($file) === true) {
+									$ci->zip->add_dir(str_replace($source . '/', '', $file . '/'));
+									//$zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+
+								} else if (is_file($file) === true) {
+									$ci->zip->add_data($file,file_get_contents(str_replace($source . '/', '', $file)));
+									//$zip->addFile($file, str_replace($source . '/', '', $file));
+								}
+							}
+
+						}
+					} else if (is_file($source) === true) {
+						$ci->zip->add_data($source,file_get_contents(basename($source)));
+						//$zip->addFile($source, basename($source));
+					}
+				//}
+					$ci->zip->archive('backup_sys/sistemabckp/sis-'.$destination.'.zip');
+					$ci->zip->clear_data();
+					
+				return 'backup_sys/sistemabckp/sis-'.$destination.'.zip';
+			}
+
+			echo 'nao achou';
+		//}
+		return false;
+	}
+}

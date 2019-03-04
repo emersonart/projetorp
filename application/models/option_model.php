@@ -89,7 +89,7 @@ class Option_model extends CI_Model{
 	}
 
 
-	public function backup_tables($tables = '*',$rotina = false){
+	public function backup_tables($tables = '*',$rotina = false,$sistema = TRUE){
 		
 		//$conn = mysqli_connect($host,$user,$pass,$name);
 		//$conn->set_charset('utf8');
@@ -191,18 +191,27 @@ class Option_model extends CI_Model{
 		}
 		$return .= "COMMIT;";
 	//save file
-		$name = 'backup-koala-'.date('Y-m-d-H-i-s');
+		$name = 'koala-'.date('d-m-Y-H-i-s');
 		//$handle = fopen($name,'w+');
 		//fwrite($handle,$return);
 		//fclose($handle);
+		if($sistema){
+			$this->load->library('zip');
+			$this->zip->add_data($name.'.sql',$return);
+			$this->zip->compression_level = 3;
+			$this->zip->archive('./backup_sys/'.$name.'.zip');
+			$this->zip->clear_data();
+			$link = 'backup_sys/'.$name.'.zip';
+			$arquivossistema = zipData('../projetorp/',$name);
+		}else{
 
-		$this->load->library('zip');
-
-		$this->zip->add_data($name.'.sql',$return);
-		$this->zip->compression_level = 3;
-		$this->zip->archive('backup_sys/'.$name.'.zip');
+			
+		}
+		
 		
 
+		
+		/*
 		//diretório que deseja listar os arquivos
 			$path = "./backup_sys/";
 
@@ -237,50 +246,23 @@ class Option_model extends CI_Model{
 			//gera um link para o arquivo
 			}
 			$diretorio -> close();
-
+		*/
 		if(!$rotina){
-			$this->zip->download($name.'.zip');
+			//$this->zip->download($name.'.zip');
+			
 		}else{
 			$send_email = array(
 					'subject' => 'Backup '.date('d/m/Y'), 
-					'message' => '<h1>Backup diário do banco de dados: '.date('d/m/Y H:i').'</h1><p>Esta mensagem foi gerada automaticamente pelo  sistema de backup diário</p><p>caso deseje baixar diretamente do site <a href="'.base_url('backup_sys/'.$name.'.zip').'" target="_blank"> CLIQUE AQUI </a>',
+					'message' => '<h1>Backup diário do banco de dados: '.date('d/m/Y H:i').'</h1><p>Esta mensagem foi gerada automaticamente pelo  sistema de backup diário</p><p>Baixe diretamente do site <a href="'.base_url($link).'"> CLIQUE AQUI PARA BAIXAR O BANCO DE DAOS</a> <br><br> <a href="'.base_url($arquivossistema).'">CLIQUE AQUI PARA BAIXAR O SITE COMPLETO</a>',
 					'emails' => 'emersonbruno_@hotmail.com',
-					'arquivo' => './backup_sys/'.$name.'.zip'
+					'arquivo'=> $link
 					);
-			send_email($send_email);
+			
+			
+			echo $send_email['arquivo'];
+			var_dump(send_email($send_email));
 
 
-
-			$this->load->library('ftp');
-
-			$config['hostname'] = 'ftp.fisicainvertida.com';
-			$config['username'] = 'fisicainvertida';
-			$config['password'] = 'natal1010';
-			$config['debug']        = TRUE;
-			$config['port']     = 21;
-
-			$this->ftp->connect($config);
-
-			$list = $this->ftp->list_files('/public_html/koalaeducational/');
-
-			for($i=0;$i<count($list);$i++){
-				if($list[$i] != "." or $list[$i] != ".."){
-					echo '-'.$list[$i];
-					if(is_dir($list[$i]) and ($list[$i] != "." or $list[$i] != "..")){
-					
-					$dentro = $this->ftp->list_files('/public_html/koalaeducational/'.$list[$i]);
-					foreach ($dentro as $key => $value) {
-						echo '--'.$value.'<br>';
-					}
-					
-				}
-				}
-				
-				
-				echo '<br>';
-			}
-
-			$this->ftp->close();
 		}
 		//echo $return;
 	}

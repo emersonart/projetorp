@@ -13,7 +13,12 @@
                 </div>
               </div>
             </div>
-
+            <?php 
+            $data = converter_data(explode(' ',$listainfo['lis_endtime'])[0],4).' '.explode(' ',$listainfo['lis_endtime'])[1];
+            if(strtotime(date('Y-m-d H:i')) >= strtotime($data)){
+              echo 'NÃO É POSSÍVEL MAIS RESPONDER ESTA LISTA';
+            }
+            ?>
             <div class="card-body">
               <?php 
                 if(isset($lista) && sizeof($lista) > 0){ 
