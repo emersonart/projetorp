@@ -15,7 +15,8 @@ class Questoes_model extends CI_Model{
 			'lis_name' => $values['nomeLista'],
 			'lis_subject' => $values['subject'],
 			'lis_teacher' => $values['id_professor'],
-			'lis_cla_hash' => $values['class_hash']
+			'lis_cla_hash' => $values['class_hash'],
+			'lis_endtime' => $values['endtime']
 		);
 
 		$this->db->insert('tb_lists',$info_lista);
@@ -114,6 +115,32 @@ class Questoes_model extends CI_Model{
 				$this->db->set('lis_name',$values['nome_lista']);
 				$this->db->where('lis_id',$infos['id_lista']);
 				$this->db->update('tb_lists');
+			}else{
+				$fff = "<strong>Nome da lista</strong> não foi alterado.";
+			}
+			$cropdate = explode(' ', $values['final_date']);
+			$date = converter_data($cropdate[0],4);
+			$finaldate = $date.' '.$cropdate[1];
+
+			if($query->row_array()['lis_endtime'] == '' or empty($query->row_array()['lis_endtime'])){
+				$finaldatedb = "1900-01-01 00:00";
+			}else{
+				$cropdatedb = explode(' ', $query->row_array()['lis_endtime']);
+				$datedb = converter_data($cropdatedb[0],4);
+				$finaldatedb = $datedb.' '.$cropdatedb[1];
+			}
+			
+			if(strtotime($finaldate) > strtotime($finaldatedb)){
+				$this->db->set('lis_endtime',$values['final_date']);
+				$this->db->where('lis_id',$infos['id_lista']);
+				$this->db->update('tb_lists');
+			}else{
+				if(isset($fff)){
+					$fff .= "<br><strong>Data e hora</strong> igual ou menor que a cadastrada anteriormente, portanto não foi atualizada";
+				}else{
+					$fff = '<strong>Data e hora</strong> igual ou menor que a cadastrada anteriormente, portanto não foi atualizada';
+				}
+				
 			}
 		}else{
 			set_msg_pop('Lista não encontrada lista, error: li01','error','normal');
@@ -183,7 +210,12 @@ class Questoes_model extends CI_Model{
 
 
 						}
-						set_msg_pop('Lista atualizada com sucesso','success','normal');
+						$msg = 'Lista atualizada com sucesso';
+						$tam = "normal";
+						if(isset($fff)){
+							$msg .= '<br>'.$fff;
+							$tam = "large";						}
+						set_msg_pop($msg,'success',$tam);
 						redirect('turma/'.$infos['hash'].'/editar/'.$infos['id_lista'],'refresh');
 						return true;
 					}
@@ -286,85 +318,106 @@ class Questoes_model extends CI_Model{
 	}
 
 	public function regResposta($dados,$respostas,$idq){
-
-		if(count($idq) == count($respostas) and count($dados) == 3){
-			$this->db->select('*');
-			$this->db->from('tb_reviews');
-			$this->db->where('rev_usu_id',$dados['id_usuario']);
-			$this->db->where('rev_lis_id',$dados['id_lista']);
-			$respondida = $this->db->get();
-			if($respondida->num_rows() > 0){
-				set_msg_pop('Sua Resposta já foi corrigida, portanto não poderá mais alterar sua resposta','error','large');
-				redirect('turma/'.$dados['hash'],'refresh');
+		$this->db->select('lis_endtime');
+		$this->db->from('tb_lists');
+		$this->db->where('lis_id',$dados['id_lista']);
+		$this->db->limit(1);
+		$qq = $this->db->get();
+		if($qq->num_rows() == 1){
+			$qq1 = $qq->row_array()['lis_endtime'];
+			$qq2 = explode(' ',$qq1);
+			$qq3 = converter_data($qq2[0],4);
+			$timee = $qq3.' '.$qq2[1];
+			if(strtotime(date('Y-m-d H:i')) > strtotime($timee)){
+				$data = converter_data($qq2[0],3);
+				set_msg_pop('O período para responder esta lista expirou!<br>A data era até '.$data.' às '.$qq2[1].'!','error','normal');
 				return false;
 			}
-
-			$hash = $dados['hash'];
-			$this->db->select('*');
-			$this->db->from('tb_answers');
-			$this->db->where('ans_usu_id',$dados['id_usuario']);
-			$this->db->where('ans_lis_id',$dados['id_lista']);
-			$this->db->where('ans_cla_hash',$dados['hash']);
-			$query = $this->db->get();
-
-			if($query->num_rows() == count($respostas)){
-				//achou uma resposta
-				$this->db->trans_start();
-				for ($i=0; $i < count($respostas); $i++) { 
-					$this->db->set('ans_resposta',$respostas[$i]);
-					$try = (int)$query->row()->ans_tries+1;
-					$this->db->set('ans_tries',$try);
-					$this->db->set('ans_date',date('d-m-Y G:i'));
-					$this->db->set('ans_status',0);
-					$this->db->where('ans_usu_id',$dados['id_usuario']);
-					$this->db->where('ans_lis_id',$dados['id_lista']);
-					$this->db->where('ans_act_id',$idq[$i]);
-					$this->db->update('tb_answers');
-				}
-				$this->db->trans_complete();
-
-				if ($this->db->trans_status() === FALSE) {
-				    # Something went wrong.
-					set_msg_pop($this->db->trans_rollback(),'error','normal');
+		
+			if(count($idq) == count($respostas) and count($dados) == 3){
+				$this->db->select('*');
+				$this->db->from('tb_reviews');
+				$this->db->where('rev_usu_id',$dados['id_usuario']);
+				$this->db->where('rev_lis_id',$dados['id_lista']);
+				$respondida = $this->db->get();
+				if($respondida->num_rows() > 0){
+					set_msg_pop('Sua Resposta já foi corrigida, portanto não poderá mais alterar sua resposta','error','large');
+					redirect('turma/'.$dados['hash'],'refresh');
 					return false;
-				}else{
-
-					set_msg_pop('Resposta computada com sucesso','success','normal');
-					redirect('turma/'.$dados['hash'].'/responder/'.$dados['id_lista'],'refresh');
-					return true;
 				}
 
+
+
+				$hash = $dados['hash'];
+				$this->db->select('*');
+				$this->db->from('tb_answers');
+				$this->db->where('ans_usu_id',$dados['id_usuario']);
+				$this->db->where('ans_lis_id',$dados['id_lista']);
+				$this->db->where('ans_cla_hash',$dados['hash']);
+				$query = $this->db->get();
+
+				if($query->num_rows() == count($respostas)){
+					//achou uma resposta
+					$this->db->trans_start();
+					for ($i=0; $i < count($respostas); $i++) { 
+						$this->db->set('ans_resposta',$respostas[$i]);
+						$try = (int)$query->row()->ans_tries+1;
+						$this->db->set('ans_tries',$try);
+						$this->db->set('ans_date',date('d-m-Y G:i'));
+						$this->db->set('ans_status',0);
+						$this->db->where('ans_usu_id',$dados['id_usuario']);
+						$this->db->where('ans_lis_id',$dados['id_lista']);
+						$this->db->where('ans_act_id',$idq[$i]);
+						$this->db->update('tb_answers');
+					}
+					$this->db->trans_complete();
+
+					if ($this->db->trans_status() === FALSE) {
+					    # Something went wrong.
+						set_msg_pop($this->db->trans_rollback(),'error','normal');
+						return false;
+					}else{
+
+						set_msg_pop('Resposta computada com sucesso','success','normal');
+						redirect('turma/'.$dados['hash'].'/responder/'.$dados['id_lista'],'refresh');
+						return true;
+					}
+
+				}else{
+					//nao achou, cadastrar nova resposta
+					$dados1 = array(
+						'ans_lis_id'=>(int)$dados['id_lista'],
+						'ans_usu_id'=>(int)$dados['id_usuario'],
+						'ans_cla_hash' => $hash,
+						'ans_tries' => 1
+					);
+					$this->db->trans_start();
+					for ($i=0; $i < count($respostas); $i++) { 
+						$dados1['ans_act_id'] = $idq[$i];
+						$dados1['ans_date'] = date('d-m-Y G:i');
+						$dados1['ans_resposta'] = $respostas[$i];
+						$dados1['ans_status'] = 0;
+						$this->db->insert('tb_answers',$dados1);
+					}
+					$this->db->trans_complete();
+
+					if ($this->db->trans_status() === FALSE) {
+					    # Something went wrong.
+						set_msg_pop($this->db->trans_rollback(),'error','normal');
+						return false;
+					}else{
+						set_msg('Resposta computada com sucesso pela primeira vez','success');
+						set_msg_pop('Resposta computada com sucesso pela primeira vez','success','normal');
+						return $hash;
+					}
+				}
 			}else{
-				//nao achou, cadastrar nova resposta
-				$dados1 = array(
-					'ans_lis_id'=>(int)$dados['id_lista'],
-					'ans_usu_id'=>(int)$dados['id_usuario'],
-					'ans_cla_hash' => $hash,
-					'ans_tries' => 1
-				);
-				$this->db->trans_start();
-				for ($i=0; $i < count($respostas); $i++) { 
-					$dados1['ans_act_id'] = $idq[$i];
-					$dados1['ans_date'] = date('d-m-Y G:i');
-					$dados1['ans_resposta'] = $respostas[$i];
-					$dados1['ans_status'] = 0;
-					$this->db->insert('tb_answers',$dados1);
-				}
-				$this->db->trans_complete();
-
-				if ($this->db->trans_status() === FALSE) {
-				    # Something went wrong.
-					set_msg_pop($this->db->trans_rollback(),'error','normal');
-					return false;
-				}else{
-					set_msg('Resposta computada com sucesso pela primeira vez','success');
-					set_msg_pop('Resposta computada com sucesso pela primeira vez','success','normal');
-					return $hash;
-				}
+				set_msg_pop('Parametros incorretos para esta solicitação','error','normal');
+				return false;
 			}
+			set_msg_pop('achou','success','normal');
 		}else{
-			set_msg_pop('Parametros incorretos para esta solicitação','error','normal');
-			return false;
+			set_msg_pop('nao achou!?','warning','normal');
 		}
 	}
 

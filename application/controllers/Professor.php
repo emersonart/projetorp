@@ -85,6 +85,8 @@ class Professor extends CI_Controller {
 			$this->form_validation->set_rules('nomeLista','Nome da Lista','trim|required|xss_clean|min_length[5]|is_unique[tb_lists.lis_name]', array('required' => 'É obrigatório inserir um nome para a lista','is_unique'=>'Nome da lista já em uso'));
 			$this->form_validation->set_rules('questoes[]','Questões','trim|required|xss_clean|min_length[12]',array('required'=>'É obrigatório inserir todas as questões para esta lista'));
 			$this->form_validation->set_rules('fotos[]','Fotos','trim');
+			$this->form_validation->set_rules('enddate','Data final para a lista','trim|required|regex_match[/^([2-9][0-9][0-9][0-9])-([0-1][0-9])-([0-3][0-9])$/]',array('regex_match' => 'Formato inválido de data'));
+			$this->form_validation->set_rules('endtime','Hora final para a lista','trim|required|callback_regex_check');//(2[0-3]|[0?1][0-9]):([0-5][0-9])
 
 			//verifica validação
 			if($this->form_validation->run() == FALSE){
@@ -101,6 +103,8 @@ class Professor extends CI_Controller {
 				$dados_lista['id_professor'] = $dados_hash['cla_teacher'];
 				$dados_lista['subject'] = $dados_hash['sub_id'];
 				$dados_lista['class_hash'] =  $dados_hash['cla_hash'];
+				$date = converter_data($dados_form['enddate'],4);
+				$dados_lista['endtime'] = $date.' '.$dados_form['endtime'];
 
 
 
@@ -125,104 +129,9 @@ class Professor extends CI_Controller {
 						}
 					}
 
-					 /*parte que comentei pra nao modificar!
-
-					if(!empty($fotos['name'])){
-					//carregar library de upload
-						$this->load->library('upload');
-					//inicio loop de upload de foto
-						for($i=0;$i<$filesCount;$i++){
-							//$filesFinalCount = $i+1;
-							if($fotos['name'][$i] == ""){
-								unset($fotos['name'][$i]);
-								unset($fotos['type'][$i]);
-								unset($fotos['tmp_name'][$i]);
-								unset($fotos['error'][$i]);
-								unset($fotos['size'][$i]);
-								$url_foto[$i] = "";
-								$url_crop_foto[$i] = '';
-							}else{
-								$idq = $i+1;
-								$_FILES['file']['name']     = $_FILES['fotos']['name'][$i];
-								$_FILES['file']['type']     = $_FILES['fotos']['type'][$i];
-								$_FILES['file']['tmp_name'] = $_FILES['fotos']['tmp_name'][$i];
-								$_FILES['file']['error']     = $_FILES['fotos']['error'][$i];
-								$_FILES['file']['size']     = $_FILES['fotos']['size'][$i];
-
-		                	// File upload configuration
-								$uploadPath = 'assets/img/listas/temp/';
-								$config['upload_path'] = './'.$uploadPath;
-								$config['allowed_types'] = 'jpg|jpeg|png|gif';
-								$config['override'] = TRUE;
-								$config['max-size'] = 2048;
-								$config['file_name'] = strtolower($hashs).'-lista-'.$id_lista.'-q-'.$idq;
-								$config['file_ext_tolower'] = TRUE;
-
-								$this->upload->initialize($config);
-
-								if($this->upload->do_upload('file')){
-			                    // Uploaded file data
-									$fileData = $this->upload->data();
-									if(!is_dir('./assets/img/listas/'.$id_lista)){
-										mkdir('./assets/img/listas/'.$id_lista,0755);
-									}
-									$uploadCrop = 'assets/img/listas/'.$id_lista.'/';
-									$url_foto[$i]['file_name'] = $fileData['file_name'];
-									$filesFinalCount += 1;
-
-									$configcrop['image_library'] = 'gd2';
-									$configcrop['source_image'] = './'.$uploadPath.$url_foto[$i]['file_name'];
-									$configcrop['new_image']     = './'.$uploadCrop.$fileData['raw_name'].$fileData['file_ext'];
-									$configcrop['maintain_ratio'] = TRUE;
-									$configcrop['create_thumb'] = FALSE;
-									$configcrop['height'] = 350;
-
-								 // Aplica as configurações para a library image_lib
-									$this->image_lib->initialize($configcrop);
-
-									if(!$this->image_lib->resize()){
-						                // Recupera as mensagens de erro e envia o usuário para a home
-										$data = array('error' => $this->image_lib->display_errors());
-										set_msg($data['error'],'info');
-									}else{
-										$url_crop_foto[$i] = $uploadCrop.$fileData['raw_name'].$fileData['file_ext'];
-										unlink('./'.$uploadPath.$fileData['raw_name'].$fileData['file_ext']);
-									}
-								}
-
-							}
-						}
-					//final loop de upload de foto
-
-					} fim parte que comentei! */
-
-					//inicio parte que to editando
-
-					//fim parte que to editando
-
-						
-						
-						
-						
-
 						
 				}
-				//final verificando se foi criada a lista
-				//var_dump($dados_form['questoes'])."<br><br>";
-				//var_dump(count($dados_form['questoes']))."<br><br>";
-				//print_r(count($_FILES['fotos']))."<br><br>";
-
-
-				//$valor = array(
-				//	'nomeLista' => $dados_form['nomeTurma'],
-				//	'descricaoTurma' => $dados_form['descricaoTurma'],
-				//	'hashTurma' => $dados['hash'],
-				//	'startHash' => date('d-m-Y'),
-				//	'endHash' => converter_data($dados_form['tempoTurma'],2),
-				//	'profTurma' => $prof,
-				//	'inscTurma' => 1
-				//);
-
+			
 			}
 
 			load_template('professor/cadastrarQuestoes', $dados);
@@ -230,6 +139,14 @@ class Professor extends CI_Controller {
 			set_msg_pop('Turma não encontrada, portanto não é possível criar uma lista de atividade','error','normal');
 			redirect('turmas','refresh');
 		}
+	}
+	public function regex_check($str){
+	    if (!preg_match('/^(2[0-3]|[0-1][0-9]):[0-5][0-9]$/', $str)){
+	        $this->form_validation->set_message('regex_check', 'Formato inválido de hora');
+	        return FALSE;
+	    }else{
+	        return TRUE;
+	    }
 	}
 
 	public function corrigirLista($hash,$id_lista,$id_aluno){
@@ -357,8 +274,10 @@ class Professor extends CI_Controller {
 			}
 
 			//parametros post
-				$this->form_validation->set_rules('questoes[]','Questão','trim' );
+				$this->form_validation->set_rules('questoes[]','Questão','trim|required' );
 				$this->form_validation->set_rules('nomeLista','Questão','trim|required' );
+				$this->form_validation->set_rules('enddate','Data final para a lista','trim|required|regex_match[/^([2-9][0-9][0-9][0-9])-([0-1][0-9])-([0-3][0-9])$/]',array('regex_match' => 'Formato inválido de data'));
+				$this->form_validation->set_rules('endtime','Hora final para a lista','trim|required|callback_regex_check');
 				$this->form_validation->set_rules('id_questao[]','Id questão','trim|required|is_natural_no_zero', array('is_natural_no_zero' => 'Questão inválida','required'=>'é preciso ter uma questão para atualizar'));
 
 				//verificar
@@ -369,6 +288,8 @@ class Professor extends CI_Controller {
 				}else{
 					$dados_form = $this->input->post();
 					$dados_form['nomeLista'] = html_escape($dados_form['nomeLista']);
+					$date = converter_data($dados_form['enddate'],4);
+					$finaldate = $date.' '.$dados_form['endtime'];
 
 					$infos = array(
 						'hash' => $hash, 
@@ -380,7 +301,8 @@ class Professor extends CI_Controller {
 						'new_fotos' => $_FILES['fotos'],
 						'nome_lista' => $dados_form['nomeLista'],
 						'questoes' => $dados_form['questoes'],
-						'id_questoes' => $dados_form['id_questao']
+						'id_questoes' => $dados_form['id_questao'],
+						'final_date' => $finaldate
 					);
 
 					if($this->questao->editarQuestoes($infos,$valores)){

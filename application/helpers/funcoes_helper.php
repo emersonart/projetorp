@@ -342,7 +342,7 @@ if(!function_exists('gerarHash')){
 			$ci->load->library('email');
 			$ci->email->subject('Koala - '.$values['subject']);
 			$ci->email->message($values['message']);
-			$ci->email->from('koala-no-reply@fisicainvertida.com', 'Koala Educational - Não Responder','koala-no-reply@fisicainvertida.');
+			$ci->email->from('kaola.no.reply@gmail.com', 'Koala Educational - Não Responder','koala-no-reply@fisicainvertida.com');
 			$ci->email->bcc($values['emails']);
 			if(isset($values['arquivo'])){
 				if(is_array($values['arquivo'])){
@@ -357,7 +357,18 @@ if(!function_exists('gerarHash')){
 			if($ci->email->send()){
 				return TRUE;
 			}else{
-				return FALSE;
+				return $ci->email->print_debugger();;
 			}
+		}
+	}
+
+	if(!function_exists('check_date')){
+		function check_date($str){
+			if (preg_match('/^(2[0-3]|[0-1][0-9]):[0-5][0-9]$/', $str)){
+		        $this->form_validation->set_message('regex_check', 'The %s field is not valid!');
+		        return FALSE;
+		    }else{
+		        return TRUE;
+		    }
 		}
 	}

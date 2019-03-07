@@ -140,7 +140,12 @@ class Adms extends CI_Controller {
 			$this->option->backup_tables();
 
 		}else if($get){
-			$this->option->backup_tables('*',TRUE);
+			if($this->input->get('sis')){
+				$this->option->backup_tables('*',TRUE,TRUE);
+			}else{
+				$this->option->backup_tables('*',TRUE,FALSE);
+			}
+			
 		}else{
 			verif_login('dashboard',0);
 		}

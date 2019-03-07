@@ -18,6 +18,31 @@
              <label>Novo nome da lista</label>
              <input type="text" class="form-control" placeholder="Nome da Lista" name="nomeLista" required="" value="<?php echo html_escape($oklista['lis_name']); ?>">
             </div>
+            <div class="form-group-inner">
+            <label>Data final para responder</label>
+            <div class="input-group">
+              <label class="input-group-addon" id="basic-addon1"> <i class="fa fa-calendar"></i></label>
+              <?php 
+              if(!empty($oklista['lis_endtime']) and isset($oklista['lis_endtime'])){
+                $date = explode(' ',$oklista['lis_endtime']);
+                $time = $date[1];
+                $date = converter_data($date[0],4);
+              }else{
+                $date = $time = NULL;
+              }
+              ?>
+              <input value="<?php echo $date; ?>" type="date" class="form-control" aria-describedby="basic-addon1" required ="" name="enddate">
+            </div>
+          </div>
+
+          <div class="form-group-inner">
+           <label>Hora final para responder</label>
+           <div class="input-group">
+              <label class="input-group-addon" id="basic-addon1"> <i class="fa fa-clock-o"></i></label>
+               <input type="time" class="form-control" placeholder="Hora final" name="endtime" required="" value="<?php echo $time; ?>">
+            </div>
+          
+         </div>
             <div class="row">
           <div class="col-lg-8 col-lg-offset-2 mg-t-30">
             <div class="col-lg">
