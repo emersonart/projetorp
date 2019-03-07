@@ -195,23 +195,21 @@ class Option_model extends CI_Model{
 		//$handle = fopen($name,'w+');
 		//fwrite($handle,$return);
 		//fclose($handle);
-		if($sistema){
 			$this->load->library('zip');
 			$this->zip->add_data($name.'.sql',$return);
 			$this->zip->compression_level = 3;
 			$this->zip->archive('./backup_sys/'.$name.'.zip');
 			$this->zip->clear_data();
 			$link = 'backup_sys/'.$name.'.zip';
-			$arquivossistema = zipData('../projetorp/',$name);
-		}else{
 
-			
+		if($sistema){	
+			$arquivossistema = zipData('../projetorp/',$name);
 		}
 		
 		
 
 		
-		/*
+		
 		//diretório que deseja listar os arquivos
 			$path = "./backup_sys/";
 
@@ -228,12 +226,12 @@ class Option_model extends CI_Model{
 							if($diretorios > 7){
 								if(filectime($path.$arquivo) < strtotime('-7 days') and explode('.',$arquivo)[1] == 'zip'){
 									unlink($path.$arquivo);
-									echo 'excluiu um<br>';
+									//echo 'excluiu um<br>';
 								}
 								
 								
 							}else{
-								echo "$arquivo foi modificado em: " . date ("F d Y H:i:s.", filectime($path.$arquivo)).'<br>';
+								//echo "$arquivo foi modificado em: " . date ("F d Y H:i:s.", filectime($path.$arquivo)).'<br>';
 							}
 					    	
 						}
@@ -246,14 +244,20 @@ class Option_model extends CI_Model{
 			//gera um link para o arquivo
 			}
 			$diretorio -> close();
-		*/
+		
 		if(!$rotina){
-			//$this->zip->download($name.'.zip');
+			$this->zip->download($name.'.zip');
 			
 		}else{
+			$msg = '<h1>Backup diário do banco de dados: '.date('d/m/Y H:i').'</h1><p>Esta mensagem foi gerada automaticamente pelo  sistema de backup diário</p><p>Baixe diretamente do site <a href="'.base_url($link).'"> CLIQUE AQUI PARA BAIXAR O BANCO DE DADOS</a>';
+
+			if(isset($arquivossitema)){
+				$msg .= '<br><br> <a href="'.base_url($arquivossistema).'">CLIQUE AQUI PARA BAIXAR O SITE COMPLETO</a>';
+			} 
+
 			$send_email = array(
 					'subject' => 'Backup '.date('d/m/Y'), 
-					'message' => '<h1>Backup diário do banco de dados: '.date('d/m/Y H:i').'</h1><p>Esta mensagem foi gerada automaticamente pelo  sistema de backup diário</p><p>Baixe diretamente do site <a href="'.base_url($link).'"> CLIQUE AQUI PARA BAIXAR O BANCO DE DAOS</a> <br><br> <a href="'.base_url($arquivossistema).'">CLIQUE AQUI PARA BAIXAR O SITE COMPLETO</a>',
+					'message' => $msg,
 					'emails' => 'emersonbruno_@hotmail.com',
 					'arquivo'=> $link
 					);

@@ -138,6 +138,45 @@ if(!function_exists('excluir_imagem_pasta')){
 if(!function_exists('zipData')){
 	function zipData($source, $destination) {
 		$ci = & get_instance();
+		
+		//diretório que deseja listar os arquivos
+			$path = "./backup_sys/sistemabckp/";
+
+		//le os arquivos do diretorio
+			$diretorio = dir($path);
+				$diretorios = scandir("./backup_sys/sistemabckp/");
+				$diretorios = count($diretorios) - 2;
+
+				var_dump($diretorio);
+		//loop para listar os arquivos do diretório, guardando na variável $arquivo
+			while( $arquivo = $diretorio -> read() ){
+				
+				if($arquivo != '.' ){
+					if($arquivo != '..'){
+						if (file_exists($path.$arquivo) and $arquivo != $destination) {
+							if($diretorios > 7){
+								if(filectime($path.$arquivo) < strtotime('-7 days') and explode('.',$arquivo)[1] == 'zip'){
+									unlink($path.$arquivo);
+									//echo 'excluiu um<br>';
+								}
+								
+								
+							}else{
+								//echo "$arquivo foi modificado em: " . date ("F d Y H:i:s.", filectime($path.$arquivo)).'<br>';
+							}
+					    	
+						}
+						
+					
+					}
+					
+					
+				}
+			//gera um link para o arquivo
+			}
+			$diretorio -> close();
+
+			
 		$ci->load->library('zip');
 		
 		
@@ -169,7 +208,7 @@ if(!function_exists('zipData')){
         //$file = realpath($file);
 
 
-							$vars = "/"."."."git|user_guide|kiaalap-master|sistemabckp/i";
+							$vars = "/"."."."git"."|"."user_guide"."|"."kiaalap-master"."|"."sistemabckp"."/i";
 							$pos = strpos( $file, '.git' );
 							$pos1 = strpos( $file, 'user_guide' );
 							$pos2 = strpos( $file, 'kiaalp-master' );
