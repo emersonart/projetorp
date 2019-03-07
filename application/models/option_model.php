@@ -165,7 +165,10 @@ class Option_model extends CI_Model{
 				}
 				
 			}
-			$return.= 'INSERT INTO '.$table.' ('.$columns.')VALUES'."\n";
+			if(!empty($res)){
+				
+			
+			$return.= 'INSERT INTO '.$table.' ('.$columns.') VALUES'."\n";
 			$c2 = 0;
 			foreach($res as $key => $value){
 
@@ -177,7 +180,8 @@ class Option_model extends CI_Model{
 					//echo $key1." -------------<br>";
 						$value1 = addslashes($value1);
 						$value1 = str_replace('\n',"\\n",$value1);
-						$return .= '"'.$value1.'"';
+						$value1 = str_replace("'",'"',$value1);
+						$return .= "'".$value1."'";
 
 						if($contador < $num_fields){
 							$return .= ",";
@@ -199,6 +203,7 @@ class Option_model extends CI_Model{
 				
 				//echo $value['act_id'].'<br>';
 			}
+		}
 
 			$return.="\n\n\n";
 		}
@@ -206,8 +211,7 @@ class Option_model extends CI_Model{
 	//save file
 
 
-		echo $return;
-		
+		//echo $return;
 		$name = 'koala-'.date('d-m-Y-H-i-s');
 
 		//$handle = fopen($name,'w+');
@@ -215,11 +219,15 @@ class Option_model extends CI_Model{
 		//fclose($handle);
 			$this->load->library('zip');
 			$this->zip->add_data($name.'.sql',$return);
-			$this->zip->compression_level = 3;
+			$this->zip->compression_level = 2;
 			$this->zip->archive('./backup_sys/'.$name.'.zip');
-			$this->zip->clear_data();
+			
 			$link = 'backup_sys/'.$name.'.zip';
-
+			if(!$rotina){
+				$this->zip->download($name.'.zip');
+			
+			}
+			$this->zip->clear_data();
 		if($sistema){	
 			$arquivossistema = zipData('../projetorp/',$name);
 		}
@@ -263,10 +271,7 @@ class Option_model extends CI_Model{
 			}
 			$diretorio -> close();
 		
-		if(!$rotina){
-			$this->zip->download($name.'.zip');
-			
-		}else{
+		if($rotina){
 			$msg = '<h1>Backup diário do banco de dados: '.date('d/m/Y H:i').'</h1><p>Esta mensagem foi gerada automaticamente pelo  sistema de backup diário</p><p>Baixe diretamente do site <a href="'.base_url($link).'"> CLIQUE AQUI PARA BAIXAR O BANCO DE DADOS</a>';
 
 			if(isset($arquivossitema)){
