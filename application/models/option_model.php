@@ -144,6 +144,7 @@ class Option_model extends CI_Model{
 			$return.= "\n\n";
 						//$return.= "-- inicio tabela ".$table."\n\n";
 			$row2 = $this->db->query('SHOW CREATE TABLE '.$table)->row_array();
+
 			//$row2 = mysqli_fetch_row(mysqli_query($conn,'SHOW CREATE TABLE '.$table));
 			$return.= "\n\n".$row2['Create Table'].";\n\n";
 		//$return.= "ALTER TABLE `".$table."`\n";
@@ -153,15 +154,27 @@ class Option_model extends CI_Model{
 
 
 		//$return.= $idd['AUTO_INCREMENT']."\n\n";
-
-			$return.= 'INSERT INTO '.$table.' VALUES'."\n";
+			$colunas = $this->db->query('SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = "'.$table.'"')->result_array();
+			//print_r($colunas);
+			$columns = '';
+			for($ij=0; $ij < count($colunas);$ij++){
+				if($ij != count($colunas)-1){
+					$columns .= '`'.$colunas[$ij]['COLUMN_NAME'].'`, ';
+				}else{
+					$columns .= '`'.$colunas[$ij]['COLUMN_NAME'].'`';
+				}
+				
+			}
+			$return.= 'INSERT INTO '.$table.' ('.$columns.')VALUES'."\n";
 			$c2 = 0;
 			foreach($res as $key => $value){
+
 				$c2 += 1;
 				$return .= "(";
 				$contador = 0;
 				foreach ($value as $key1 => $value1) {
 					$contador += 1;
+					//echo $key1." -------------<br>";
 						$value1 = addslashes($value1);
 						$value1 = str_replace('\n',"\\n",$value1);
 						$return .= '"'.$value1.'"';
@@ -191,6 +204,9 @@ class Option_model extends CI_Model{
 		}
 		$return .= "COMMIT;";
 	//save file
+
+		echo $return;
+		
 		$name = 'backup-koala-'.date('Y-m-d-H-i-s');
 		//$handle = fopen($name,'w+');
 		//fwrite($handle,$return);
