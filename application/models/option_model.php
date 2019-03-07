@@ -89,7 +89,7 @@ class Option_model extends CI_Model{
 	}
 
 
-	public function backup_tables($tables = '*',$rotina = false,$sistema = TRUE){
+	public function backup_tables($tables = '*',$rotina = false,$sistema = FALSE){
 		
 		//$conn = mysqli_connect($host,$user,$pass,$name);
 		//$conn->set_charset('utf8');
@@ -222,12 +222,13 @@ class Option_model extends CI_Model{
 			$this->zip->compression_level = 2;
 			$this->zip->archive('./backup_sys/'.$name.'.zip');
 			
-			$link = 'backup_sys/'.$name.'.zip';
+			$link = './backup_sys/'.$name.'.zip';
+			
+			$this->zip->clear_data();
 			if(!$rotina){
 				$this->zip->download($name.'.zip');
 			
 			}
-			$this->zip->clear_data();
 		if($sistema){	
 			$arquivossistema = zipData('../projetorp/',$name);
 		}
@@ -274,7 +275,7 @@ class Option_model extends CI_Model{
 		if($rotina){
 			$msg = '<h1>Backup diário do banco de dados: '.date('d/m/Y H:i').'</h1><p>Esta mensagem foi gerada automaticamente pelo  sistema de backup diário</p><p>Baixe diretamente do site <a href="'.base_url($link).'"> CLIQUE AQUI PARA BAIXAR O BANCO DE DADOS</a>';
 
-			if(isset($arquivossitema)){
+			if(isset($arquivossistema)){
 				$msg .= '<br><br> <a href="'.base_url($arquivossistema).'">CLIQUE AQUI PARA BAIXAR O SITE COMPLETO</a>';
 			} 
 
@@ -286,10 +287,10 @@ class Option_model extends CI_Model{
 					);
 			
 			
-			echo $send_email['arquivo'];
-			var_dump(send_email($send_email));
+			//echo $send_email['arquivo'];
+			send_email($send_email);
 
-
+			return true;
 		}
 		//echo $return;
 	}

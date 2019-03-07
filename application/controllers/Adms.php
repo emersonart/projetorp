@@ -136,15 +136,18 @@ class Adms extends CI_Controller {
 		}else{
 			$getOK = FALSE;
 		}
-		if(verif_login('dashboard',0,false)){
+		if($get = $this->input->get('sis') == 1){
+			$getSIS = TRUE;
+		}else{
+			$getSIS = FALSE;
+		}
+		if((verif_login('dashboard',0,false) and $get) or $get){
+			var_dump($this->option->backup_tables('*',$getOK,$getSIS));
+
+		}else if(verif_login('dashboard',0,false)){
+
 			$this->option->backup_tables();
 
-		}else if($get){
-			if($this->input->get('sis')){
-				$this->option->backup_tables('*',TRUE,TRUE);
-			}else{
-				$this->option->backup_tables('*',TRUE,FALSE);
-			}
 			
 		}else{
 			verif_login('dashboard',0);
