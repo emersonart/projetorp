@@ -61,12 +61,17 @@ class Usuarios extends CI_Controller {
 				}else{
 					$senha = $this->input->post()['senha'];
 
-					$senhaalterada = $this->usuario->redefine_password($senha);
+					$dados_enviar = array('senha' => $senha, 'idusuario' => $hash);
+
+					$senhaalterada = $this->usuario->redefine_password($dados_enviar);
 					if($senhaalterada){
+						$this->usuario->delete_token($hash,$token);
 						redirect('login','refresh');
 					}
 				}
-				$this->load->view('recoverypassword');
+				$dados['idusu'] = $hash;
+				$dados['token']= $token;
+				$this->load->view('recoverypassword',$dados);
 			}else{
 				redirect('login','refresh');
 			}
@@ -111,7 +116,8 @@ class Usuarios extends CI_Controller {
 		}else{
 			$perfil = $this->usuario->getPerfil($id_usuario);
 		}
-		
+		$dados['titulo'] = $perfil['inf_name']." - Perfil -";
+		$dados['h1'] = 'Perfil: '.$perfil['inf_name'].' '.$perfil['inf_lastname'];
 		$dados['nick'] = $perfil['usu_login'];	
 		if($perfil and $perfil['usu_id'] == $id_usuario){
 			$dados['perfil'] = $perfil;

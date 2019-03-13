@@ -31,7 +31,7 @@
                                     ?>
                                                     <tr>
                                                         <td><?php echo $n; ?></td>
-                                                        <td><?php echo $linha->inf_name.' '.$linha->inf_lastname; ?></td>
+                                                        <td><a href="<?php echo base_url('perfil/'.$linha->usu_login);?>"><?php echo $linha->inf_name.' '.$linha->inf_lastname; ?></a></td>
                                                         <td><?php echo $linha->inf_registration; ?></td>
                                                         <td>
                                                         <?php

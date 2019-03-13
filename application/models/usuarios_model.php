@@ -395,5 +395,22 @@ class Usuarios_model extends CI_Model{
 		$this->db->delete('tb_recovery_password');
 	}
 
+	public function redefine_password($values){
+		$password = createBcrypt($values['senha']);
+
+		$this->db->set('usu_password',$password['cript']);
+		$this->db->set('usu_session',$password['hskey']);
+		$this->db->where('usu_id',$values['idusuario']);
+		$this->db->update('tb_users');
+		
+		if($this->db->affected_rows()>0){
+			set_msg('Senha alterada com sucesso, use sua nova senha para acessar o sistema','success');
+			return TRUE;
+		}else{
+			set_msg('Não foi possível alterar a senha','danger');
+			return FALSE;
+		}
+
+	}
 
 }

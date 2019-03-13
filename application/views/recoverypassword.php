@@ -78,11 +78,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="hpanel">
                     <div class="panel-body">
                         <?php echo get_msg();?>
-                        <?php echo form_open();?>
-                            <div class="form-group">
-                                <label class="control-label" for="user">Usuário, Matrícula ou Email</label>
-                                <input type="text" placeholder="Nome de usuário ou matrícula" title="Please enter you username" required="" value="" name="userkoala" id="user" class="form-control">
-                            </div>
+                        <?php echo form_open('recovery?hash='.$idusu.'&token='.$token);?>
+                            <div id="passwordme" class="col-lg-6">
+                                    <div class="form-group" >
+                                        <label>Senha</label>
+                                        <input type="password" class="form-control senha1" name="senha" placeholder="******">
+                                    </div>
+                                    <div class="form-group mg-b-pass">
+                                            <div class="pwstrength_viewport_progress">
+                                                
+                                            </div>
+                                        </div>
+                                </div>
+                                 <div id="passwordme2" class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Confirme a senha</label>
+                                        <input type="password" class="form-control senha2"  name="senha2" placeholder="******">
+                                        
+                                    </div>
+                                    <div class="pwstrength_viewport_progress">
+                                                
+                                            </div>
+                                </div>
+                           
                            
                             <button type="submit" class="btn btn-custon-four btn-success btn-block loginbtn">Redefinir Senha</button>
                         <?php echo form_close(); ?>

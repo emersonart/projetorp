@@ -90,6 +90,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="checkbox login-checkbox">
                                 <label><input type="checkbox" name="remember" class="i-checks"> Lembrar-me </label>
                             </div>
+                            <div class="text-center" style="margin: 5px 0">
+                                <label style="text-align: center;">Esqueceu sua senha? <a style="color:#5cb85c" href="<?php echo base_url('forgetpassword');?>">Redefinir senha</a></label>
+                            </div>
                             <button class="btn btn-custon-four btn-success btn-block loginbtn">Login</button>
                             <a class="btn btn-custon-four btn-primary btn-block text-white" href="<?php echo base_url('registrar');?>" style="margin: 5px 0;">Registrar</a>
                         <?php echo form_close(); ?>

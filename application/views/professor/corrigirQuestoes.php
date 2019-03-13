@@ -6,7 +6,7 @@
 					<div class="analysis-progrebar-content row">
 						<div class="col-lg-6 col-md-5 col-sm-5 col-xs-5 fixq">
                             <p>
-                                <b>Aluno:</b> <?php echo $aluno['inf_name'].' '.$aluno['inf_lastname'];?>
+                                <b>Aluno:</b> <?php echo $aluno['inf_name'].' '.$aluno['inf_lastname'];?> - <a href="<?php echo base_url('perfil/'.$aluno['usu_login']);?>" target="_blank">Ver Perfil</a>
                             </p>
                             <p>
                                 <b>Matrícula: </b><?php echo $aluno['inf_registration'];?>

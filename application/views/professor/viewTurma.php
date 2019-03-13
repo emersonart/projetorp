@@ -73,7 +73,7 @@
                                <img class="message-avatar" src="<?php echo base_url('assets/img/profile/'.rand(1,9).'.jpg');?>" alt="">
                              </div>
                              <div class="message">
-                              <a class="message-author" href="#"> <?php echo $linha->inf_name.' '.$linha->inf_lastname;?></a>
+                              <a class="message-author" href="<?php echo base_url('perfil/'.$linha->usu_login);?>"> <?php echo $linha->inf_name.' '.$linha->inf_lastname;?></a>
 
                               <span class="message-content">
                                 <b>Email: </b><?php echo $linha->inf_email;?><br>
