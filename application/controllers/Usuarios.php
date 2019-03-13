@@ -31,6 +31,52 @@ class Usuarios extends CI_Controller {
 		}
 		
 	}
+
+	public function forget_password(){
+		$this->form_validation->set_rules('userkoala','Usuário','trim|required');
+		if($this->form_validation->run() == FALSE){
+			if(validation_errors()){
+				set_msg(validation_errors(),'warning');
+			}
+		}else{
+			$user = $this->input->post()['userkoala'];
+
+			$this->usuario->forget_password($user);
+		}
+
+		$this->load->view('forgetpassword');
+
+	}
+
+	public function redefine_password(){
+		if($hash = $this->input->get('hash') and $token = $this->input->get('token')){
+			$oktoken = $this->usuario->verif_token($hash,$token);
+			if($oktoken){
+				$this->form_validation->set_rules('senha','Senha','trim|required|xss_clean|min_length[6]|regex_match[/^[^\s]+$/]',array('regex_match' => 'Senha não pode conter espaços'));
+				$this->form_validation->set_rules('senha2','Repita a Senha','trim|required|xss_clean|min_length[6]|matches[senha]|regex_match[/^[^\s]+$/]',array('regex_match' => 'Senha não pode conter espaços'));
+				if($this->form_validation->run() == FALSE){
+					if(validation_errors()){
+						set_msg(validation_errors(),'warning');
+					}
+				}else{
+					$senha = $this->input->post()['senha'];
+
+					$senhaalterada = $this->usuario->redefine_password($senha);
+					if($senhaalterada){
+						redirect('login','refresh');
+					}
+				}
+				$this->load->view('recoverypassword');
+			}else{
+				redirect('login','refresh');
+			}
+		}else{
+			set_msg('Parâmetros incorretos','warning');
+			redirect('login','refresh');
+		}
+
+
+	}
 	public function login(){
 		
 		

@@ -81,8 +81,17 @@ class Professor extends CI_Controller {
 			$dados['h1'] = 'Cadastrar questões';
 			$dados['qtd'] = (int)$this->option->get_option('qtd_atv');
 
+			if(isset($_POST) and !empty($_POST)){
+				$_POST['nomeLista'] .= "_KOALA_".$hashs;
+			}
+			if(!empty(set_value('nomeLista'))){
+				$nomeeli = set_value('nomeLista');
+				$dados['nomeeli'] = explode('_KOALA_',$nomeeli)[0];
+			}else{
+				$dados['nomeeli'] = '';
+			}
 			//parametros de validação
-			$this->form_validation->set_rules('nomeLista','Nome da Lista','trim|required|xss_clean|min_length[5]|is_unique[tb_lists.lis_name]', array('required' => 'É obrigatório inserir um nome para a lista','is_unique'=>'Nome da lista já em uso'));
+			$this->form_validation->set_rules('nomeLista','Nome da Lista','trim|required|xss_clean|min_length[5]|callback_regex_namelist', array('required' => 'É obrigatório inserir um nome para a lista'));
 			$this->form_validation->set_rules('questoes[]','Questões','trim|required|xss_clean|min_length[12]',array('required'=>'É obrigatório inserir todas as questões para esta lista'));
 			$this->form_validation->set_rules('fotos[]','Fotos','trim');
 			$this->form_validation->set_rules('enddate','Data final para a lista','trim|required|regex_match[/^([2-9][0-9][0-9][0-9])-([0-1][0-9])-([0-3][0-9])$/]',array('regex_match' => 'Formato inválido de data'));
@@ -99,6 +108,7 @@ class Professor extends CI_Controller {
 				$fotos = $_FILES['fotos'];
 				$filesCount = count($fotos['name']); 
 				$filesFinalCount = 0;
+				$dados_form['nomeLista'] = explode('_KOALA_',$dados_form['nomeLista'])[0];
 				$dados_lista['nomeLista'] = $dados_form['nomeLista'];
 				$dados_lista['id_professor'] = $dados_hash['cla_teacher'];
 				$dados_lista['subject'] = $dados_hash['sub_id'];
@@ -120,12 +130,14 @@ class Professor extends CI_Controller {
 							$criarq = $this->questao->criarQuestoes($dados_form['questoes'],$dados_lista,$url_crop_foto);
 							if($criarq){
 								redirect('turma/'.$dados_hash['cla_hash'],'refresh');
+							}else{
+								set_msg_pop('Erro ao cadastrar a lista. <br>erro: cl01','error','normal');
 							}
-							print_r($url_crop_foto);
-							set_msg_pop('entrou na parte que passou pelo url_crop_foto','success','normal');
+							//print_r($url_crop_foto);
+							//set_msg_pop('entrou na parte que passou pelo url_crop_foto','success','normal');
 							//fim cadastrar questoes na lista
 						}else{
-							set_msg_pop('erro ao cadastrar lista','error','normal');
+							set_msg_pop('Erro ao cadastrar a lista.<br>erro: cl02','error','normal');
 						}
 					}
 
@@ -140,9 +152,26 @@ class Professor extends CI_Controller {
 			redirect('turmas','refresh');
 		}
 	}
+	public function regex_namelist($val){
+		$quebrar = explode('_KOALA_',$val);
+		$values['nomeLista'] = $quebrar[0];
+		$values['hash'] = $quebrar[1];
+
+		$encontrou = $this->questao->getListainfo($values);
+
+		if($encontrou){
+			$this->form_validation->set_message('regex_namelist','Já existe uma lista com esse nome para esta turma');
+			$_POST['nomeLista'] = $values['nomeLista'];
+			return FALSE;
+		}else{
+			return TRUE;
+		}
+
+	}
 	public function regex_check($str){
 	    if (!preg_match('/^(2[0-3]|[0-1][0-9]):[0-5][0-9]$/', $str)){
 	        $this->form_validation->set_message('regex_check', 'Formato inválido de hora');
+
 	        return FALSE;
 	    }else{
 	        return TRUE;

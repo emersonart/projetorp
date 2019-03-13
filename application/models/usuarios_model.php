@@ -303,5 +303,97 @@ class Usuarios_model extends CI_Model{
 		}
 	}
 
+	public function forget_password($value){
+		$this->db->select('*');
+		$this->db->from('tb_info_users');
+		$this->db->where('inf_email',$value);
+		$this->db->or_where('inf_registration',$value);
+		$this->db->limit(1);
+		$q_info = $this->db->get();
+
+		$this->db->select('*');
+		$this->db->from('tb_users');
+		$this->db->join('tb_info_users','tb_info_users.inf_usu_id = tb_users.usu_id','inner');
+		$this->db->where('tb_users.usu_login',$value);
+		$this->db->limit(1);
+		$q_login = $this->db->get();
+
+
+		if($q_info->num_rows() == 1){
+			$results = $q_info->row_array();
+			$id_usuario = $q_info->row_array()['inf_usu_id'];
+		}else if($q_login->num_rows() == 1){
+			$results = $q_login->row_array();
+			$id_usuario = $q_login->row_array()['usu_id'];
+		}else{
+			set_msg('Usuário não encontrado','danger');
+			return FALSE;
+		}
+		$date = date('d-m-Y H:i');
+		$validation = 'k'.bin2hex($this->encryption->create_key(2)).'o'.bin2hex($this->encryption->create_key(2)).'a'.bin2hex($this->encryption->create_key(2)).'l'.strtotime($date).'a';
+
+		$dados_insert = array('rec_usu_id' => $id_usuario, 'rec_validation' => $validation,'rec_date' => $date);
+
+		$this->db->insert('tb_recovery_password',$dados_insert);
+
+		if($this->db->insert_id()){
+			$link = base_url('recovery?hash='.$id_usuario.'&token='.$validation);
+			$send_email = array(
+					'emails' => $results['inf_email'], 
+					'message' => '<h1>Redefinição de senha</h1><br><h3>Olá, '.$results['inf_name'].'</h3><br><p>Foi solicitado a redefinição de senha para a sua conta no <a href="'.base_url().'" target="_blank">Koala Educational</a><br><br>Para redefinir sua senha acesse o link: <a href="'.$link.'" target="_blank">Clique Aqui</a><br><br>Não consegue acessar pelo link? Cole isto no seu navegador: {unwrap}'.$link.'{/unwrap}<br><br>*Esse link irá expirar em 2 dias.</p><p>Nao foi você que solicitou a redefinição de senha? Tudo bem, ignore este email.<br><br>Não responda este email!<br><a href="'.base_url().'" target="_blank">Koala Educational</a>',
+					'subject' => 'Redefinição de senha'
+				);
+
+				send_email($send_email);
+
+				set_msg('Um email para redefinição  de senha foi enviado para o email cadastrado nessa conta, siga os passos do email!<br>O link enviado no email tem validade de 02 dias','success');
+				return TRUE;
+		}else{
+			set_msg('Erro ao solicitar redefinição de senha.<br>erro: rp01','warning');
+			return false;
+		}
+
+
+	}
+
+	public function verif_token($id,$token){
+		$this->db->select('*');
+		$this->db->from('tb_recovery_password');
+		$this->db->where('rec_usu_id',$id);
+		$this->db->where('rec_validation',$token);
+		$this->db->limit(1);
+		$query = $this->db->get();
+
+		if($query->num_rows() == 1){
+			$result = $query->row_array();
+			$databanco = date('d-m-Y G:i',strtotime($result['rec_date']));
+			$databanco2 = date('d-m-Y G:i',strtotime("+2 days",strtotime($result['rec_date']))); 
+			$dataatual =date('d-m-Y G:i');
+
+			if($databanco2 >= $dataatual){
+				echo "data do banco está válida<br><br>";
+				echo 'data banco + 2 dias:'.$databanco2." > data atual: ".$dataatual;
+				return TRUE;
+
+			}else{
+				echo "data do banco não está válida<br><br>";
+				echo 'data atual:'.$dataatual." < data do banco + 2 dias: ".$databanco2;
+				$this->delete_token($id,$token);
+				return false;
+			}
+			
+		}else{
+			set_msg('Token de redefinição de senha não existe ou expirou.','warning');
+			return false;
+		}
+
+	}
+
+	public function delete_token($id,$token){
+		$this->db->where('rec_usu_id',$id);
+		$this->db->where('rec_validation',$token);
+		$this->db->delete('tb_recovery_password');
+	}
+
 
 }

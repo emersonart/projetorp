@@ -10,7 +10,14 @@ class Questoes_model extends CI_Model{
 	}
 
 	public function criarLista($values){
-		
+		$this->db->select('lis_id');
+		$this->db->from('tb_lists');
+		$this->db->where('lis_name',$values['nomeLista']);
+		$this->db->where('lis_cla_hash',$values['class_hash']);
+		$encontrou = $this->db->get();
+		if($encontrou->num_rows() > 1){
+			set_msg_pop('Nome de lista já usado para esta turma','error','normal');
+		}
 		$info_lista = array(
 			'lis_name' => $values['nomeLista'],
 			'lis_subject' => $values['subject'],
@@ -265,7 +272,12 @@ class Questoes_model extends CI_Model{
 		$this->db->select('*');
 		$this->db->from('tb_lists');
 		$this->db->where('lis_cla_hash',$values['hash']);
-		$this->db->where('lis_id',$values['id']);
+		if(isset($values['nomeLista']) and !empty($values['nomeLista'])){
+			$this->db->where('lis_name',$values['nomeLista']);
+		}else{
+			$this->db->where('lis_id',$values['id']);
+		}
+		
 		$this->db->limit(1);
 
 		$query2 = $this->db->get();

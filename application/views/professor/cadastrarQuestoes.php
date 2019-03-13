@@ -17,7 +17,7 @@
             <div class="form-group-inner">
 
              <label>Defina um nome para essa lista</label>
-             <input type="text" class="form-control" placeholder="Nome da Lista" name="nomeLista" required="" value="<?php echo set_value('nomeLista'); ?>">
+             <input type="text" class="form-control" placeholder="Nome da Lista" name="nomeLista" required="" value="<?php echo $nomeeli; ?>">
            </div>
            <div class="form-group-inner">
             <label>Data final para responder</label>

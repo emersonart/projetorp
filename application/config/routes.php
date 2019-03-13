@@ -56,6 +56,7 @@ $route['login'] = 'usuarios/login';
 $route['registrar'] = 'usuarios/register';
 $route['sair'] = 'usuarios/logout';
 $route['dashboard'] = 'usuarios';
+$route['recovery'] = 'usuarios/redefine_password';
 $route['administrativo/novoprofessor'] = 'adms/criarprofessor';
 $route['administrativo/novamateria'] = 'adms/criarmateria';
 $route['administrativo/configs'] = 'adms/config_site';
