@@ -144,7 +144,7 @@ if(!function_exists('verif_login')){
 					
 					if($redirect){
 						set_msg_pop('Acesso restrito, apenas admins e professores são permitidos','error','normal');
-						redirect($page,'refresh');
+						redirect('dashboard','refresh');
 					}
 					return false;
 					
@@ -154,6 +154,43 @@ if(!function_exists('verif_login')){
 		}else{
 			set_msg('Acesso restrito, faça login para acessar','warning');
 			if($redirect){
+				$url = $ci->uri->uri_string();
+				$gets = '';
+					$cont = 1;
+
+				if($_GET and !empty($_GET)){
+					$gets = '&';
+					
+					foreach ($_GET as $key => $value) {
+						if(count($_GET) == $cont){
+							$f = '';
+						}else{
+							$f = '&';
+						}
+						$gets .= $key.'='.$value.$f;
+						
+						$cont++;
+					}
+				}
+				echo $gets;
+				$brokenurl = explode('/', $url);
+				print_r($brokenurl);
+				$uri = '?page=';
+				if(count($brokenurl) > 0){
+					$pages = '';
+					for($i=0;$i < count($brokenurl);$i++){
+
+						$pages .= $brokenurl[$i];
+						if($i < count($brokenurl)-1){
+							$pages .= ',';
+						}
+					}
+				}else{
+					$pages = $brokenurl[0];
+				}
+				$pages = $uri.$pages;
+				$ci->session->set_userdata('pagina_anterior',$pages.$gets);
+				//echo "<br>".$ci->session->userdata('pagina_anterior');
 				redirect('login','refresh');
 			}
 			return false;

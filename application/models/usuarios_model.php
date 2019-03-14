@@ -88,8 +88,23 @@ class Usuarios_model extends CI_Model{
 						'logged' => TRUE
 					);
 				$this->session->set_userdata($arg);
-
-				redirect('dashboard','refresh');
+				if(!empty($this->session->userdata('pagina_anterior'))){
+					$page = $this->session->userdata('pagina_anterior');
+					$q1 = explode('?',$page);
+					$q1 = $q1[1];
+					$q2 = explode('&',$q1);
+					if(count($q2) > 0){
+						$q3 = explode('=',$q2[0]);
+						$pagina_anterior = str_replace(',', '/', $q3[1]).'?'.explode($q3[1],$q1)[1];
+					}else{
+						$q3 = explode('=',$q2[0]);
+						$pagina_anterior  = str_replace(',', '/', $q3[1]);
+					}
+					redirect($pagina_anterior,'refresh');
+				}else{
+					redirect('dashboard','refresh');
+				}
+				
 			}else{
 				set_msg('login e/ou senhas inválidos <i>erro: ul03</i>','danger');
 				return false;
