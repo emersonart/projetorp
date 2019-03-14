@@ -139,9 +139,7 @@ if(!function_exists('verif_login')){
 				if($prof == $ci->session->userdata('perm') or $ci->session->userdata('perm') == 0){
 
 					return true;
-				}else{
-					
-					
+				}else{				
 					if($redirect){
 						set_msg_pop('Acesso restrito, apenas admins e professores são permitidos','error','normal');
 						redirect('dashboard','refresh');
@@ -172,9 +170,9 @@ if(!function_exists('verif_login')){
 						$cont++;
 					}
 				}
-				echo $gets;
+				//echo $gets;
 				$brokenurl = explode('/', $url);
-				print_r($brokenurl);
+				//print_r($brokenurl);
 				$uri = '?page=';
 				if(count($brokenurl) > 0){
 					$pages = '';
@@ -190,7 +188,7 @@ if(!function_exists('verif_login')){
 				}
 				$pages = $uri.$pages;
 				$ci->session->set_userdata('pagina_anterior',$pages.$gets);
-				//echo "<br>".$ci->session->userdata('pagina_anterior');
+				echo "<br>".$ci->session->userdata('pagina_anterior');
 				redirect('login','refresh');
 			}
 			return false;
