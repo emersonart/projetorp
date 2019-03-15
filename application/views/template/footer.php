@@ -85,6 +85,10 @@
     <!-- tab JS
         ============================================ -->
         <script src="<?php echo base_url('assets/js/tab.js');?>"></script>
+    <!-- TOUCH SPIN JS 
+        ============================================ -->
+        <script src="<?php echo base_url('assets/js/touchspin/jquery.bootstrap-touchspin.min.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/touchspin/touchspin-active.js');?>"></script>
     <!-- chosen JS
         ============================================ -->
         <script src="<?php echo base_url('assets/js/chosen/chosen.jquery.js');?>"></script>

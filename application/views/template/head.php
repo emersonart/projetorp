@@ -60,7 +60,9 @@
     <!-- alerts CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/alerts.css');?>">
-    
+    <!-- touchspin CSS
+        ============================================ -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/touchspin/jquery.bootstrap-touchspin.min.css')?>">
     <!-- notifications CSS
         ============================================ -->
     <link rel="stylesheet" href="<?php echo base_url('assets/css/notifications/Lobibox.min.css');?>">
