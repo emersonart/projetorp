@@ -198,4 +198,6 @@ class Usuarios extends CI_Controller {
         $this->load->view('register');
     }
 
+    
+
 }

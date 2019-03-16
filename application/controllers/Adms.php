@@ -42,7 +42,11 @@ class Adms extends CI_Controller {
 
 	public function excluirUsuarios(){
 		verif_login('dashboard',0);
-		load_template('painel/excluirUsuarios');
+		$dados['h1'] = 'Excluir usuários';
+		$dados['alunos'] = $this->usuario->getAllUsers(1,TRUE);
+		$dados['adms'] = $this->usuario->getAllUsers('adm',false);
+		$dados['professores'] = $this->usuario->getAllUsers(2,false);
+		load_template('painel/excluirUsuarios',$dados);
 	}
 
 	public function criarProfessor(){

@@ -59,6 +59,7 @@ $route['dashboard'] = 'usuarios';
 $route['recovery'] = 'usuarios/redefine_password';
 $route['forgetpassword'] = 'usuarios/forget_password';
 $route['administrativo/novoprofessor'] = 'adms/criarprofessor';
+$route['administrativo/excluirusuarios'] = 'adms/excluirusuarios';
 $route['administrativo/novamateria'] = 'adms/criarmateria';
 $route['administrativo/configs'] = 'adms/config_site';
 $route['administrativo/fazerbackup'] = 'adms/fazerbackup';

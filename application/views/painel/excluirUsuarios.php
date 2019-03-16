@@ -10,6 +10,12 @@
                             </ul>
                             <div id="myTabContent" class="tab-content custom-product-edit">
                                 <div class="product-tab-list tab-pane fade active in" id="description">
+                                    <?php
+                               foreach ($alunos as $linha) {
+                                   echo $linha->inf_name."<br>";
+                               }
+
+                                ?>
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="review-content-section">
@@ -68,6 +74,12 @@
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="review-content-section">
+                                                <?php
+                               foreach ($professores as $linha) {
+                                   echo $linha->inf_name."<br>";
+                               }
+
+                                ?>
                                                 <div class="row">
                                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                         <div class="devit-card-custom">
@@ -98,6 +110,12 @@
                         <div class="row">
                           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="devit-card-custom">
+                               <?php
+                               foreach ($adms as $linha) {
+                                   echo $linha->inf_name."<br>";
+                               }
+
+                                ?>
                               <div class="form-group">
                                 <input type="url" class="form-control" placeholder="Facebook URL">
                               </div>

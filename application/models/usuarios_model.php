@@ -268,6 +268,40 @@ class Usuarios_model extends CI_Model{
 		}
 	}
 
+	public function getAllUsers($tipo = NULL,$turma = FALSE){
+    	$this->db->select('*');
+    	$this->db->from('tb_users');
+    	$this->db->join('tb_info_users','tb_users.usu_id = tb_info_users.inf_usu_id','inner');
+    	if($tipo != NULL){
+    		if($tipo == 2){
+    			$this->db->join('tb_teacher_subject','tb_teacher_subject.tea_usu_id = tb_users.usu_id','inner');
+    			$this->db->join('tb_subjects','tb_teacher_subject.tea_sub_id = tb_subjects.sub_id','inner');
+    		}
+    		if($tipo == 'adm'){
+
+    			$this->db->where('tb_users.usu_perm',0);
+    		}else{
+    			$this->db->where('tb_users.usu_perm',$tipo);
+    		}
+
+
+    		
+    	}
+    	if($turma == TRUE and $tipo == 1){
+    		$this->db->join('tb_register_class','tb_register_class.reg_usu_id = tb_users.usu_id','inner');
+    		$this->db->join('tb_class','tb_class.cla_hash = tb_register_class.reg_cla_hash','inner');
+
+    	}
+    	$this->db->order_by('tb_info_users.inf_name','asc');
+
+    	$query = $this->db->get();
+    	if($query->num_rows() > 0){
+    		return $query->result();
+    	}else{
+    		return false;
+    	}
+    }
+
 	public function getPerfil($dado){
 
 		$this->db->select('usu_id');
