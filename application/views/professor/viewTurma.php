@@ -138,7 +138,7 @@
                             <?php } ?>
                             <span class="message-content">
                               <?php $dd = array('cla_hash' => $linha->lis_cla_hash, 'id_lista'=>$linha->lis_id);?>
-                              <b>Questões: <?php echo $this->questao->countQuestoes($dd);?></b><br>
+                              <b>Questões: <?php echo $this->questao->countQuestoes($dd);?></b> | Responder até: <b><?php echo $linha->lis_endtime ? converter_data(explode(' ',$linha->lis_endtime)[0],3).' às '.explode(' ',$linha->lis_endtime)[1] : 'Não Informado';?></b><br>
                             </span>
                             
                           </div>

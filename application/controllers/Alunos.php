@@ -33,20 +33,25 @@ class Alunos extends CI_Controller {
 				$dados['respostaanterior'] = false;
 			}
 			$dados['listainfo'] = $this->questao->getListainfo($values);
+			if(!empty($dados['listainfo']['lis_endtime'])){
 
+		     $dados['datalimite'] = converter_data(explode(' ',$dados['listainfo']['lis_endtime'])[0],3).' às '.explode(' ',$dados['listainfo']['lis_endtime'])[1];
 			 $data = converter_data(explode(' ',$dados['listainfo']['lis_endtime'])[0],4).' '.explode(' ',$dados['listainfo']['lis_endtime'])[1];
             $now = date('Y-m-d H:i');
             $t = strtotime($now);
             $banco = strtotime($data);
             if($t > $banco){ 
-            	$dados['listavencida'] = '<div class="col-lg-10 col-lg-offset-1">
+            	
+            		            	$dados['listavencida'] = '<div class="col-lg-10 col-lg-offset-1">
               <div class="alert alert-danger alert-st-four" role="alert">
                             <i class="fa fa-exclamation-triangle edu-checked-pro admin-check-pro" aria-hidden="true"></i>
                             <p class="message-mg-rt"><strong>Ops!</strong> Não é possível mais responder esta lista! <br> A data para responder foi até <strong>'.converter_data(explode(' ',$dados['listainfo']['lis_endtime'])[0],3).'</strong> às <strong>'.explode(' ',$dados['listainfo']['lis_endtime'])[1].'</strong></p>
                           </div>
                         </div>';
+            	
+
             }
-			
+			}
 			$dados['h1'] = 'Responder lista: '.$dados['listainfo']['lis_name'];
 
 			$this->form_validation->set_rules('respostas[]','Respostas','trim|min_length[10]');

@@ -28,6 +28,22 @@
                                 <?php }?>
                             </ul>
                         </li>
+                        <?php if($usuario['perm'] == 1){ ?>
+                            <li class="<?php echo menu_active('boletim');?>">
+                                <a href="<?php echo base_url('boletim');?>">
+                                 <span class="educate-icon educate-form icon-wrap"></span>
+                                <span class="mini-click-non">Meu Boletim</span>
+                                </a>
+                            </li>
+                        <?php }else{?>
+                            <li class="<?php echo menu_active('boletins');?>">
+                                <a href="<?php echo base_url('boletins');?>">
+                                 <span class="educate-icon educate-form icon-wrap"></span>
+                                <span class="mini-click-non">Boletins</span>
+                                </a>
+                            </li> 
+                        <?php }?>
+                        
                         <?php if(verif_login('',0,false)){?>
                         <li class="<?php echo menu_active('administrativo/novoprofessor');?>">
                             <a class="has-arrow" href="all-professors.html" aria-expanded="false"><span class="educate-icon educate-settings icon-wrap"></span> <span class="mini-click-non">Administrativo</span></a>

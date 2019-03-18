@@ -78,7 +78,11 @@
                     <input class="touchspin3" type="text">
                   </div>
                   </div>
-                  <?php if($adm){ ?>
+                  
+
+                    </div>
+                   <?php if($adm){ ?>
+                  <div class="row">
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label> Escolha o Professor: </label>
@@ -93,12 +97,8 @@
                           </select>
                         </div>
                       </div>
+                      </div>
                       <?php } ?>
-
-                    </div>
-                    <div class="row">
-
-                    </div>
 
 
                     <div class="row">
