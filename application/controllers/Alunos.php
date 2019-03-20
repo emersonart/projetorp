@@ -87,5 +87,9 @@ class Alunos extends CI_Controller {
 		
 	}
 
+	public function meuboletim(){
+		verif_login();
+		load_template('aluno/boletimaluno');
+	}
 
 }

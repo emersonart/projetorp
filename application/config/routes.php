@@ -75,3 +75,4 @@ $route['aviso/turma/(:any)'] = 'professor/avisos/$1';
 $route['turma/(:any)/corrigir/(:num)/(:num)'] = 'professor/corrigirlista/$1/$2/$3';
 $route['turma/(:any)/responder/(:num)'] = 'alunos/responderlista/$1/$2';
 $route['turma/(:any)/respostas/(:num)'] = 'professor/listaresposta/$1/$2';
+$route['alunos/boletim'] = 'alunos/meuboletim';

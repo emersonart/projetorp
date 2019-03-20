@@ -5097,3 +5097,10 @@ table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:af
 	background: #ec4445;
 	color: white;
 }
+.b-info{
+	cursor: pointer;
+	font-size: 1em;
+}
+.b-info:hover{
+	background: #29c75f!important;
+}

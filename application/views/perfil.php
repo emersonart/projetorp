@@ -90,7 +90,19 @@
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                                                         <div class="address-hr biography">
-                                                            <p><b>Tipo:</b><br> <?php echo $perfil['usu_perm'];?></p>
+                                                            <p><b>Tipo:</b><br> <?php
+                                                             switch ($perfil['usu_perm']) {
+                                                                case 0:
+                                                                    echo 'Administrador';
+                                                                    break;
+                                                                case 2:
+                                                                    echo 'Professor';
+                                                                    break;
+                                                                default:
+                                                                    echo 'Aluno';
+                                                                    break;
+                                                             };
+                                                             ?></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">

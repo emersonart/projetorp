@@ -45,7 +45,7 @@
                   </div>
 
                   <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                       <div class="form-group">
                         <label> Permitir inscrições até: </label>
                         <div class="input-group">
@@ -54,31 +54,21 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                       <label>Divisão de períodos</label>
                      <div class="inline-checkbox-cs"> 
-                      <label class=" i-checks pull-left" style="margin-right: 15px">
-                      <input type="radio" value="bimestre" name="periodos" id="BIMESTRE">
+                      <label class=" i-checks pull-left" style="margin-right: 15px" for="BIMESTRE">
+                      <input type="radio" value="bimestre" name="periodosTurma" id="BIMESTRE">
                         Bimestre 
                       </label>
-                      <label class=" i-checks pull-left" style="margin-right: 15px">
-                      <input type="radio" value="trimestre" name="periodos" id="TRIMESTRE">
+                      <label class=" i-checks pull-left" style="margin-right: 15px" for="TRIMESTRE">
+                      <input type="radio" value="trimestre" name="periodosTurma" id="TRIMESTRE">
                         Trimestre
                       </label>
-                      <label class=" i-checks pull-left" style="margin-right: 15px">
-                      <input type="radio" value="semestre" name="periodos" id="SEMESTRE">
-                        Semestre
-                      </label>
+                      <span class="badge b-info" data-toggle="tooltip" title="Define em até quantos períodos será dividido o boletim da turma. Bimestre: até 4 | Trimestre: até 3" data-placement="right"><i class="fa fa-info"></i></span>
                     </div>
 
                   </div>
-                  <div class="col-lg-4">
-                  <div class="touchspin-inner">
-                    <label style="font-weight: 700;">Quantidade de períodos</label>
-                    <input class="touchspin3" type="text">
-                  </div>
-                  </div>
-                  
 
                     </div>
                    <?php if($adm){ ?>
@@ -102,9 +92,11 @@
 
 
                     <div class="row">
-                      <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-custon-four" style="padding-left: 10px;">Criar sala</button>
-                      </div> 
+                      <div class="col-lg-12">
+                        <div class="form-group">
+                          <button type="submit" style="padding-left: 35px; padding-right: 35px;"class="btn btn-success btn-lg btn-custon-four pull-right" style="padding-left: 10px;">Criar sala</button>
+                        </div> 
+                      </div>
                     </div>
                   </div>
 
