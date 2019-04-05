@@ -63,6 +63,11 @@ class Turmas extends CI_Controller {
 			$dados['getalunospend'] = $this->turma->getAlunos($values['hash'],FALSE);
 			$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash'],FALSE);
 			$dados['getlistas'] = $this->questao->getListas($values['hash']);
+
+			for($i = 0; $i < count($dados['getlistas']);$i++){
+				$dados['getlistas'][$i]['lis_gabarito'] = $this->questao->getGabarito($dados['getlistas'][$i]['lis_id']);
+				$dados['getlistas'][$i]['lis_gab_status'] = $this->questao->getGabarito($dados['getlistas'][$i]['lis_id'])['status'];
+			}
 			$dados['informativos'] = $this->turma->getInformativos($values['hash']);
 			$dados['h1'] = $dados['getturma']['cla_nome'];
 			load_template('professor/viewTurma',$dados);

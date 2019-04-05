@@ -15,6 +15,37 @@ class Alunos extends CI_Controller {
 		redirect('perfil','refresh');
 	}
 
+	public function ver_gabarito($hash,$id){
+		verif_login();
+		$values = array('id' => $id,'hash' => $hash,'id_usuario'=>$this->session->userdata('id_usuario') );
+		$questoes= $this->questao->getQuestoes($values);
+		$lista = $this->questao->getListainfo($values);
+		$alu = $this->turma->verifAluno($values);
+		$gabarito = $this->questao->getGabarito($id);
+		if($questoes and $lista and ($alu or ($lista['lis_teacher'] == $this->session->userdata('id_usuario') or verif_login('',2,false)))){
+			if(($gabarito['status'] == '1' and $alu) or ($lista['lis_teacher'] == $this->session->userdata('id_usuario') or verif_login('',2,false))){
+				$dados['gabarito'] = $gabarito;
+				$dados['titulo'] = $lista['lis_name'];
+				$dados['lista'] = $lista;
+				$dados['questoes'] = $questoes;
+				$dat = explode(' ',$lista['lis_endtime'])[0];
+				$hora = explode(' ',$lista['lis_endtime'])[1];
+				$data = converter_data($dat,3).' às '.$hora;
+				$dados['data_final'] = $data;
+				$dados['aluno'] = $alu;
+				$dados['h1'] = 'Registrar Gabarito: '.$dados['titulo'];
+
+			}else{
+				set_msg_pop('Sem permissão para acessar esta página','warning','normal');
+				redirect('dashboard','refresh');
+			}
+		}else{
+			set_msg_pop('Lista e/ou gabarito não encontrada','error','normal');
+			redirect('dashboard','refresh');
+		}
+		load_template('professor/vergabarito',$dados);
+	}
+
 	public function responderLista($hash,$id){
 		verif_login();
 		$values = array('id' => $id,'hash' => $hash,'id_usuario'=>$this->session->userdata('id_usuario') );
@@ -35,9 +66,13 @@ class Alunos extends CI_Controller {
 			$dados['listainfo'] = $this->questao->getListainfo($values);
 
 			 $data = converter_data(explode(' ',$dados['listainfo']['lis_endtime'])[0],4).' '.explode(' ',$dados['listainfo']['lis_endtime'])[1];
+			 	$dat = explode(' ',$dados['listainfo']['lis_endtime'])[0];
+				$horaa = explode(' ',$dados['listainfo']['lis_endtime'])[1];
+				$dataa = converter_data($dat,3).' às '.$horaa;
             $now = date('Y-m-d H:i');
             $t = strtotime($now);
             $banco = strtotime($data);
+            $dados['data_final'] = $dataa;
             if($t > $banco){ 
             	$dados['listavencida'] = '<div class="col-lg-10 col-lg-offset-1">
               <div class="alert alert-danger alert-st-four" role="alert">

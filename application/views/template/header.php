@@ -116,6 +116,10 @@
                             <h1><?php echo $h1; ?></h1>
                             <?php if($this->uri->segment(3) == 'responder'){?>
                                 <h4>Tentativa: <?php echo $tentativas;?></h4>
+                                <h4>Data final: <?php echo $data_final; ?></h4>
+                           <?php } ?>
+                           <?php if($this->uri->segment(3) == 'gabarito'){?>
+                                <h4>Data final: <?php echo $data_final; ?></h4>
                            <?php } ?>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">

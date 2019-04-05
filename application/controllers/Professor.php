@@ -152,6 +152,49 @@ class Professor extends CI_Controller {
 			redirect('turmas','refresh');
 		}
 	}
+
+	public function registrar_gabarito($hash,$id){
+		verif_login('dashboard',2);
+		$lista = $this->questao->getListainfo(array('id' => $id,'hash' => $hash));
+		$questoes = $this->questao->getQuestoes(array('id' => $id,'hash' => $hash));
+		$prof = $this->turma->getInfoProf($this->session->userdata('id_usuario'));
+		if($questoes and $lista and ($prof or $this->session->userdata('perm') == 0)){
+			$dados['gabarito'] = $this->questao->getGabarito($id);
+			$dados['titulo'] = $lista['lis_name'];
+			$dados['lista'] = $lista;
+			$dados['questoes'] = $questoes;
+			$dat = explode(' ',$lista['lis_endtime'])[0];
+			$hora = explode(' ',$lista['lis_endtime'])[1];
+			$data = converter_data($dat,3).' às '.$hora;
+			$dados['data_final'] = $data;
+			
+			$dados['h1'] = 'Registrar Gabarito: '.$dados['titulo'];
+
+
+			$this->form_validation->set_rules('respostas[]','Respostas','trim|min_length[10]');
+			$this->form_validation->set_rules('qid[]','Descrição da Turma','trim|integer');
+
+			if($this->form_validation->run() == FALSE){
+				if(validation_errors()){
+					set_msg(validation_errors(),'danger');
+				}
+			}else{
+				$dados_form = $this->input->post();
+					$dd = array(
+						'id_usuario' => $lista['lis_teacher'],
+						'hash' => $hash,
+						'id_lista' => $lista['lis_id']
+					);
+					$this->questao->regGabarito($dd,$dados_form['respostas'],$dados_form['qid']);
+			}
+		}else{
+			set_msg_pop('Nenhuma lista foi encontrada','error','normal');
+			redirect('turmas','refresh');
+		}
+
+		load_template('professor/gabaritoLista',$dados);
+	}
+
 	public function regex_namelist($val){
 		$quebrar = explode('_KOALA_',$val);
 		$values['nomeLista'] = $quebrar[0];

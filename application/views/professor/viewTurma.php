@@ -55,7 +55,10 @@
             <li class="<?php echo respostal($aba,'infos');?>"><a href="#infos">Avisos</a></li>
             <?php if($profok or $usuario['perm'] == 0){ ?>
             <li class="<?php echo respostal($aba,'pendentes');?>"><a href="#pendentes">Cadastros pendentes<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
+            <?php $gg = false; ?>
+            <?php if($gg){?>
             <li class="<?php echo respostal($aba,'listas');?>"><a href="#configs"> <i class="fa fa-cog"></i></a></li>
+          <?php } ?>
             <?php } ?>
             
             
@@ -112,17 +115,20 @@
                           foreach ($getlistas as $linha) { ?>
                           <div  class="chat-message col-lg-12 col-md-12 col-sm-12 col-xs-12">
                            <div style="margin-left: 0;"class="message">
-                            <a class="message-author" href="#"> <?php echo $linha->lis_name;?></a>
+                            <a class="message-author" href="#"> <?php echo $linha['lis_name'];?></a>
                             <?php if($profok or 0 == $usuario['perm']){?>
                             <span class="message-date">
-                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/respostas/'.$linha->lis_id);?>" class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Ver Respostas"><i class="fa fa-eye" style="color: #fff;"></i> Respostas </a>
-                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/editar/'.$linha->lis_id);?>"class="btn btn-md btn-default btn-custon-four" data-toggle="tooltip" data-placement="bottom" title="Editar Lista"><i class="fa fa-edit" style="color: #000;"></i> Editar</a>
+                             
+                              <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/respostas/'.$linha['lis_id']);?>" class="btn btn-md btn-info btn-custon-three" data-toggle="tooltip" data-placement="bottom" title="Ver Respostas"><i class="fa fa-eye" style="color: #fff;"></i> Respostas </a>
+                              <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/editar/'.$linha['lis_id']);?>"class="btn btn-md btn-default btn-custon-three" data-toggle="tooltip" data-placement="bottom" title="Editar Lista"><i class="fa fa-edit" style="color: #000;"></i></a>
+                              <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/reggabarito/'.$linha['lis_id']);?>" class="btn btn-md btn-success btn-custon-three" data-toggle="tooltip" data-placement="bottom" title="Gabarito"><i class="fa fa-check-square-o" style="color: #fff;"></i></a>
                               <span data-toggle="tooltip" data-placement="bottom" title="Excluir Lista">
-                               <a href="#" nome-value="<?php echo $linha->lis_name;?>" data-toggle="modal" class="btn btn-md btn-danger btn-custon-four deletelista" data-value="<?php echo $linha->lis_id;?>" data-target="#deletelista"><i class="fa fa-close" style="color: #fff;"></i> Excluir</a>
+
+                               <a href="#" nome-value="<?php echo $linha['lis_name'];?>" data-toggle="modal" class="btn btn-md btn-danger btn-custon-three deletelista" data-value="<?php echo $linha['lis_id'];?>" data-target="#deletelista"><i class="fa fa-close" style="color: #fff;"></i></a>
                              </span>
                            </span>
                            <?php }else{ 
-                            $nota = $this->questao->getNotaLista(array('id_lista' => $linha->lis_id, 'id_aluno'=>$id_aluno));?>
+                            $nota = $this->questao->getNotaLista(array('id_lista' => $linha['lis_id'], 'id_aluno'=>$id_aluno));?>
                             <span class="message-date">
                               <span style="padding-left: 10px;padding-right: 20px;" class="btn btn-md btn-<?php echo showNota($nota,1);?> btn-custon-four" data-toggle="tooltip" data-placement="top" title="Minha Nota"><i class="fa fa-check" style="color: #fff;margin-right: 7px;"></i>  
                                 <?php 
@@ -133,12 +139,17 @@
                                 }
                                 ?>
                               </span>
-                              <a href="<?php echo base_url('turma/'.$linha->lis_cla_hash.'/responder/'.$linha->lis_id);?>"class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="top" title="Responder Lista"><i class="fa fa-pencil" style="color: #fff;margin-right: 7px;"></i> Responder</a>
+                              <?php print_r($linha['lis_gabarito']);?>
+                              <?php if(isset($linha['lis_gabarito']) and !empty($linha['lis_gabarito']) and isset($linha['lis_gab_status']) and $linha['lis_gab_status'] == '1'){?>
+                              <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/vergabarito/'.$linha['lis_id']);?>"class="btn btn-md btn-warning btn-custon-four" data-toggle="tooltip" data-placement="top" title="Ver Gabarito"><i class="fa fa-check-square-o" style="color: #fff;"></i></a>
+                            <?php } ?>
+                               <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/responder/'.$linha['lis_id']);?>"class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="top" title="Responder Lista"><i class="fa fa-pencil" style="color: #fff;margin-right: 7px;"></i> Responder</a>
                             </span>
                             <?php } ?>
                             <span class="message-content">
-                              <?php $dd = array('cla_hash' => $linha->lis_cla_hash, 'id_lista'=>$linha->lis_id);?>
-                              <b>Questões: <?php echo $this->questao->countQuestoes($dd);?></b><br>
+                              <?php $dd = array('cla_hash' => $linha['lis_cla_hash'], 'id_lista'=>$linha['lis_id']);?>
+
+                              <b>Questões: <?php echo $this->questao->countQuestoes($dd);?></b><br>Responder até: <b><?php echo $linha['lis_endtime'] ? converter_data(explode(' ',$linha['lis_endtime'])[0],3).' às '.explode(' ',$linha['lis_endtime'])[1] : 'Não Informado';?></b><br>
                             </span>
                             
                           </div>
@@ -261,6 +272,7 @@
                 </div>
               </div>
             </div>
+                        <?php if($gg){?>
             <div class="product-tab-list tab-pane fade in <?php echo respostal($aba,'configs');?>" id="configs">
               <div class="row">
                 <?php echo form_open();?>
@@ -340,6 +352,7 @@
                     </div>
                   </div>
                 </div>
+              <?php }?>
                 <?php } ?>
               </div>
             </div>

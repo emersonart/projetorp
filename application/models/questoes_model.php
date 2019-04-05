@@ -250,7 +250,7 @@ class Questoes_model extends CI_Model{
 		$query = $this->db->get();
 
 		if($query->num_rows() > 0){
-			return $query->result();
+			return $query->result_array();
 		}else{
 			return false;
 		}
@@ -327,6 +327,83 @@ class Questoes_model extends CI_Model{
 			return false;
 		}
 		
+	}
+
+	public function getGabarito($id){
+		$this->db->select('*');
+		$this->db->from('tb_feedbacks');
+		$this->db->where('fed_lis_id',$id);
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+			$result = $query->result_array();
+			$result['status'] = $query->result_array()[0]['fed_status'];
+			return $result;
+		}else{
+			return false;
+		}
+	}
+
+	public function regGabarito($dados,$respostas,$idq){
+		if(count($idq) != count($respostas) and count($dados) != 3){
+			set_msg_pop('Parametros incorretos.','error','normal');
+			return false;
+		}
+		$this->db->select('*');
+		$this->db->from('tb_feedbacks');
+		$this->db->where('fed_lis_id',$dados['id_lista']);
+		$query = $this->db->get();
+
+		if($query->num_rows() > 0){
+				$this->db->trans_start();
+				for($i = 0;$i < count($respostas);$i++){
+					$this->db->set('fed_resposta',$respostas[$i]);
+					$this->db->set('fed_status',0);
+					$this->db->where('fed_cla_hash',$dados['hash']);
+					$this->db->where('fed_lis_id',$dados['id_lista']);
+					$this->db->where('fed_act_id',$idq[$i]);
+					$this->db->update('tb_feedbacks');
+				}
+				$this->db->trans_complete();
+
+				if ($this->db->trans_status() === FALSE) {
+				    # Something went wrong.
+					set_msg($this->db->trans_rollback(),'error','normal');
+					set_msg_pop('Não foi possível cadastrar o gabarito','error','normal');
+					return false;
+				}else{
+					set_msg('Gabarito atualizado com sucesso','success');
+					set_msg_pop('Gabarito atualizado com sucesso','success','normal');
+					return true;
+				}
+			
+		}else{
+			$dados1 = array(
+				'fed_lis_id' => $dados['id_lista'], 
+				'fed_usu_id' => $dados['id_usuario'],
+				'fed_cla_hash' => $dados['hash'],
+				'fed_status' => 0
+			);
+			
+			$this->db->trans_start();
+			for($i = 0;$i < count($respostas);$i++){
+				$dados1['fed_resposta'] = $respostas[$i];
+				$dados1['fed_act_id'] = $idq[$i];
+				$this->db->insert('tb_feedbacks',$dados1);
+			}
+			$this->db->trans_complete();
+
+			if ($this->db->trans_status() === FALSE) {
+			    # Something went wrong.
+				set_msg($this->db->trans_rollback(),'error','normal');
+				set_msg_pop('Não foi possível cadastrar o gabarito','error','normal');
+				return false;
+			}else{
+				set_msg('Gabarito cadastrado com sucesso','success');
+				set_msg_pop('Gabarito cadastrado com sucesso','success','normal');
+				return true;
+			}
+		}
 	}
 
 	public function regResposta($dados,$respostas,$idq){
