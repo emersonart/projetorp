@@ -23,6 +23,7 @@ class Professor extends CI_Controller {
 		//parametros de validação
 		$this->form_validation->set_rules('nomeTurma','Nome da Turma','trim|required|min_length[5]|is_unique[tb_class.cla_nome]', array('required' => 'É obrigatório inserir um nome para a turma','is_unique'=>'Nome da turma já em uso'));
 		$this->form_validation->set_rules('descricaoTurma','Descrição da Turma','trim');
+		$this->form_validation->set_rules('periodosTurma','Períodos da turma','trim|required|callback_regex_periodo');
 		$this->form_validation->set_rules('tempoTurma','Inscrições até:','trim|required|regex_match[/^([2-9][0-9][0-9][0-9])-([0-1][0-9])-([0-3][0-9])$/]',array('regex_match' => 'Formato inválido da data: 0000-00-00','required'=>'É obrigatório inserir uma data para o final das inscrições'));//|regex_match[/^([0-1]?[1-2]-([0-1]|[3-4])(0|5)$/]
 		if($this->session->userdata('perm') == 0){
 			$dados['adm'] = TRUE;
@@ -54,13 +55,26 @@ class Professor extends CI_Controller {
 				'startHash' => date('d-m-Y'),
 				'endHash' => converter_data($dados_form['tempoTurma'],2),
 				'profTurma' => $prof,
-				'inscTurma' => 1
+				'inscTurma' => 1,
+				'periodosTurma' => $dados_form['periodosTurma']
 			);
 			$this->turma->criarTurma($valor);
 		}
 
 		load_template('professor/criarSala',$dados);
 
+	}
+
+	public function regex_periodo($val){
+		$val = strtolower($val);
+		if ($val != "bimestre" and $val != "trimestre" and $val != "semestre" ){
+	        $this->form_validation->set_message('regex_periodo', 'Período Inválido: '.$val);
+
+	        return FALSE;
+	    }else{
+	    	
+	        return TRUE;
+	    }
 	}
 
 

@@ -12,13 +12,24 @@ class Turmas_model extends CI_Model{
 		//var_dump($values);
 		//echo converter_data('17/01/2019',0);
 
-		if(count($values) != 7){
+		if(count($values) != 8){
 			set_msg('Parametros incorretos','danger');
 			return false;
 		}
 
 		$subject = $this->option->getMateria($values['profTurma']);
-
+		switch ($values['periodosTurma']) {
+			case 'bimestre':
+				$values['periodosTurma'] = 0;
+				break;
+			case 'trimestre':
+				$values['periodosTurma'] = 1;
+				break;
+			
+			default:
+				# code...
+				break;
+		}
 		if($subject){
 			$dados = array(
 				'cla_hash' => $values['hashTurma'],
@@ -28,12 +39,14 @@ class Turmas_model extends CI_Model{
 				'cla_start_time' => $values['startHash'],
 				'cla_end_time' => $values['endHash'],
 				'cla_descricao' => $values['descricaoTurma'],
-				'cla_insc' => $values['inscTurma'] 
+				'cla_insc' => $values['inscTurma'],
+				'cla_periodos' => $values['periodosTurma']
 			);
 			$this->db->insert('tb_class',$dados);
 
 			if($this->db->insert_id()){
 				set_msg('Turma criada com sucesso!','success');
+				redirect('turma/'.$values['hashTurma'].'/configs');
 				return true;
 			}else{
 				set_msg('Não foi possível cirar a turma, contate um administrador','danger');

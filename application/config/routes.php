@@ -77,3 +77,4 @@ $route['turma/(:any)/responder/(:num)'] = 'alunos/responderlista/$1/$2';
 $route['turma/(:any)/respostas/(:num)'] = 'professor/listaresposta/$1/$2';
 $route['turma/(:any)/reggabarito/(:num)'] = 'professor/registrar_gabarito/$1/$2';
 $route['turma/(:any)/vergabarito/(:num)'] = 'alunos/ver_gabarito/$1/$2';
+$route['alunos/boletim'] = 'alunos/meuboletim';

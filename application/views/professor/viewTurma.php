@@ -56,9 +56,10 @@
             <?php if($profok or $usuario['perm'] == 0){ ?>
             <li class="<?php echo respostal($aba,'pendentes');?>"><a href="#pendentes">Cadastros pendentes<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
             <?php $gg = false; ?>
-            <?php if($gg){?>
-            <li class="<?php echo respostal($aba,'listas');?>"><a href="#configs"> <i class="fa fa-cog"></i></a></li>
-          <?php } ?>
+            <?php if($gg){ ?>
+            <li class="<?php echo respostal($aba,'configs');?>"><a href="#configs"> <i class="fa fa-cog"></i></a></li>
+            <?php } ?>
+
             <?php } ?>
             
             
@@ -313,33 +314,30 @@
                   <div class="row">
                     <div class="col-lg-6">
                       <div class="form-group">
-                        <label> Permitir inscrições até: </label>
-                        <div class="input-group">
-                          <label class="input-group-addon" id="basic-addon1"> <i class="fa fa-calendar"></i></label>
-                          <input type="radio" class="form-control" aria-describedby="basic-addon1" name="fecharPeriodo">
-                        </div>
-                        <div class="input-group">
-                          <label class="input-group-addon" id="basic-addon1"> <i class="fa fa-calendar"></i></label>
-                          <input type="radio" class="form-control" aria-describedby="basic-addon1" name="fecharPeriodo">
+                        <label> Período atual: </label>
+                        <div class="inline-checkbox-cs"> 
+                        <label class=" i-checks pull-left" style="margin-right: 15px" for="um">
+                            <input type="radio" value="1" checked name="periodoTurma" id="um">
+                            1º 
+                          </label>
+                          <label class=" i-checks pull-left" style="margin-right: 15px" for="do">
+                            <input type="radio" value="2" name="periodoTurma" id="do">
+                            2º 
+                          </label>
+                          <label class=" i-checks pull-left" style="margin-right: 15px" for="tr">
+                            <input type="radio" value="3" name="periodoTurma" id="tr">
+                            3º 
+                          </label>
+                          <label class=" i-checks pull-left" style="margin-right: 15px" for="qu">
+                            <input type="radio" value="4" name="periodoTurma" id="qu">
+                            4º 
+                          </label>
+                          <span class="badge b-info" data-toggle="tooltip" title="Ao selecionar um período os demais serão fechados automaticamente" data-placement="bottom"><i class="fa fa-info"></i></span>
+
                         </div>
                       </div>
                     </div>
-                    <?php if($adm){ ?>
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label> Escolha o Professor: </label>
-                        <select name="profTurma" class="form-control custom-select-value">
-                          <option value="0" style="padding: 5px 3px; font-size: 1.2em;">Selecionar professor</option>
-                          <?php 
-                          if(isset($professores) && sizeof($professores)>0){ 
-                            foreach ($professores as $linha) {
-                              ?>
-                              <option style="padding: 10px 3px; font-size: 1.2em;" value="<?php echo $linha->usu_id;?>"><?php echo $linha->inf_name;?></option>
-                              <?php }} ?>
-                            </select>
-                          </div>
-                        </div>
-                        <?php } ?>
+                   
 
                       </div>
 
