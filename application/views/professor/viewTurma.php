@@ -140,7 +140,6 @@
                                 }
                                 ?>
                               </span>
-                              <?php print_r($linha['lis_gabarito']);?>
                               <?php if(isset($linha['lis_gabarito']) and !empty($linha['lis_gabarito']) and isset($linha['lis_gab_status']) and $linha['lis_gab_status'] == '1'){?>
                               <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/vergabarito/'.$linha['lis_id']);?>"class="btn btn-md btn-warning btn-custon-four" data-toggle="tooltip" data-placement="top" title="Ver Gabarito"><i class="fa fa-check-square-o" style="color: #fff;"></i></a>
                             <?php } ?>
