@@ -419,14 +419,14 @@ class Usuarios_model extends CI_Model{
 			$databanco2 = date('d-m-Y G:i',strtotime("+2 days",strtotime($result['rec_date']))); 
 			$dataatual =date('d-m-Y G:i');
 
-			if($databanco2 >= $dataatual){
-				echo "data do banco está válida<br><br>";
-				echo 'data banco + 2 dias:'.$databanco2." > data atual: ".$dataatual;
+			if(strtotime($dataatual) <= strtotime($databanco2) and strtotime($dataatual) >= strtotime($databanco)){
+				//echo "data do banco está válida<br><br>";
+				//echo 'data banco + 2 dias:'.$databanco2." > data atual: ".$dataatual;
 				return TRUE;
 
 			}else{
-				echo "data do banco não está válida<br><br>";
-				echo 'data atual:'.$dataatual." < data do banco + 2 dias: ".$databanco2;
+				//echo "data do banco não está válida<br><br>";
+				//echo 'data atual:'.$dataatual." < data do banco + 2 dias: ".$databanco2;
 				$this->delete_token($id,$token);
 				return false;
 			}

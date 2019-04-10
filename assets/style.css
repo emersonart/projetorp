@@ -5104,3 +5104,7 @@ table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:af
 .b-info:hover{
 	background: #29c75f!important;
 }
+
+.btn-custon-three.btn-dark{
+	border-bottom: 2px solid #666a6d;
+}

@@ -188,7 +188,7 @@ if(!function_exists('verif_login')){
 				}
 				$pages = $uri.$pages;
 				$ci->session->set_userdata('pagina_anterior',$pages.$gets);
-				echo "<br>".$ci->session->userdata('pagina_anterior');
+				//echo "<br>".$ci->session->userdata('pagina_anterior');
 				redirect('login','refresh');
 			}
 			return false;

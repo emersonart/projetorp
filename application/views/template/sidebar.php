@@ -2,8 +2,8 @@
     <div class="left-sidebar-pro">
         <nav id="sidebar" <?php if($this->uri->segment(3) == 'responder'):echo "class='active'";endif;?>>
             <div class="sidebar-header">
-                <a href="index.html"><img class="main-logo" src="<?php echo base_url('assets/img/logo/logo.png');?>" alt="" /></a>
-                <strong><a href="index.html"><img class="main-logo-small" src="<?php echo base_url('assets/images/logo/logo-verde.png');?>" alt="" /></a></strong>
+                <a href="<?php echo base_url();?>"><img class="main-logo" src="<?php echo base_url('assets/img/logo/logo.png');?>" alt="" /></a>
+                <strong><a href="<?php echo base_url();?>"><img class="main-logo-small" src="<?php echo base_url('assets/images/logo/logo-verde.png');?>" alt="" /></a></strong>
             </div>
             <div class="left-custom-menu-adp-wrap comment-scrollbar">
                 <nav class="sidebar-nav left-sidebar-menu-pro">

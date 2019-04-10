@@ -23,7 +23,7 @@ class Alunos extends CI_Controller {
 		$alu = $this->turma->verifAluno($values);
 		$gabarito = $this->questao->getGabarito($id);
 		if($questoes and $lista and ($alu or ($lista['lis_teacher'] == $this->session->userdata('id_usuario') or verif_login('',2,false)))){
-			if(($gabarito['status'] == '1' and $alu) or ($lista['lis_teacher'] == $this->session->userdata('id_usuario') or verif_login('',2,false))){
+			if($gabarito and ($lista['lis_gab_status'] == '1' and $alu) or ($lista['lis_teacher'] == $this->session->userdata('id_usuario') or verif_login('',2,false))){
 				$dados['gabarito'] = $gabarito;
 				$dados['titulo'] = $lista['lis_name'];
 				$dados['lista'] = $lista;
@@ -33,7 +33,7 @@ class Alunos extends CI_Controller {
 				$data = converter_data($dat,3).' às '.$hora;
 				$dados['data_final'] = $data;
 				$dados['aluno'] = $alu;
-				$dados['h1'] = 'Registrar Gabarito: '.$dados['titulo'];
+				$dados['h1'] = 'Ver Gabarito: '.$dados['titulo'];
 
 			}else{
 				set_msg_pop('Sem permissão para acessar esta página','warning','normal');

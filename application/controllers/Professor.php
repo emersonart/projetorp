@@ -143,7 +143,7 @@ class Professor extends CI_Controller {
 							//cadastrar questoes na lista
 							$criarq = $this->questao->criarQuestoes($dados_form['questoes'],$dados_lista,$url_crop_foto);
 							if($criarq){
-								redirect('turma/'.$dados_hash['cla_hash'],'refresh');
+								redirect('turma/'.$dados_hash['cla_hash'].'/'.'reggabarito/'.$id_lista,'refresh');
 							}else{
 								set_msg_pop('Erro ao cadastrar a lista. <br>erro: cl01','error','normal');
 							}
@@ -199,7 +199,11 @@ class Professor extends CI_Controller {
 						'hash' => $hash,
 						'id_lista' => $lista['lis_id']
 					);
-					$this->questao->regGabarito($dd,$dados_form['respostas'],$dados_form['qid']);
+					$gabarito = $this->questao->regGabarito($dd,$dados_form['respostas'],$dados_form['qid']);
+
+					if($gabarito){
+						redirect('turma/'.$hash.'/listas','refresh');
+					}
 			}
 		}else{
 			set_msg_pop('Nenhuma lista foi encontrada','error','normal');
@@ -361,6 +365,7 @@ class Professor extends CI_Controller {
 
 			//parametros post
 				$this->form_validation->set_rules('questoes[]','Questão','trim|required' );
+				$this->form_validation->set_rules('status_gab','Status Gabarito','trim|required|alpha|exact_length[1]|in_list[S,N,s,n]' );
 				$this->form_validation->set_rules('nomeLista','Questão','trim|required' );
 				$this->form_validation->set_rules('enddate','Data final para a lista','trim|required|regex_match[/^([2-9][0-9][0-9][0-9])-([0-1][0-9])-([0-3][0-9])$/]',array('regex_match' => 'Formato inválido de data'));
 				$this->form_validation->set_rules('endtime','Hora final para a lista','trim|required|callback_regex_check');
@@ -376,10 +381,15 @@ class Professor extends CI_Controller {
 					$dados_form['nomeLista'] = html_escape($dados_form['nomeLista']);
 					$date = converter_data($dados_form['enddate'],4);
 					$finaldate = $date.' '.$dados_form['endtime'];
-
+					if($dados_form['status_gab'] == 's' or $dados_form['status_gab'] == 'S'){
+						$dados_form['status_gab'] = 1;
+					}else{
+						$dados_form['status_gab'] = 0;
+					}
 					$infos = array(
 						'hash' => $hash, 
-						'id_lista' => $oklista['lis_id']
+						'id_lista' => $oklista['lis_id'],
+						'gab_status' => $dados_form['status_gab']
 					);
 
 					$valores = array(

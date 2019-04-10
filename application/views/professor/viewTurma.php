@@ -131,7 +131,7 @@
                            <?php }else{ 
                             $nota = $this->questao->getNotaLista(array('id_lista' => $linha['lis_id'], 'id_aluno'=>$id_aluno));?>
                             <span class="message-date">
-                              <span style="padding-left: 10px;padding-right: 20px;" class="btn btn-md btn-<?php echo showNota($nota,1);?> btn-custon-four" data-toggle="tooltip" data-placement="top" title="Minha Nota"><i class="fa fa-check" style="color: #fff;margin-right: 7px;"></i>  
+                              <span style="padding-left: 10px;padding-right: 20px;" class="btn btn-md btn-<?php echo showNota($nota,1);?> btn-custon-three" data-toggle="tooltip" data-placement="top" title="Minha Nota"><i class="fa fa-check" style="color: #fff;margin-right: 7px;"></i>  
                                 <?php 
                                 if($nota){
                                   echo " ".showNota($nota)." ";
@@ -140,10 +140,10 @@
                                 }
                                 ?>
                               </span>
-                              <?php if(isset($linha['lis_gabarito']) and !empty($linha['lis_gabarito']) and isset($linha['lis_gab_status']) and $linha['lis_gab_status'] == '1'){?>
-                              <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/vergabarito/'.$linha['lis_id']);?>"class="btn btn-md btn-warning btn-custon-four" data-toggle="tooltip" data-placement="top" title="Ver Gabarito"><i class="fa fa-check-square-o" style="color: #fff;"></i></a>
+                              <?php if(isset($linha['lis_gab_status']) and $linha['lis_gab_status'] == '1'){?>
+                              <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/vergabarito/'.$linha['lis_id']);?>"class="btn btn-md btn-success btn-custon-three" data-toggle="tooltip" data-placement="top" title="Ver Gabarito"><i class="fa fa-eye" style="color: #fff;"></i></a>
                             <?php } ?>
-                               <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/responder/'.$linha['lis_id']);?>"class="btn btn-md btn-info btn-custon-four" data-toggle="tooltip" data-placement="top" title="Responder Lista"><i class="fa fa-pencil" style="color: #fff;margin-right: 7px;"></i> Responder</a>
+                               <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/responder/'.$linha['lis_id']);?>"class="btn btn-md btn-info btn-custon-three" data-toggle="tooltip" data-placement="top" title="Responder Lista"><i class="fa fa-pencil" style="color: #fff;margin-right: 7px;"></i> Responder</a>
                             </span>
                             <?php } ?>
                             <span class="message-content">

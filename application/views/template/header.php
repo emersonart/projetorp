@@ -19,7 +19,7 @@
                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <div class="header-top-menu tabl-d-n">
                                     <div class="logo-pro">
-                                        <a href="index.html"><img class="main-logo" src="<?php echo base_url('assets/img/logo/logo.png');?>" alt="" /></a>
+                                        <a href="<?php echo base_url();?>"><img class="main-logo" src="<?php echo base_url('assets/img/logo/logo.png');?>" alt="" /></a>
                                     </div>
                                 </div>
                             </div>

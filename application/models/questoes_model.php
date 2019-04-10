@@ -149,6 +149,9 @@ class Questoes_model extends CI_Model{
 				}
 				
 			}
+			$this->db->set('lis_gab_status',$infos['gab_status']);
+			$this->db->where('lis_id',$infos['id_lista']);
+			$this->db->update('tb_lists');
 		}else{
 			set_msg_pop('Lista não encontrada lista, error: li01','error','normal');
 			return false;
@@ -217,6 +220,7 @@ class Questoes_model extends CI_Model{
 
 
 						}
+
 						$msg = 'Lista atualizada com sucesso';
 						$tam = "normal";
 						if(isset($fff)){
@@ -337,7 +341,6 @@ class Questoes_model extends CI_Model{
 
 		if($query->num_rows() > 0){
 			$result = $query->result_array();
-			$result['status'] = $query->result_array()[0]['fed_status'];
 			return $result;
 		}else{
 			return false;
@@ -358,7 +361,6 @@ class Questoes_model extends CI_Model{
 				$this->db->trans_start();
 				for($i = 0;$i < count($respostas);$i++){
 					$this->db->set('fed_resposta',$respostas[$i]);
-					$this->db->set('fed_status',0);
 					$this->db->where('fed_cla_hash',$dados['hash']);
 					$this->db->where('fed_lis_id',$dados['id_lista']);
 					$this->db->where('fed_act_id',$idq[$i]);
@@ -372,8 +374,12 @@ class Questoes_model extends CI_Model{
 					set_msg_pop('Não foi possível cadastrar o gabarito','error','normal');
 					return false;
 				}else{
+					$this->db->set('lis_gab_status',1);
+					$this->db->where('lis_id',$dados['id_lista']);
+					$this->db->update('tb_lists');
 					set_msg('Gabarito atualizado com sucesso','success');
 					set_msg_pop('Gabarito atualizado com sucesso','success','normal');
+
 					return true;
 				}
 			
@@ -382,7 +388,6 @@ class Questoes_model extends CI_Model{
 				'fed_lis_id' => $dados['id_lista'], 
 				'fed_usu_id' => $dados['id_usuario'],
 				'fed_cla_hash' => $dados['hash'],
-				'fed_status' => 0
 			);
 			
 			$this->db->trans_start();
@@ -399,6 +404,9 @@ class Questoes_model extends CI_Model{
 				set_msg_pop('Não foi possível cadastrar o gabarito','error','normal');
 				return false;
 			}else{
+				$this->db->set('lis_gab_status',1);
+				$this->db->where('lis_id',$dados['id_lista']);
+				$this->db->update('tb_lists');
 				set_msg('Gabarito cadastrado com sucesso','success');
 				set_msg_pop('Gabarito cadastrado com sucesso','success','normal');
 				return true;
