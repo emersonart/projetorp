@@ -224,11 +224,12 @@ class Option_model extends CI_Model{
 			
 			$link = './backup_sys/'.$name.'.zip';
 			
-			$this->zip->clear_data();
+			
 			if(!$rotina){
 				$this->zip->download($name.'.zip');
 			
 			}
+			$this->zip->clear_data();
 		if($sistema){	
 			$arquivossistema = zipData('../projetorp/',$name);
 		}

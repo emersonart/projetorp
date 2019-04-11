@@ -23,7 +23,8 @@ class Questoes_model extends CI_Model{
 			'lis_subject' => $values['subject'],
 			'lis_teacher' => $values['id_professor'],
 			'lis_cla_hash' => $values['class_hash'],
-			'lis_endtime' => $values['endtime']
+			'lis_endtime' => $values['endtime'],
+			'lis_gab_status' => 0
 		);
 
 		$this->db->insert('tb_lists',$info_lista);

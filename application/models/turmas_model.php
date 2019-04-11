@@ -27,7 +27,7 @@ class Turmas_model extends CI_Model{
 				break;
 			
 			default:
-				# code...
+				$values['periodosTurma'] = 0;
 				break;
 		}
 		if($subject){

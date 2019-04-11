@@ -45,7 +45,7 @@
         </div>
         <div class="form-group-inner">
          <label>Liberar gabarito</label>
-         <div class="input-group">
+         <div class="input-group" style="margin-left: auto;margin-right: auto;">
          <?php 
               if($oklista['lis_gab_status'] == 0){
                 $na = 'active';
@@ -61,6 +61,28 @@
             </label>
             <label class="btn btn-lg btn-success notalista <?php echo $si?>" style="color:white;padding-left: 3.2rem;padding-right: 3.2rem;">
               <input type="radio" name="status_gab" value="s" <?php echo $si ? 'checked':''?>> <strong>SIM</strong>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group-inner">
+         <label>Liberar para resposta?</label>
+         <div class="input-group" style="margin-left: auto;margin-right: auto;" >
+         <?php 
+              if($oklista['lis_res_status'] == 0){
+                $na1 = 'active';
+                $si1 = '';
+              }else{
+                $na1 = '';
+                $si1 = 'active';
+              }
+          ?>
+          <div class="btn-group btn-custon-four text-center" style="margin-left: auto;margin-right: auto;" data-toggle="buttons">
+            <label class="btn btn-lg btn-danger notalista <?php echo $na1?>" style="color:white;padding-left: 3.2rem;padding-right: 3.2rem;" >
+            <input type="radio" name="status_res" value="n" <?php echo $na1 ? 'checked':''?>> <strong>NÃO</strong>
+            </label>
+            <label class="btn btn-lg btn-success notalista <?php echo $si1?>" style="color:white;padding-left: 3.2rem;padding-right: 3.2rem;">
+              <input type="radio" name="status_res" value="s" <?php echo $si1 ? 'checked':''?>> <strong>SIM</strong>
             </label>
           </div>
         </div>
