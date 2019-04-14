@@ -22,8 +22,25 @@ class Alunos extends CI_Controller {
 		$lista = $this->questao->getListainfo($values);
 		$alu = $this->turma->verifAluno($values);
 		$gabarito = $this->questao->getGabarito($id);
-		if($questoes and $lista and ($alu or ($lista['lis_teacher'] == $this->session->userdata('id_usuario') or verif_login('',2,false)))){
-			if($gabarito and ($lista['lis_gab_status'] == '1' and $alu) or ($lista['lis_teacher'] == $this->session->userdata('id_usuario') or verif_login('',2,false))){
+		if($gabarito and count($gabarito) > 0){
+			$j = 0;
+			for($i =0;$i< count($gabarito);$i++){
+				if($gabarito[$i]['gab_resposta'] == ''){
+					$j++;
+				}
+			}
+			if(count($gabarito) == $j){
+				$gabarito = FALSE;
+			}
+		}
+
+		$expired = expired_date($lista['lis_endtime']);
+		if($expired){
+			$valu = array('id' => $id,'hash'=>$hash );
+			$this->questao->liberarGabarito($valu);
+		}
+		if($questoes and $lista and $lista['lis_res_status'] == 1 and ($alu or ($lista['lis_teacher'] == $this->session->userdata('id_usuario') or verif_login('',2,false)))){
+			if($gabarito and (($lista['lis_gab_status'] == '1' or $expired) and $alu) or ($lista['lis_teacher'] == $this->session->userdata('id_usuario') or verif_login('',2,false))){
 				$dados['gabarito'] = $gabarito;
 				$dados['titulo'] = $lista['lis_name'];
 				$dados['lista'] = $lista;
@@ -37,7 +54,7 @@ class Alunos extends CI_Controller {
 
 			}else{
 				set_msg_pop('Sem permissão para acessar esta página','warning','normal');
-				redirect('dashboard','refresh');
+				redirect('turma/'.$hash.'/listas','refresh');
 			}
 		}else{
 			set_msg_pop('Lista e/ou gabarito não encontrada','error','normal');
@@ -49,8 +66,10 @@ class Alunos extends CI_Controller {
 	public function responderLista($hash,$id){
 		verif_login();
 		$values = array('id' => $id,'hash' => $hash,'id_usuario'=>$this->session->userdata('id_usuario') );
-		if($lista = $this->questao->getQuestoes($values) and ($alu = $this->turma->verifAluno($values) or verif_login('',2,false))){
-
+		$dados['listainfo'] = $this->questao->getListainfo($values);
+		if($lista = $this->questao->getQuestoes($values) and ($alu = $this->turma->verifAluno($values) or verif_login('',2,false)) and $dados['listainfo']['lis_res_status'] == 1){
+			$dados['hash']=$hash;
+			$dados['questao']=$id;
 			$respostaanterior = $this->questao->getRespostas(array('hash' => $hash, 'id_lista'=>$id,'id_usuario'=>$this->session->userdata('id_usuario')));
 
 			if($respostaanterior){
@@ -63,7 +82,7 @@ class Alunos extends CI_Controller {
 				$dados['tentativas'] = 1;
 				$dados['respostaanterior'] = false;
 			}
-			$dados['listainfo'] = $this->questao->getListainfo($values);
+			
 			if(!empty($dados['listainfo']['lis_endtime'])){
 
 		     $dados['datalimite'] = converter_data(explode(' ',$dados['listainfo']['lis_endtime'])[0],3).' às '.explode(' ',$dados['listainfo']['lis_endtime'])[1];
@@ -83,9 +102,9 @@ class Alunos extends CI_Controller {
                             <p class="message-mg-rt"><strong>Ops!</strong> Não é possível mais responder esta lista! <br> A data para responder foi até <strong>'.converter_data(explode(' ',$dados['listainfo']['lis_endtime'])[0],3).'</strong> às <strong>'.explode(' ',$dados['listainfo']['lis_endtime'])[1].'</strong></p>
                           </div>
                         </div>';
-            	
 
             }
+
 			}
 			$dados['h1'] = 'Responder lista: '.$dados['listainfo']['lis_name'];
 

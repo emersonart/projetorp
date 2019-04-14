@@ -106,6 +106,8 @@ class Professor extends CI_Controller {
 			}
 			//parametros de validação
 			$this->form_validation->set_rules('nomeLista','Nome da Lista','trim|required|xss_clean|min_length[5]|callback_regex_namelist', array('required' => 'É obrigatório inserir um nome para a lista'));
+
+			$this->form_validation->set_rules('status_res1','Status Resposta','trim|required|alpha|exact_length[1]|in_list[S,N,s,n]' );
 			$this->form_validation->set_rules('questoes[]','Questões','trim|required|xss_clean|min_length[12]',array('required'=>'É obrigatório inserir todas as questões para esta lista'));
 			$this->form_validation->set_rules('fotos[]','Fotos','trim');
 			$this->form_validation->set_rules('enddate','Data final para a lista','trim|required|regex_match[/^([2-9][0-9][0-9][0-9])-([0-1][0-9])-([0-3][0-9])$/]',array('regex_match' => 'Formato inválido de data'));
@@ -119,6 +121,12 @@ class Professor extends CI_Controller {
 			}else{
 				
 				$dados_form = $this->input->post();
+
+					if($dados_form['status_res1'] == 's' or $dados_form['status_res1'] == 'S'){
+						$dados_form['status_res1'] = 1;
+					}else{
+						$dados_form['status_res1'] = 0;
+					}
 				$fotos = $_FILES['fotos'];
 				$filesCount = count($fotos['name']); 
 				$filesFinalCount = 0;
@@ -127,6 +135,8 @@ class Professor extends CI_Controller {
 				$dados_lista['id_professor'] = $dados_hash['cla_teacher'];
 				$dados_lista['subject'] = $dados_hash['sub_id'];
 				$dados_lista['class_hash'] =  $dados_hash['cla_hash'];
+
+				$dados_lista['res_status'] = $dados_form['status_res1'];
 				$date = converter_data($dados_form['enddate'],4);
 				$dados_lista['endtime'] = $date.' '.$dados_form['endtime'];
 
@@ -365,7 +375,7 @@ class Professor extends CI_Controller {
 
 			//parametros post
 				$this->form_validation->set_rules('questoes[]','Questão','trim|required' );
-				$this->form_validation->set_rules('status_gab','Status Gabarito','trim|required|alpha|exact_length[1]|in_list[S,N,s,n]' );
+				$this->form_validation->set_rules('status_res1','Status Resposta','trim|required|alpha|exact_length[1]|in_list[S,N,s,n]' );
 				$this->form_validation->set_rules('nomeLista','Questão','trim|required' );
 				$this->form_validation->set_rules('enddate','Data final para a lista','trim|required|regex_match[/^([2-9][0-9][0-9][0-9])-([0-1][0-9])-([0-3][0-9])$/]',array('regex_match' => 'Formato inválido de data'));
 				$this->form_validation->set_rules('endtime','Hora final para a lista','trim|required|callback_regex_check');
@@ -381,15 +391,16 @@ class Professor extends CI_Controller {
 					$dados_form['nomeLista'] = html_escape($dados_form['nomeLista']);
 					$date = converter_data($dados_form['enddate'],4);
 					$finaldate = $date.' '.$dados_form['endtime'];
-					if($dados_form['status_gab'] == 's' or $dados_form['status_gab'] == 'S'){
-						$dados_form['status_gab'] = 1;
+
+					if($dados_form['status_res1'] == 's' or $dados_form['status_res1'] == 'S'){
+						$dados_form['status_res1'] = 1;
 					}else{
-						$dados_form['status_gab'] = 0;
+						$dados_form['status_res1'] = 0;
 					}
 					$infos = array(
 						'hash' => $hash, 
 						'id_lista' => $oklista['lis_id'],
-						'gab_status' => $dados_form['status_gab']
+						'res_status' => $dados_form['status_res1']
 					);
 
 					$valores = array(

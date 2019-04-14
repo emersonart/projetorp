@@ -35,6 +35,21 @@
             </div>
           
          </div>
+
+      <div class="form-group-inner">
+         <label>Liberar para resposta?</label>
+         <div class="input-group" style="margin-left: auto;margin-right: auto;" >
+
+          <div class="btn-group btn-custon-four text-center" style="margin-left: auto;margin-right: auto;" data-toggle="buttons">
+            <label class="btn btn-lg btn-danger notalista" style="color:white;padding-left: 3.2rem;padding-right: 3.2rem;" >
+            <input type="radio" name="status_res1" value="n" > <strong>NÃO</strong>
+            </label>
+            <label class="btn btn-lg btn-success notalista active" style="color:white;padding-left: 3.2rem;padding-right: 3.2rem;">
+              <input type="radio" name="status_res1" value="s" checked> <strong>SIM</strong>
+            </label>
+          </div>
+        </div>
+      </div>
          <div class="row">
 
           <div class="col-lg-8 col-lg-offset-2 mg-t-30">

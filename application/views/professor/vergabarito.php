@@ -1,5 +1,4 @@
 
-
 <div class="single-pro-review-area mt-t-30 mg-b-15">
             <div class="container-fluid">
                 <div class="row">
@@ -71,7 +70,7 @@
                                                               <?php }else{echo"<br>";}?>
                                     						<div class="respostaaluno">
                                                                 <?php if($gabarito){?>
-                                                                <?php echo $gabarito[$i]['fed_resposta'];?>  
+                                                                <?php echo $gabarito[$i]['gab_resposta'] ? $gabarito[$i]['gab_resposta'] : 'Questão sem resposta.';?>  
                                                                 <?php }else{?>
                                                                     Lista ainda sem resposta 
                                                                 <?php }?>                 

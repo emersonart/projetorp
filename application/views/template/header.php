@@ -117,6 +117,12 @@
                             <?php if($this->uri->segment(3) == 'responder'){?>
                                 <h4>Tentativa: <?php echo $tentativas;?></h4>
                                 <h4>Data final: <?php echo $data_final; ?></h4>
+                                <?php if(isset($listavencida)){?>
+                                    <h4>
+                                        <a href="<?php echo base_url('turma/'.$hash.'/vergabarito/'.$questao);?>" class="bt btn-lg btn-custon-three btn-info">Ver Garito</a>
+                                    </h4>
+                                <?php }?>
+                                
                            <?php } ?>
                            <?php if($this->uri->segment(3) == 'gabarito'){?>
                                 <h4>Data final: <?php echo $data_final; ?></h4>

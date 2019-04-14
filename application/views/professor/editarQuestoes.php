@@ -41,32 +41,10 @@
             <label class="input-group-addon" id="basic-addon1"> <i class="fa fa-clock-o"></i></label>
             <input type="time" class="form-control" placeholder="Hora final" name="endtime" required="" value="<?php echo $time; ?>">
           </div>
-          
         </div>
-        <div class="form-group-inner">
-         <label>Liberar gabarito</label>
-         <div class="input-group" style="margin-left: auto;margin-right: auto;">
-         <?php 
-              if($oklista['lis_gab_status'] == 0){
-                $na = 'active';
-                $si = '';
-              }else{
-                $na = '';
-                $si = 'active';
-              }
-          ?>
-          <div class="btn-group btn-custon-four" data-toggle="buttons">
-            <label class="btn btn-lg btn-danger notalista <?php echo $na?>" style="color:white;padding-left: 3.2rem;padding-right: 3.2rem;" >
-            <input type="radio" name="status_gab" value="n" <?php echo $na ? 'checked':''?>> <strong>NÃO</strong>
-            </label>
-            <label class="btn btn-lg btn-success notalista <?php echo $si?>" style="color:white;padding-left: 3.2rem;padding-right: 3.2rem;">
-              <input type="radio" name="status_gab" value="s" <?php echo $si ? 'checked':''?>> <strong>SIM</strong>
-            </label>
-          </div>
-        </div>
-      </div>
+
       <div class="form-group-inner">
-         <label>Liberar para resposta?</label>
+         <label>Liberar para os alunos?</label>
          <div class="input-group" style="margin-left: auto;margin-right: auto;" >
          <?php 
               if($oklista['lis_res_status'] == 0){
@@ -79,10 +57,10 @@
           ?>
           <div class="btn-group btn-custon-four text-center" style="margin-left: auto;margin-right: auto;" data-toggle="buttons">
             <label class="btn btn-lg btn-danger notalista <?php echo $na1?>" style="color:white;padding-left: 3.2rem;padding-right: 3.2rem;" >
-            <input type="radio" name="status_res" value="n" <?php echo $na1 ? 'checked':''?>> <strong>NÃO</strong>
+            <input type="radio" name="status_res1" value="n" <?php echo $na1 ? 'checked':''?>> <strong>NÃO</strong>
             </label>
             <label class="btn btn-lg btn-success notalista <?php echo $si1?>" style="color:white;padding-left: 3.2rem;padding-right: 3.2rem;">
-              <input type="radio" name="status_res" value="s" <?php echo $si1 ? 'checked':''?>> <strong>SIM</strong>
+              <input type="radio" name="status_res1" value="s" <?php echo $si1 ? 'checked':''?>> <strong>SIM</strong>
             </label>
           </div>
         </div>

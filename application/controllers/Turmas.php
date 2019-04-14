@@ -66,7 +66,11 @@ class Turmas extends CI_Controller {
 
 			for($i = 0; $i < count($dados['getlistas']);$i++){
 				$dados['getlistas'][$i]['lis_gabarito'] = $this->questao->getGabarito($dados['getlistas'][$i]['lis_id']);
-				
+				$dados['getlistas'][$i]['lis_expired'] = expired_date($dados['getlistas'][$i]['lis_endtime']);
+				if($dados['getlistas'][$i]['lis_expired'] == TRUE){
+					$valu = array('id' => $dados['getlistas'][$i]['lis_id'], 'hash' => $hash);
+					$this->questao->liberarGabarito($valu);
+				}
 			}
 			$dados['informativos'] = $this->turma->getInformativos($values['hash']);
 			$dados['h1'] = $dados['getturma']['cla_nome'];

@@ -24,7 +24,8 @@ class Questoes_model extends CI_Model{
 			'lis_teacher' => $values['id_professor'],
 			'lis_cla_hash' => $values['class_hash'],
 			'lis_endtime' => $values['endtime'],
-			'lis_gab_status' => 0
+			'lis_gab_status' => $values['gab_status'],
+			'lis_res_status' => $values['res_status']
 		);
 
 		$this->db->insert('tb_lists',$info_lista);
@@ -150,7 +151,7 @@ class Questoes_model extends CI_Model{
 				}
 				
 			}
-			$this->db->set('lis_gab_status',$infos['gab_status']);
+			$this->db->set('lis_res_status',$infos['res_status']);
 			$this->db->where('lis_id',$infos['id_lista']);
 			$this->db->update('tb_lists');
 		}else{
@@ -333,11 +334,27 @@ class Questoes_model extends CI_Model{
 		}
 		
 	}
+	public function liberarGabarito($values){
+		$this->db->select('*');
+		$this->db->from('tb_lists');
+		$this->db->where('lis_gab_status',1);
+		$this->db->where('lis_id',$values['id']);
+		$this->db->where('lis_cla_hash',$values['hash']);
+		$query = $this->db->get();
 
+		if($query->num_rows() == 0){
+			$this->db->set('lis_gab_status',1);
+			$this->db->where('lis_id',$values['id']);
+			$this->db->where('lis_cla_hash',$values['hash']);
+			$this->db->update('tb_lists');
+		}
+
+		return true;
+	}
 	public function getGabarito($id){
 		$this->db->select('*');
-		$this->db->from('tb_feedbacks');
-		$this->db->where('fed_lis_id',$id);
+		$this->db->from('tb_gabaritos');
+		$this->db->where('gab_lis_id',$id);
 		$query = $this->db->get();
 
 		if($query->num_rows() > 0){
@@ -354,18 +371,18 @@ class Questoes_model extends CI_Model{
 			return false;
 		}
 		$this->db->select('*');
-		$this->db->from('tb_feedbacks');
-		$this->db->where('fed_lis_id',$dados['id_lista']);
+		$this->db->from('tb_gabaritos');
+		$this->db->where('gab_lis_id',$dados['id_lista']);
 		$query = $this->db->get();
 
 		if($query->num_rows() > 0){
 				$this->db->trans_start();
 				for($i = 0;$i < count($respostas);$i++){
-					$this->db->set('fed_resposta',$respostas[$i]);
-					$this->db->where('fed_cla_hash',$dados['hash']);
-					$this->db->where('fed_lis_id',$dados['id_lista']);
-					$this->db->where('fed_act_id',$idq[$i]);
-					$this->db->update('tb_feedbacks');
+					$this->db->set('gab_resposta',$respostas[$i]);
+					$this->db->where('gab_cla_hash',$dados['hash']);
+					$this->db->where('gab_lis_id',$dados['id_lista']);
+					$this->db->where('gab_act_id',$idq[$i]);
+					$this->db->update('tb_gabaritos');
 				}
 				$this->db->trans_complete();
 
@@ -375,9 +392,7 @@ class Questoes_model extends CI_Model{
 					set_msg_pop('Não foi possível cadastrar o gabarito','error','normal');
 					return false;
 				}else{
-					$this->db->set('lis_gab_status',1);
-					$this->db->where('lis_id',$dados['id_lista']);
-					$this->db->update('tb_lists');
+
 					set_msg('Gabarito atualizado com sucesso','success');
 					set_msg_pop('Gabarito atualizado com sucesso','success','normal');
 
@@ -386,16 +401,16 @@ class Questoes_model extends CI_Model{
 			
 		}else{
 			$dados1 = array(
-				'fed_lis_id' => $dados['id_lista'], 
-				'fed_usu_id' => $dados['id_usuario'],
-				'fed_cla_hash' => $dados['hash'],
+				'gab_lis_id' => $dados['id_lista'], 
+				'gab_usu_id' => $dados['id_usuario'],
+				'gab_cla_hash' => $dados['hash'],
 			);
 			
 			$this->db->trans_start();
 			for($i = 0;$i < count($respostas);$i++){
-				$dados1['fed_resposta'] = $respostas[$i];
-				$dados1['fed_act_id'] = $idq[$i];
-				$this->db->insert('tb_feedbacks',$dados1);
+				$dados1['gab_resposta'] = $respostas[$i];
+				$dados1['gab_act_id'] = $idq[$i];
+				$this->db->insert('tb_gabaritos',$dados1);
 			}
 			$this->db->trans_complete();
 
@@ -405,9 +420,7 @@ class Questoes_model extends CI_Model{
 				set_msg_pop('Não foi possível cadastrar o gabarito','error','normal');
 				return false;
 			}else{
-				$this->db->set('lis_gab_status',1);
-				$this->db->where('lis_id',$dados['id_lista']);
-				$this->db->update('tb_lists');
+
 				set_msg('Gabarito cadastrado com sucesso','success');
 				set_msg_pop('Gabarito cadastrado com sucesso','success','normal');
 				return true;

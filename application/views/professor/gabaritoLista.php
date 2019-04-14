@@ -41,7 +41,7 @@
                       Resposta:
                     </div>
                     <textarea id="q" class="summernote1" name="respostas[]">
-                      <?php if(!$gabarito): echo set_value('respostas[]');else:echo $gabarito[$i]['fed_resposta'];endif; ?>
+                      <?php if(!$gabarito): echo set_value('respostas[]');else:echo $gabarito[$i]['gab_resposta'];endif; ?>
                         
                       </textarea>
                   </div>

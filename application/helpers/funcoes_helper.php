@@ -407,3 +407,16 @@ if(!function_exists('gerarHash')){
 		    }
 		}
 	}
+
+	if(!function_exists('expired_date')){
+		function expired_date($da){
+			$atual = strtotime(date('Y-m-d H:i'));
+			 $data = strtotime(converter_data(explode(' ',$da)[0],4).' '.explode(' ',$da)[1]);
+			if ($atual > $data){
+		        
+		        return TRUE;
+		    }else{
+		        return FALSE;
+		    }
+		}
+	}
