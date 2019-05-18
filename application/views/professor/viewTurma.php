@@ -39,7 +39,7 @@
                 </div>
               </div>
               <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
-                <div class="address-hr tb-sm-res-d-n dps-tb-ntn">
+                <div class="address-hr tb-sm-res-d-n dps-tb-ntn" style="word-break: break-word;">
                   <p><b>Email:</b><br /> <?php echo $getturma['inf_email'];?></p>
                 </div>
               </div>
@@ -55,7 +55,7 @@
             <li class="<?php echo respostal($aba,'infos');?>"><a href="#infos">Avisos</a></li>
             <?php if($profok or $usuario['perm'] == 0){ ?>
               <li class="<?php echo respostal($aba,'pendentes');?>"><a href="#pendentes">Cadastros pendentes<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
-              <?php $gg = false; ?>
+              <?php $gg = true; ?>
               <?php if($gg){ ?>
                 <li class="<?php echo respostal($aba,'configs');?>"><a href="#configs"> <i class="fa fa-cog"></i></a></li>
               <?php } ?>
