@@ -89,12 +89,12 @@ class Pdf extends CI_Controller {
 					$nome = $nome[0];
 				}
 				
-				$html.= "<tr style='".$d." padding-top: 15px;padding-bottom:15px;'><td style='padding: 10px 10px;".$d."'>".$nome.'</td>';
+				$html.= "<tr style='".$d." padding-top: 15px;padding-bottom:15px;'><td style='padding: 5px 5x;".$d."'>".$nome.'</td>';
 
 			
 			foreach ($info['respostas'] as $resposta) {
 
-				$html.="<td style='padding: 10px 10px;".$d."'>".$resposta['nota']."</td>";
+				$html.="<td style='padding: 5px 5px;".$d."'>".$resposta['nota']."</td>";
 			}
 			$html.="</tr>";
 			$l++;
