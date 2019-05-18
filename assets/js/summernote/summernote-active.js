@@ -75,6 +75,5 @@ $(document).ready(function ($) {
 		    
 		  ]
 	});
-	
   $('div.note-group-select-from-files').remove();
 }); 
