@@ -110,7 +110,7 @@ class Pdf extends CI_Controller {
 		$mpdf->WriteHTML($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);
 		$mpdf->setFooter('{PAGENO}');
        // $html = $this->load->view('teste/boletim_professor',$dados,true);
-        $mpdf->WriteHTML($html);
+        $mpdf->WriteHTML($this->load->view('pdf/boletim_professor',$dados,true));
         $mpdf->Output(); // opens in browser
 	}
  
