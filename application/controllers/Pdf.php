@@ -26,7 +26,8 @@ class Pdf extends CI_Controller {
 		}
 		$bootstrap = file_get_contents('./assets/css/bootstrap.min.css');
 		$css = file_get_contents('./assets/style.css');
-		$mpdf = new \Mpdf\Mpdf();
+		$mpdf = new \Mpdf\Mpdf(['format' => [210, 293],
+    'orientation' => 'P']);
         $html = $this->load->view('pdf/resposta_lista',$dados,true);
         $mpdf->WriteHTML($html);
         $mpdf->Output(); // opens in browser
@@ -104,7 +105,8 @@ class Pdf extends CI_Controller {
 		
 		$stylesheet = file_get_contents('assets/css/bootstrap.min.css');
 		$stylesheet2 = file_get_contents('assets/style.css');
-		$mpdf = new \Mpdf\Mpdf();
+		$mpdf = new \Mpdf\Mpdf(['format' => [210, 293],
+    'orientation' => 'P']);
 		$mpdf->WriteHTML($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);
 		$mpdf->setFooter('{PAGENO}');
        // $html = $this->load->view('teste/boletim_professor',$dados,true);
