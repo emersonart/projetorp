@@ -209,7 +209,7 @@ if(!function_exists('verif_setup')){
 
 //construct layout
 if(!function_exists('load_template')){
-	function load_template($cert,$dados = NULL){
+	function load_template($cert,$dados = NULL,$teste=false){
 		$ci = &get_instance();
 		if(!isset($dados['h1'])){
 			$dados['h1'] =  $ci->option->get_option('site_title');
@@ -226,11 +226,17 @@ if(!function_exists('load_template')){
 		$dados['site_author'] = $ci->option->get_option('site_author');
 		$dados['site_favico'] = $ci->option->get_option('site_favico');
 		$dados['usuario'] = $ci->session->userdata();
-		$ci->load->view('template/head',$dados);
+		
+
+		if(!$teste){
+			$ci->load->view('template/head',$dados);
 		$ci->load->view('template/sidebar');
 		$ci->load->view('template/header');
 		$ci->load->view($cert);
 		$ci->load->view('template/footer');
+		}else{
+			return $ci->load->view('template/head',$dados).$ci->load->view('template/sidebar').$ci->load->view('template/header').$ci->load->view($cert).$ci->load->view('template/footer');
+		}
 	}
 }
 
