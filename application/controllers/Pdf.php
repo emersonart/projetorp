@@ -49,6 +49,7 @@ class Pdf extends CI_Controller {
 			$j = 0;
 			foreach ($listas as $lista){
 				$infos[$i]['respostas'][$j]['lis_id'] = $lista['lis_id'];
+				$infos[$i]['respostas'][$j]['lis_name'] = $lista['lis_name'];
 				$nota = $this->questao->getNotaLista(array('id_lista' => $lista['lis_id'], 'id_aluno'=>$aluno->usu_id));
 				if($nota == ''){
 					$infos[$i]['respostas'][$j]['nota'] = '0';
@@ -63,12 +64,12 @@ class Pdf extends CI_Controller {
 			//echo "<hr>";
 			$i++;
 		}
-		$html = "<table class='table'>
+		$html = "<table class='table table-bordered'>
 				<thead>
-					<tr >
-						<th style='padding: 10px 10px;border-bottom: 2px solid grey'>Aluno</th>";
-						for($k = 1;$k <= count($infos[0]['respostas']); $k++) {
-							$html.="<th style='padding: 10px 10px;border-bottom: 2px solid grey'>Lista ".$k."</th>";					
+					<tr>
+						<th style='padding: 10px 10px;'>Aluno</th>";
+						for($k = 0;$k < count($infos[0]['respostas']); $k++) {
+							$html.="<th style='padding: 10px 10px;'>".$infos[0]['respostas'][$k]['lis_name']."</th>";					
 						}
 		$html.= "</tr></thead>
 		<tbody>";
@@ -79,8 +80,15 @@ class Pdf extends CI_Controller {
 		}else{
 			$d ='';
 		}
-
-				$html.= "<tr style='".$d." padding-top: 15px;padding-bottom:15px;'><td style='padding: 10px 10px;".$d."'>".$info['inf_name'].'</td>';
+				$nome = $info['inf_name'].' '.$info['inf_lastname'];
+				$nome = explode(' ',$nome);
+				if(count($nome) >= 2){
+					$nome = $nome[0].' '.$nome[1];
+				}else{
+					$nome = $nome[0];
+				}
+				
+				$html.= "<tr style='".$d." padding-top: 15px;padding-bottom:15px;'><td style='padding: 10px 10px;".$d."'>".$nome.'</td>';
 
 			
 			foreach ($info['respostas'] as $resposta) {
