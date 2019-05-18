@@ -106,6 +106,7 @@ class Pdf extends CI_Controller {
 		$stylesheet2 = file_get_contents('assets/style.css');
 		$mpdf = new \Mpdf\Mpdf();
 		$mpdf->WriteHTML($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);
+		$mpdf->setFooter('{PAGENO}');
        // $html = $this->load->view('teste/boletim_professor',$dados,true);
         $mpdf->WriteHTML($html);
         $mpdf->Output(); // opens in browser
