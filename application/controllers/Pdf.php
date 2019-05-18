@@ -19,7 +19,7 @@ class Pdf extends CI_Controller {
 		$dados['lista'] = $this->questao->getRespostas(array('hash' => $hash, 'id_lista'=>$id_lista,'id_usuario'=>$id_aluno));
 		$dados['aluno'] = $this->turma->getAluno($id_aluno);
 		$dados['turma'] = $this->turma->getTurma($hash);
-		if($no = $this->questao->getNotaLista(array('id_aluno' => $id_aluno, 'id_lista'=>$id_lista))){
+		if($notao = $this->questao->getNotaLista(array('id_aluno' => $id_aluno, 'id_lista'=>$id_lista))){
 			$dados['nota'] = strtoupper($no);
 		}else{
 			$dados['nota'] = 'Sem nota';
@@ -39,23 +39,24 @@ class Pdf extends CI_Controller {
 		$turma = $this->turma->getTurma($hash);
 		$alunos = $this->turma->getAlunos($hash);
 		$listas = $this->questao->getListas($hash);
-		$infos = array();
+
+		$nota_alunos = array();
 		$i = 0;
 		
 		foreach ($alunos as $aluno){
-			$infos[$i]['inf_name'] = $aluno->inf_name;
-			$infos[$i]['inf_lastname'] = $aluno->inf_lastname;
-			$infos[$i]['inf_registration'] = $aluno->inf_registration;
+			$nota_alunos[$i]['inf_name'] = $aluno->inf_name;
+			$nota_alunos[$i]['inf_lastname'] = $aluno->inf_lastname;
+			$nota_alunos[$i]['inf_registration'] = $aluno->inf_registration;
 			//echo $aluno->inf_name." ".$aluno->inf_lastname.": <br>";
 			$j = 0;
 			foreach ($listas as $lista){
-				$infos[$i]['respostas'][$j]['lis_id'] = $lista['lis_id'];
-				$infos[$i]['respostas'][$j]['lis_name'] = $lista['lis_name'];
+				$nota_alunos[$i]['respostas'][$j]['lis_id'] = $lista['lis_id'];
+				$nota_alunos[$i]['respostas'][$j]['lis_name'] = $lista['lis_name'];
 				$nota = $this->questao->getNotaLista(array('id_lista' => $lista['lis_id'], 'id_aluno'=>$aluno->usu_id));
 				if($nota == ''){
-					$infos[$i]['respostas'][$j]['nota'] = '0';
+					$nota_alunos[$i]['respostas'][$j]['nota'] = '0';
 				}else{
-					$infos[$i]['respostas'][$j]['nota'] = $nota;
+					$nota_alunos[$i]['respostas'][$j]['nota'] = $nota;
 				}
 				
 
@@ -69,19 +70,19 @@ class Pdf extends CI_Controller {
 				<thead>
 					<tr>
 						<th style='padding: 10px 10px;'>Aluno</th>";
-						for($k = 0;$k < count($infos[0]['respostas']); $k++) {
-							$html.="<th style='padding: 10px 10px;'>".$infos[0]['respostas'][$k]['lis_name']."</th>";					
+						for($k = 0;$k < count($nota_alunos[0]['respostas']); $k++) {
+							$html.="<th style='padding: 10px 10px;'>".$nota_alunos[0]['respostas'][$k]['lis_name']."</th>";					
 						}
 		$html.= "</tr></thead>
 		<tbody>";
 		$l=0;
-		foreach ($infos as $info) {
+		foreach ($nota_alunos as $nota_aluno) {
 		if($l%2 == 0){
 			$d = 'background-color: #eee;';
 		}else{
 			$d ='';
 		}
-				$nome = $info['inf_name'].' '.$info['inf_lastname'];
+				$nome = $nota_aluno['inf_name'].' '.$nota_aluno['inf_lastname'];
 				$nome = explode(' ',$nome);
 				if(count($nome) >= 2){
 					$nome = $nome[0].' '.$nome[1];
@@ -92,7 +93,7 @@ class Pdf extends CI_Controller {
 				$html.= "<tr style='".$d." padding-top: 15px;padding-bottom:15px;'><td style='padding: 5px 5x;".$d."'>".$nome.'</td>';
 
 			
-			foreach ($info['respostas'] as $resposta) {
+			foreach ($nota_aluno['respostas'] as $resposta) {
 
 				$html.="<td style='padding: 5px 5px;".$d."'>".$resposta['nota']."</td>";
 			}
@@ -100,7 +101,7 @@ class Pdf extends CI_Controller {
 			$l++;
 		}
 		$html.='</tbody></table>';
-		$dados['notas_aluno'] = $infos;
+		$dados['nota_alunos'] = $nota_alunos;
 		$dados['turma'] = $turma;
 		
 		$stylesheet = file_get_contents('assets/css/bootstrap.min.css');
