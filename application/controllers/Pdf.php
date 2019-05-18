@@ -33,6 +33,7 @@ class Pdf extends CI_Controller {
 
 	}
 	
+
 	public function relatorio_turma($hash = 'FIED32'){
 		$turma = $this->turma->getTurma($hash);
 		$alunos = $this->turma->getAlunos($hash);
@@ -95,5 +96,5 @@ class Pdf extends CI_Controller {
         //$mpdf->WriteHTML($html);
         //$mpdf->Output(); // opens in browser
 	}
-
+ 
 }
