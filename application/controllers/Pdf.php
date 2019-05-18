@@ -63,38 +63,44 @@ class Pdf extends CI_Controller {
 			//echo "<hr>";
 			$i++;
 		}
-		echo "<table class='table table-stripped'>
+		$html = "<table class='table'>
 				<thead>
-					<tr>
-						<td>Aluno</td>";
-						for($k = 0;$k < count($infos[0]['respostas']); $k++) {
-							echo "<td>Lista ".$k."</td>";					
+					<tr >
+						<th style='padding: 10px 10px;border-bottom: 2px solid grey'>Aluno</th>";
+						for($k = 1;$k <= count($infos[0]['respostas']); $k++) {
+							$html.="<th style='padding: 10px 10px;border-bottom: 2px solid grey'>Lista ".$k."</th>";					
 						}
-		echo "</tr></thead>
+		$html.= "</tr></thead>
 		<tbody>";
 		$l=0;
-		foreach ($infos as $info) {	
-			if($l % 2 == 0){
-				$d = 'background: #eee';
-			}else{
-				$d = '';
-			}
-			echo "<tr style='".$d."'><td>".$info['inf_name'].'</td>';
+		foreach ($infos as $info) {
+		if($l%2 == 0){
+			$d = 'background-color: #eee;';
+		}else{
+			$d ='';
+		}
+
+				$html.= "<tr style='".$d." padding-top: 15px;padding-bottom:15px;'><td style='padding: 10px 10px;".$d."'>".$info['inf_name'].'</td>';
+
+			
 			foreach ($info['respostas'] as $resposta) {
-				echo "<td>".$resposta['nota']."</td>";
+
+				$html.="<td style='padding: 10px 10px;".$d."'>".$resposta['nota']."</td>";
 			}
-			echo "</tr>";
+			$html.="</tr>";
 			$l++;
 		}
-		echo '</tbody></table>';
+		$html.='</tbody></table>';
 		$dados['notas_aluno'] = $infos;
 		$dados['turma'] = $turma;
 		
-
-		//$mpdf = new \Mpdf\Mpdf();
-        //$html = $this->load->view('teste/boletim_professor',$dados,true);
-        //$mpdf->WriteHTML($html);
-        //$mpdf->Output(); // opens in browser
+		$stylesheet = file_get_contents('assets/css/bootstrap.min.css');
+		$stylesheet2 = file_get_contents('assets/style.css');
+		$mpdf = new \Mpdf\Mpdf();
+		$mpdf->WriteHTML($stylesheet,\Mpdf\HTMLParserMode::HEADER_CSS);
+       // $html = $this->load->view('teste/boletim_professor',$dados,true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output(); // opens in browser
 	}
  
 }
