@@ -82,4 +82,19 @@ class Turmas extends CI_Controller {
 		}
 	}
 
+	public function fechar_periodo($hash,$periodo = false){
+		verif_login('dashboard',2);
+		$turma = $this->turma->getTurma($hash);
+		$dad = array('hash' => $hash, 'id_usuario'=.$this->session->userdata('id_usuario'));
+		$prof = $this->turma->verifProf($dad);
+		if(!$turma and (!$prof or verif_login('',2,false))){
+			set_msg('Turma não encontrada','danger');
+			redirect('turmas');
+		}
+
+		if($fechado = $this->turma->fechar_periodo($hash,$periodo)){
+			set_msg('Período fechado com sucesso','success');
+		}
+	}
+
 }

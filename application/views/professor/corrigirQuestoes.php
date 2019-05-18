@@ -43,18 +43,21 @@
                                         <?php echo form_open();?>
                                     
         							<div class="btn-group btn-custon-four" data-toggle="buttons">
-        								<label class="btn btn-lg btn-danger notalista <?php echo respostal('d',$nota)?>">
-        									<input <?php echo respostal('d',$nota,TRUE)?> type="radio" name="notaLista" value="d"> D
-        								</label>
-        								<label class="btn btn-lg btn-warning notalista <?php echo respostal('c',$nota)?>">
-        									<input <?php echo respostal('c',$nota,TRUE)?> type="radio" name="notaLista" value="c"> C
+        								<label class="btn btn-lg btn-success notalista <?php echo respostal('a',$nota)?>">
+        									<input <?php echo respostal('a',$nota,TRUE)?> type="radio" name="notaLista" value="a"> A
         								</label>
         								<label class="btn btn-lg btn-primary notalista <?php echo respostal('b',$nota)?>">
         									<input <?php echo respostal('b',$nota,TRUE)?> type="radio" name="notaLista" value="b"> B
         								</label>
-        								<label class="btn btn-lg btn-success notalista <?php echo respostal('a',$nota)?>">
-        									<input <?php echo respostal('a',$nota,TRUE)?> type="radio" name="notaLista" value="a"> A
+        								<label class="btn btn-lg btn-info notalista <?php echo respostal('c',$nota)?>">
+        									<input <?php echo respostal('c',$nota,TRUE)?> type="radio" name="notaLista" value="c"> c
         								</label>
+        								<label class="btn btn-lg btn-warning notalista <?php echo respostal('d',$nota)?>">
+        									<input <?php echo respostal('d',$nota,TRUE)?> type="radio" name="notaLista" value="d"> D
+        								</label>
+                                        <label class="btn btn-lg btn-danger  notalista <?php echo respostal('e',$nota)?>">
+                                            <input <?php echo respostal('e',$nota,TRUE)?> type="radio" name="notaLista" value="e"> E
+                                        </label>
         							</div>
                                 </div>
                                 <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 mg-b-15" style="vertical-align: middle;">
@@ -66,17 +69,20 @@
                                 <?php echo form_close();?>
                                 <?php }else{?>
                                     <div class="btn-group btn-custon-four" data-toggle="buttons">
-                                        <label class="btn btn-lg btn-danger notalista <?php echo respostal('d',$nota)?>">
-                                             D
-                                        </label>
-                                        <label class="btn btn-lg btn-warning notalista <?php echo respostal('c',$nota)?>">
-                                             C
+                                        <label class="btn btn-lg btn-success notalista <?php echo respostal('a',$nota)?>">
+                                             A
                                         </label>
                                         <label class="btn btn-lg btn-primary notalista <?php echo respostal('b',$nota)?>">
                                             B
                                         </label>
-                                        <label class="btn btn-lg btn-success notalista <?php echo respostal('a',$nota)?>" >
-                                            A
+                                        <label class="btn btn-lg btn-info notalista <?php echo respostal('c',$nota)?>">
+                                           C
+                                        </label>
+                                        <label class="btn btn-lg btn-warning notalista <?php echo respostal('d',$nota)?>" >
+                                            D
+                                        </label>
+                                        <label class="btn btn-lg btn-danger notalista <?php echo respostal('e',$nota)?>" >
+                                            E
                                         </label>
                                     </div>
                                 <?php }?>
