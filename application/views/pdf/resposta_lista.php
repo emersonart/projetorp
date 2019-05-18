@@ -80,8 +80,14 @@
 		<footer>
 			<div class="container">
 				<div class="row">
-					<div class="col-md-6 mx-auto text-center mt-5" style="font-weight: bold">
+					<div class="col-md-12 mx-auto text-center mt-5" style="font-weight: bold">
 						Koala Educacional
+					</div>		
+				</div>
+				<div class="row">
+					<div class="col-md-12 mx-auto text-center mt-5">
+						Lista de Respostas <br>
+						Arquivo Emitido no dia: <?=date('d-m-Y');?>
 					</div>		
 				</div>
 			</div>
