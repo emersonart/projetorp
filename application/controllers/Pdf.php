@@ -15,20 +15,66 @@ class Pdf extends CI_Controller {
 
 	}
 
-	public function resposta_lista($hash = 'FID14E',$id_lista = '26',$id_aluno = '113'){
-		$dados['lista'] = $this->questao->getRespostas(array('hash' => $hash, 'id_lista'=>$id_lista,'id_usuario'=>$id_aluno));
-		$dados['aluno'] = $this->turma->getAluno($id_aluno);
-		$dados['turma'] = $this->turma->getTurma($hash);
-		if($notao = $this->questao->getNotaLista(array('id_aluno' => $id_aluno, 'id_lista'=>$id_lista))){
-			$dados['nota'] = strtoupper($no);
+	public function resposta_lista($hash = 'FID14E',$id_lista = '26',$id_aluno = NULL){
+		if($id_aluno){
+			$dados['lista'] = $this->questao->getRespostas(array('hash' => $hash, 'id_lista'=>$id_lista,'id_usuario'=>$id_aluno));
+			$dados['aluno'] = $this->turma->getAluno($id_aluno);
+			$dados['turma'] = $this->turma->getTurma($hash);
+			if($dados['lista']){
+				if($notao = $this->questao->getNotaLista(array('id_aluno' => $id_aluno, 'id_lista'=>$id_lista))){
+					$dados['nota'] = strtoupper($notao);
+				}else{
+					$dados['nota'] = 'Sem nota';
+				}
+				if($link = gerar_pdf($dados,'resposta_lista')){
+					$pdfs[] = array(
+						'pli_cla_hash' => $hash, 
+						'pli_lis_id'=>$id_lista,
+						'pli_usu_id'=>$dados['aluno']['usu_id'],
+						'pli_pdf' => $link
+					);
+				}
+			}
+			
+			$this->questao->cadastrar_pdf($pdfs);
+			force_download($link, NULL);
+			redirect('turma/'.$hash);
+			//if($link = gerar_pdf($dados,'resposta_lista')){
+			//	echo $link;
+			//}
 		}else{
-			$dados['nota'] = 'Sem nota';
+			
+			$alunos = $this->turma->getAlunos($hash);
+			$dados['turma'] = $this->turma->getTurma($hash);
+			$contar = 1;
+			foreach ($alunos as $aluno) {
+				$dados['aluno'] = $this->turma->getAluno($aluno->usu_id);
+				$dados['lista'] = $this->questao->getRespostas(array('hash' => $hash, 'id_lista'=>$id_lista,'id_usuario'=>$aluno->usu_id));
+				if($dados['lista']){
+						//echo count($dados['lista']).'<br>';
+					if($notao = $this->questao->getNotaLista(array('id_aluno' => $aluno->usu_id, 'id_lista'=>$id_lista))){
+						$dados['nota'] = strtoupper($notao);
+					}else{
+						$dados['nota'] = 'Sem nota';
+					}
+					if($link = gerar_pdf($dados,'resposta_lista')){
+						$pdfs[] = array(
+							'pli_cla_hash' => $hash, 
+							'pli_lis_id'=>$id_lista,
+							'pli_usu_id'=>$aluno->usu_id,
+							'pli_pdf' => $link
+						);
+					}
+					$contar++;
+				}					
+			}
+			$this->questao->cadastrar_pdf($pdfs);
+			//echo count($dados['listas']);
+			//if($link = gerar_pdf($dados,'resposta_lista')){
+			//	echo $link;
+			//}
 		}
-		$bootstrap = file_get_contents('./assets/css/bootstrap.min.css');
-		$css = file_get_contents('./assets/style.css');
-		if($link = gerar_pdf($dados,'resposta_lista')){
-			echo $link;
-		}
+		
 		//$mpdf = new \Mpdf\Mpdf(['format' => [210, 293],
     //'orientation' => 'P']);
         //$html = $this->load->view('pdf/resposta_lista',$dados,true);
@@ -70,30 +116,30 @@ class Pdf extends CI_Controller {
 			$i++;
 		}
 		$html = "<table class='table table-bordered'>
-				<thead>
-					<tr>
-						<th style='padding: 10px 10px;'>Aluno</th>";
-						for($k = 0;$k < count($nota_alunos[0]['respostas']); $k++) {
-							$html.="<th style='padding: 10px 10px;'>".$nota_alunos[0]['respostas'][$k]['lis_name']."</th>";					
-						}
+		<thead>
+		<tr>
+		<th style='padding: 10px 10px;'>Aluno</th>";
+		for($k = 0;$k < count($nota_alunos[0]['respostas']); $k++) {
+			$html.="<th style='padding: 10px 10px;'>".$nota_alunos[0]['respostas'][$k]['lis_name']."</th>";					
+		}
 		$html.= "</tr></thead>
 		<tbody>";
 		$l=0;
 		foreach ($nota_alunos as $nota_aluno) {
-		if($l%2 == 0){
-			$d = 'background-color: #eee;';
-		}else{
-			$d ='';
-		}
-				$nome = $nota_aluno['inf_name'].' '.$nota_aluno['inf_lastname'];
-				$nome = explode(' ',$nome);
-				if(count($nome) >= 2){
-					$nome = $nome[0].' '.$nome[1];
-				}else{
-					$nome = $nome[0];
-				}
-				
-				$html.= "<tr style='".$d." padding-top: 15px;padding-bottom:15px;'><td style='padding: 5px 5x;".$d."'>".$nome.'</td>';
+			if($l%2 == 0){
+				$d = 'background-color: #eee;';
+			}else{
+				$d ='';
+			}
+			$nome = $nota_aluno['inf_name'].' '.$nota_aluno['inf_lastname'];
+			$nome = explode(' ',$nome);
+			if(count($nome) >= 2){
+				$nome = $nome[0].' '.$nome[1];
+			}else{
+				$nome = $nome[0];
+			}
+
+			$html.= "<tr style='".$d." padding-top: 15px;padding-bottom:15px;'><td style='padding: 5px 5x;".$d."'>".$nome.'</td>';
 
 			
 			foreach ($nota_aluno['respostas'] as $resposta) {
@@ -115,5 +161,5 @@ class Pdf extends CI_Controller {
 		}
 		 // opens in browser
 	}
- 
+
 }

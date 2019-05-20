@@ -55,8 +55,7 @@ class Professor extends CI_Controller {
 				'startHash' => date('d-m-Y'),
 				'endHash' => converter_data($dados_form['tempoTurma'],2),
 				'profTurma' => $prof,
-				'inscTurma' => 1,
-				'periodosTurma' => $dados_form['periodosTurma']
+				'inscTurma' => 1
 			);
 			$this->turma->criarTurma($valor);
 		}
@@ -135,7 +134,7 @@ class Professor extends CI_Controller {
 				$dados_lista['id_professor'] = $dados_hash['cla_teacher'];
 				$dados_lista['subject'] = $dados_hash['sub_id'];
 				$dados_lista['class_hash'] =  $dados_hash['cla_hash'];
-
+				$dados_lista['periodo'] =  $dados_hash['cla_per_id'];
 				$dados_lista['res_status'] = $dados_form['status_res1'];
 				$date = converter_data($dados_form['enddate'],4);
 				$dados_lista['endtime'] = $date.' '.$dados_form['endtime'];

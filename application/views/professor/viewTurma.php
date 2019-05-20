@@ -44,6 +44,13 @@
                 </div>
               </div>
             </div>
+             <div class="row">
+              <div class="col-lg-6 col-md-12 col-sm-12 col-xs-6">
+                <div class="address-hr">
+                 <p><b>Bimestre:</b><br /> <?php echo $getturma['cla_per_id'];?>º</p>
+               </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -53,8 +60,10 @@
             <li class="<?php echo respostal($aba,'alunos');?>"><a href="#alunos">Alunos</a></li>
             <li class="<?php echo respostal($aba,'listas');?>"><a href="#listas"> Listas</a></li>
             <li class="<?php echo respostal($aba,'infos');?>"><a href="#infos">Avisos</a></li>
+            <li class="<?php echo respostal($aba,'todasaslistas');?>"><a href="#todasaslistas">Outras Listas</a></li>
             <?php if($profok or $usuario['perm'] == 0){ ?>
               <li class="<?php echo respostal($aba,'pendentes');?>"><a href="#pendentes">Cadastros pendentes<?php if($countalunopend > 0){?><span class="aviso-circulo" data-toggle="tooltip" data-placement="top" title="Essa turma possui alunos pendentes"><?php echo $countalunopend;?></span><?php }?></a></li>
+               
               <?php $gg = true; ?>
               <?php if($gg){ ?>
                 <li class="<?php echo respostal($aba,'configs');?>"><a href="#configs"> <i class="fa fa-cog"></i></a></li>
@@ -171,6 +180,7 @@
                             <?php }else{ ?>
                               <span class="badge badge-warning ">Lista não está dissponível para os alunos!</span>
                             <?php }?>
+                            <?=$linha['lis_per_id']?>º Bimestre
                           </span>
 
                         </div>
@@ -243,6 +253,94 @@
           </div>
         </div>
       </div>
+      <div class="product-tab-list tab-pane fade in <?php echo respostal($aba,'todasaslistas');?>" id="todasaslistas">
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="review-content-section">
+                    <div class="chat-discussion" style="height: auto">
+                      <div class="row" style="margin: 0">
+                       <?php if(!empty($getalllistas) && isset($getalllistas) && sizeof($getalllistas) > 0){ 
+                        foreach ($getalllistas as $linha) { ?>
+                          <?php if($linha['lis_res_status'] == 1 or $profok or 0 == $usuario['perm']){?>
+                          <!-- COMEÇA A DIV DE LISTA -->
+                          <div  class="chat-message col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                           <div style="margin-left: 0;"class="message">
+                            <a class="message-author" href="#"> <?php echo $linha['lis_name'];?></a>
+                            <?php if($profok or 0 == $usuario['perm']){?>
+                              <span class="message-date">
+                                <?php if($linha['lis_res_status'] == 1){?>
+                                <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/respostas/'.$linha['lis_id']);?>" class="btn btn-md btn-info btn-custon-three" data-toggle="tooltip" data-placement="bottom" title="Ver Respostas"><i class="fa fa-eye" style="color: #fff;"></i> Respostas </a>
+                              <?php }?>
+                                <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/editar/'.$linha['lis_id']);?>"class="btn btn-md btn-default btn-custon-three" data-toggle="tooltip" data-placement="bottom" title="Editar Lista"><i class="fa fa-edit" style="color: #000;"></i></a>
+                                <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/reggabarito/'.$linha['lis_id']);?>" class="btn btn-md btn-success btn-custon-three" data-toggle="tooltip" data-placement="bottom" title="Gabarito"><i class="fa fa-check-square-o" style="color: #fff;"></i></a>
+                                <span data-toggle="tooltip" data-placement="bottom" title="Excluir Lista">
+
+                                 <a href="#" nome-value="<?php echo $linha['lis_name'];?>" data-toggle="modal" class="btn btn-md btn-danger btn-custon-three deletelista" data-value="<?php echo $linha['lis_id'];?>" data-target="#deletelista"><i class="fa fa-close" style="color: #fff;"></i></a>
+                               </span>
+                             
+                             </span>
+                           <?php }else{ 
+                            $nota = $this->questao->getNotaLista(array('id_lista' => $linha['lis_id'], 'id_aluno'=>$id_aluno));?>
+                            <span class="message-date">
+                              <span style="padding-left: 10px;padding-right: 20px;" class="btn btn-md btn-<?php echo showNota($nota,1);?> btn-custon-three" data-toggle="tooltip" data-placement="top" title="Minha Nota"><i class="fa fa-check" style="color: #fff;margin-right: 7px;"></i>  
+                                <?php 
+                                if($nota){
+                                  echo " ".showNota($nota)." ";
+                                }else{
+                                  echo "S/N";
+                                }
+                                ?>
+                              </span>
+                              <?php $gabarito = $this->questao->getGabarito($linha['lis_id']); 
+                              if($gabarito and count($gabarito) > 0){
+                                $j = 0;
+                                for($i =0;$i< count($gabarito);$i++){
+                                  if($gabarito[$i]['gab_resposta'] == ''){
+                                    $j++;
+                                  }
+                                }
+                                if(count($gabarito) == $j){
+                                  $gabarito = FALSE;
+                                }
+                              }
+                              ?>
+                              <?php if(isset($linha['lis_gab_status']) and $linha['lis_gab_status'] == '1' and $gabarito and $linha['lis_expired']){?>
+                                <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/vergabarito/'.$linha['lis_id']);?>"class="btn btn-md btn-success btn-custon-three" data-toggle="tooltip" data-placement="top" title="Ver Gabarito"><i class="fa fa-eye" style="color: #fff;"></i></a>
+                              <?php } ?>
+                              <a href="<?php echo base_url('turma/'.$linha['lis_cla_hash'].'/'.'pdf'.'/'.$linha['lis_id'].'/'.$usuario['id_usuario']);?>"class="btn btn-md btn-info btn-custon-three" data-toggle="tooltip" data-placement="top" title="Responder Lista"><i class="fa fa-pencil" style="color: #fff;margin-right: 7px;"></i>PDF</a>
+                            </span>
+                          <?php } ?>
+                          <span class="message-content">
+                            <?php $dd = array('cla_hash' => $linha['lis_cla_hash'], 'id_lista'=>$linha['lis_id']);?>
+                            <b>Questões: <?php echo $this->questao->countQuestoes($dd);?></b><br>
+                            <?php if($linha['lis_res_status']  == 1){?>
+                            Responder até: <b><?php echo $linha['lis_endtime'] ? converter_data(explode(' ',$linha['lis_endtime'])[0],3).' às '.explode(' ',$linha['lis_endtime'])[1] : 'Não Informado';?></b><br>
+                            <?php }else{ ?>
+                              <span class="badge badge-warning ">Lista não está disponível para os alunos!</span><br>
+                            <?php }?>
+                            <?=$linha['lis_per_id']?>º Bimestre
+                          </span>
+
+                        </div>
+                      </div>
+                    <?php } ?>
+                      <!-- ACABA A DIV DE UMA LISTA -->
+                    <?php } }else{?>
+                      <div class="alert alert-warning alert-st-three" role="alert">
+                        <i class="fa fa-exclamation-triangle edu-checked-pro admin-check-pro" aria-hidden="true"></i>
+                        <p class="message-mg-rt"><strong>Ops!</strong> Esta turma ainda não possui listas!</p>
+                      </div>
+
+                    <?php }?>
+                    <?php if($profok2){?>
+                      <a href="<?php echo base_url('criarlista/turma/'.$hashturma);?>" class="btn btn-lg btn-success btn-custon-four widget-btn-1 ">CRIAR LISTA</a>
+                    <?php } ?>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       <?php if($usuario['perm'] == 2 or $usuario['perm'] == 0){ ?>
         <div class="product-tab-list tab-pane fade in <?php echo respostal($aba,'pendentes');?>" id="pendentes">
           <div class="row">
@@ -295,6 +393,7 @@
             </div>
           </div>
         </div>
+        
         <?php if($gg){?>
           <div class="product-tab-list tab-pane fade in <?php echo respostal($aba,'configs');?>" id="configs">
             <div class="row">
@@ -337,21 +436,22 @@
                   <div class="col-lg-6">
                     <div class="form-group">
                       <label> Período atual: </label>
+                      <?=$getturma['cla_per_id'];?>
                       <div class="inline-checkbox-cs"> 
                         <label class=" i-checks pull-left" style="margin-right: 15px" for="um">
-                          <input type="radio" value="1" checked name="periodoTurma" id="um">
+                          <input type="radio" value="1" <?php if($getturma['cla_per_id'] == 1):  echo 'checked';endif;?> <?php if($getturma['cla_per_id'] > 1):  echo 'disabled';endif;?> name="periodoTurma" id="um">
                           1º 
                         </label>
                         <label class=" i-checks pull-left" style="margin-right: 15px" for="do">
-                          <input type="radio" value="2" name="periodoTurma" id="do">
+                          <input type="radio" value="2" <?php if($getturma['cla_per_id'] == 2):  echo 'checked';endif;?> <?php if($getturma['cla_per_id'] > 2):  echo 'disabled';endif;?> name="periodoTurma" id="do">
                           2º 
                         </label>
                         <label class=" i-checks pull-left" style="margin-right: 15px" for="tr">
-                          <input type="radio" value="3" name="periodoTurma" id="tr">
+                          <input type="radio" value="3" <?php if($getturma['cla_per_id'] == 3):  echo 'checked';endif;?> <?php if($getturma['cla_per_id'] > 3):  echo 'disabled';endif;?> name="periodoTurma" id="tr">
                           3º 
                         </label>
                         <label class=" i-checks pull-left" style="margin-right: 15px" for="qu">
-                          <input type="radio" value="4" name="periodoTurma" id="qu">
+                          <input type="radio" value="4" <?php if($getturma['cla_per_id'] == 4):  echo 'checked';endif;?> name="periodoTurma" id="qu">
                           4º 
                         </label>
                         <span class="badge b-info" data-toggle="tooltip" title="Ao selecionar um período os demais serão fechados automaticamente" data-placement="bottom"><i class="fa fa-info"></i></span>
@@ -366,7 +466,7 @@
 
                 <div class="row">
                   <div class="form-group">
-                    <button type="submit" class="btn btn-success btn-custon-four" style="padding-left: 10px;">Criar sala</button>
+                    <button type="submit" class="btn btn-success btn-custon-four" style="padding-left: 10px;">Salvar</button>
                   </div> 
                 </div>
               </div>

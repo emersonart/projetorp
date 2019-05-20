@@ -67,7 +67,7 @@ class Alunos extends CI_Controller {
 		verif_login();
 		$values = array('id' => $id,'hash' => $hash,'id_usuario'=>$this->session->userdata('id_usuario') );
 		$dados['listainfo'] = $this->questao->getListainfo($values);
-		if($lista = $this->questao->getQuestoes($values) and ($alu = $this->turma->verifAluno($values) or verif_login('',2,false)) and $dados['listainfo']['lis_res_status'] == 1){
+		if($lista = $this->questao->getQuestoes($values) and ($alu = $this->turma->verifAluno($values) or verif_login('',2,false)) and $dados['listainfo']['lis_res_status'] == 1 and $dados['listainfo']['lis_per_id'] == $dados['listainfo']['cla_per_id']){
 			$dados['hash']=$hash;
 			$dados['questao']=$id;
 			$respostaanterior = $this->questao->getRespostas(array('hash' => $hash, 'id_lista'=>$id,'id_usuario'=>$this->session->userdata('id_usuario')));

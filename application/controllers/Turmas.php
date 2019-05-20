@@ -62,18 +62,61 @@ class Turmas extends CI_Controller {
 			$dados['countlistapend'] = $this->turma->countAlunosTurma($values['hash']);
 			$dados['getalunospend'] = $this->turma->getAlunos($values['hash'],FALSE);
 			$dados['countalunopend'] = $this->turma->countAlunosTurma($values['hash'],FALSE);
-			$dados['getlistas'] = $this->questao->getListas($values['hash']);
 
-			for($i = 0; $i < count($dados['getlistas']);$i++){
+			$dados['getlistas'] = $this->questao->getListas(array('hash' => $hash, 'periodo'=>$dados['getturma']['cla_per_id']));
+			if($dados['getlistas']){
+				for($i = 0; $i < count($dados['getlistas']);$i++){
 				$dados['getlistas'][$i]['lis_gabarito'] = $this->questao->getGabarito($dados['getlistas'][$i]['lis_id']);
-				$dados['getlistas'][$i]['lis_expired'] = expired_date($dados['getlistas'][$i]['lis_endtime']);
-				if($dados['getlistas'][$i]['lis_expired'] == TRUE){
-					$valu = array('id' => $dados['getlistas'][$i]['lis_id'], 'hash' => $hash);
-					$this->questao->liberarGabarito($valu);
+					$dados['getlistas'][$i]['lis_expired'] = expired_date($dados['getlistas'][$i]['lis_endtime']);
+					if($dados['getlistas'][$i]['lis_expired'] == TRUE){
+						$valu = array('id' => $dados['getlistas'][$i]['lis_id'], 'hash' => $hash);
+						$this->questao->liberarGabarito($valu);
+						$dados['getlistas'][$i]['lis_gab_status'] = 1;
+					}
 				}
 			}
+
+			$dados['getalllistas'] = $this->questao->getListas(array('hash' => $hash,'periodo'=>$dados['getturma']['cla_per_id']),TRUE);
+			if($dados['getalllistas']){
+				for($i = 0; $i < count($dados['getalllistas']);$i++){
+				$dados['getalllistas'][$i]['lis_gabarito'] = $this->questao->getGabarito($dados['getalllistas'][$i]['lis_id']);
+					$dados['getalllistas'][$i]['lis_expired'] = expired_date($dados['getalllistas'][$i]['lis_endtime']);
+					if($dados['getalllistas'][$i]['lis_expired'] == TRUE){
+						$valu = array('id' => $dados['getalllistas'][$i]['lis_id'], 'hash' => $hash);
+						$this->questao->liberarGabarito($valu);
+						$dados['getalllistas'][$i]['lis_gab_status'] = 1;
+					}
+				}
+			}
+			
 			$dados['informativos'] = $this->turma->getInformativos($values['hash']);
 			$dados['h1'] = $dados['getturma']['cla_nome'];
+			if(!empty($this->input->post()['nomeTurma']) and $this->input->post()['nomeTurma'] and $this->input->post()['nomeTurma'] != $dados['getturma']['cla_nome']){
+				$this->form_validation->set_rules('nomeTurma','Nome da Turma','trim|required|min_length[5]|is_unique[tb_class.cla_nome]', array('required' => 'É obrigatório inserir um nome para a turma','is_unique'=>'Nome da turma já em uso'));
+			}
+			
+			$this->form_validation->set_rules('descricaoTurma','Descrição da Turma','trim');
+			$this->form_validation->set_rules('periodoTurma','Períodos da turma','trim|in_list[1,2,3,4]');
+			$this->form_validation->set_rules('tempoTurma','Inscrições até:','trim|regex_match[/^([2-9][0-9][0-9][0-9])-([0-1][0-9])-([0-3][0-9])$/]',array('regex_match' => 'Formato inválido da data: 0000-00-00'));
+			
+			if($this->form_validation->run() == FALSE){
+				if(validation_errors()){
+					set_msg(validation_errors(),'danger');
+				}
+			}else{
+				$dados_enviados = $this->input->post();
+				if($dados_enviados['periodoTurma'] < $dados['getturma']['cla_per_id']){
+					$dados_enviados['periodoTurma'] = $dados['getturma']['cla_per_id'];
+				}
+				$dados_enviados['periodo_anterior'];
+				$dados_enviados['tempoTurma'] = converter_data($dados_enviados['tempoTurma'],4);
+				$dados_enviados['hash'] = $hash;
+
+				if($this->turma->editarTurma($dados_enviados)){
+					redirect('turma/'.$hash.'/configs');
+				}
+
+			}
 			load_template('professor/viewTurma',$dados);
 
 		}else{
@@ -85,7 +128,7 @@ class Turmas extends CI_Controller {
 	public function fechar_periodo($hash,$periodo = false){
 		verif_login('dashboard',2);
 		$turma = $this->turma->getTurma($hash);
-		$dad = array('hash' => $hash, 'id_usuario'=.$this->session->userdata('id_usuario'));
+		$dad = array('hash' => $hash, 'id_usuario' => $this->session->userdata('id_usuario'));
 		$prof = $this->turma->verifProf($dad);
 		if(!$turma and (!$prof or verif_login('',2,false))){
 			set_msg('Turma não encontrada','danger');

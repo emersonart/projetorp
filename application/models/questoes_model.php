@@ -20,12 +20,13 @@ class Questoes_model extends CI_Model{
 		}
 		$info_lista = array(
 			'lis_name' => $values['nomeLista'],
+			'lis_per_id' => $values['periodo'],
 			'lis_subject' => $values['subject'],
 			'lis_teacher' => $values['id_professor'],
 			'lis_cla_hash' => $values['class_hash'],
 			'lis_endtime' => $values['endtime'],
-			'lis_gab_status' => $values['gab_status'],
-			'lis_res_status' => $values['res_status']
+			'lis_res_status' => $values['res_status'],
+			'lis_gab_status' => 0
 		);
 
 		$this->db->insert('tb_lists',$info_lista);
@@ -249,10 +250,15 @@ class Questoes_model extends CI_Model{
 
 
 
-	public function getListas($value){
+	public function getListas($values,$f = NULL){
 		$this->db->select('*');
 		$this->db->from('tb_lists');
-		$this->db->where('lis_cla_hash',$value);
+		$this->db->where('lis_cla_hash',$values['hash']);
+		if($f == NULL){
+			$this->db->where('lis_per_id',$values['periodo']);
+		}else{
+			$this->db->where('lis_per_id !=',$values['periodo']);
+		}
 		$query = $this->db->get();
 
 		if($query->num_rows() > 0){
@@ -275,6 +281,7 @@ class Questoes_model extends CI_Model{
 		}
 	}
 	public function getListainfo($values){
+		$turma = $this->turma->getTurma($values['hash']);
 		$this->db->select('*');
 		$this->db->from('tb_lists');
 		$this->db->where('lis_cla_hash',$values['hash']);
@@ -288,7 +295,9 @@ class Questoes_model extends CI_Model{
 
 		$query2 = $this->db->get();
 		if($query2->num_rows() == 1){
-			return $query2->row_array();
+			$result = $query2->row_array();
+			$result['cla_per_id'] = $turma['cla_per_id'];
+			return $result;
 		}else{
 			return false;
 		}
@@ -637,6 +646,10 @@ class Questoes_model extends CI_Model{
 		$this->db->delete('tb_answers');
 		$this->db->where('rev_lis_id',$values['id']);
 		$this->db->delete('tb_reviews');
+		$this->db->where('pli_lis_id',$values['id']);
+		$this->db->where('pli_cla_hash',$values['hash']);
+		$this->db->delete('tb_pdflista');
+
 		$this->db->trans_complete();
 
 		if($this->db->trans_status() === FALSE){
@@ -645,7 +658,7 @@ class Questoes_model extends CI_Model{
 		}else{
 			$this->db->trans_commit();
 			$pasta = "./assets/img/listas/".$values['id'];
-
+			$pdf = './assets/pdf/'.$values['hash'].'/lista_'.$values['id'];
 			if(is_dir($pasta)){
 				$dirr = dir($pasta);
 				while ($arquivo = $dirr->read()) {
@@ -656,8 +669,43 @@ class Questoes_model extends CI_Model{
 				$dirr->close();
 				rmdir($pasta);
 			}
+			if(is_dir($pdf)){
+				$dirr = dir($pdf);
+				while ($arquivo = $dirr->read()) {
+					if ($arquivo != '.' and $arquivo != '..') {
+						unlink($pdf.'/'.$arquivo);
+					}
+				}
+				$dirr->close();
+				rmdir($pasta);
+			}
 
 			return true;
+		}
+	}
+
+	public function cadastrar_pdf($values){
+
+		$this->db->insert_batch('tb_pdflista',$values);
+
+		if($this->db->insert_id()){
+			return true;
+		}else{
+			return false;
+		}
+
+	}
+	public function get_resposta_pdf($values){
+		$this->db->from('tb_pdflista');
+		$this->db->where('pli_usu_id',$values['id_usuario']);
+		$this->db->where('pli_lis_id',$values['id_lista']);
+		$this->db->where('pli_cla_hash',$values['hash']);
+		$query = $this->db->get();
+
+		if($query->num_row() == 1){
+			return $query->row->array();
+		}else{
+			return false;
 		}
 	}
 }

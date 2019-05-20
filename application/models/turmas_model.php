@@ -18,18 +18,6 @@ class Turmas_model extends CI_Model{
 		}
 
 		$subject = $this->option->getMateria($values['profTurma']);
-		switch ($values['periodosTurma']) {
-			case 'bimestre':
-				$values['periodosTurma'] = 0;
-				break;
-			case 'trimestre':
-				$values['periodosTurma'] = 1;
-				break;
-			
-			default:
-				$values['periodosTurma'] = 0;
-				break;
-		}
 		if($subject){
 			$dados = array(
 				'cla_hash' => $values['hashTurma'],
@@ -58,6 +46,23 @@ class Turmas_model extends CI_Model{
 		}
 
 		
+	}
+
+	public function editarTurma($dados){
+		$this->db->where('cla_hash',$dados['hash']);
+		$atualizar = array(
+			'cla_nome' => $dados['nomeTurma'],
+			'cla_end_time' => $dados['tempoTurma'],
+			'cla_descricao' => $dados['descricaoTurma'],
+			'cla_per_id' => $dados['periodoTurma'] 
+		);
+		$this->db->update('tb_class',$atualizar);
+
+		if($this->db->affected_rows()){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	public function getTurmas($aluno){
