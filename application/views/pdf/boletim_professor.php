@@ -45,7 +45,6 @@
 			</div>
 		</header>
 		<hr>
-
 		<?php 
 
 		$html = "<table class='table table-bordered'>
@@ -74,10 +73,10 @@
 				
 				$html.= "<tr style='".$d." padding-top: 15px;padding-bottom:15px;'><td style='padding: 5px 5x;".$d."'>".$nome.'</td>';
 
-			
-			foreach ($nota_aluno['respostas'] as $resposta) {
 
-				$html.="<td style='padding: 5px 5px;".$d."'>".$resposta['nota']."</td>";
+			for($u = 0; $u < count($nota_aluno['respostas']);$u++) {
+
+				$html.="<td style='padding: 5px 5px;".$d."'>".$nota_aluno['respostas'][$u]['nota']."</td>";
 			}
 			$html.="</tr>";
 			$l++;

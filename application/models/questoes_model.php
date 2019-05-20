@@ -250,13 +250,13 @@ class Questoes_model extends CI_Model{
 
 
 
-	public function getListas($values,$f = NULL){
+	public function getListas($values,$f = 'atual'){
 		$this->db->select('*');
 		$this->db->from('tb_lists');
 		$this->db->where('lis_cla_hash',$values['hash']);
-		if($f == NULL){
+		if($f == 'atual'){
 			$this->db->where('lis_per_id',$values['periodo']);
-		}else{
+		}else if($f == 'outras'){
 			$this->db->where('lis_per_id !=',$values['periodo']);
 		}
 		$query = $this->db->get();
@@ -695,11 +695,34 @@ class Questoes_model extends CI_Model{
 		}
 
 	}
+	public function cadastrar_relatorio_pdf($values){
+
+		$this->db->insert_batch('tb_relatorios',$values);
+
+		if($this->db->insert_id()){
+			return true;
+		}else{
+			return false;
+		}
+
+	}
 	public function get_resposta_pdf($values){
 		$this->db->from('tb_pdflista');
 		$this->db->where('pli_usu_id',$values['id_usuario']);
 		$this->db->where('pli_lis_id',$values['id_lista']);
 		$this->db->where('pli_cla_hash',$values['hash']);
+		$query = $this->db->get();
+
+		if($query->num_row() == 1){
+			return $query->row->array();
+		}else{
+			return false;
+		}
+	}
+	public function get_relatorio_pdf($values){
+		$this->db->from('tb_relatorios');
+		$this->db->where('rel_cla_hash',$values['hash']);
+		$this->db->where('rel_per_id',$values['periodo']);
 		$query = $this->db->get();
 
 		if($query->num_row() == 1){

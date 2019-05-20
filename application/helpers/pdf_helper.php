@@ -30,8 +30,7 @@ if(!function_exists('gerar_pdf')){
             $mpdf->Output('./'.$nome_pdf, \Mpdf\Output\Destination::FILE);
         }
         
-        
-        if(file_exists('./'.$nome_pdf)){
+       if(file_exists('./'.$nome_pdf)){
         	return $nome_pdf;
         }else{
         	return false;

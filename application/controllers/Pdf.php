@@ -87,78 +87,57 @@ class Pdf extends CI_Controller {
 	public function relatorio_turma($hash = 'FIED32'){
 		$turma = $this->turma->getTurma($hash);
 		$alunos = $this->turma->getAlunos($hash);
-		$listas = $this->questao->getListas($hash);
-
+		$da = array(
+			'hash' => $hash,
+			'periodo' => $turma['cla_per_id']
+		);
+		$listas = $this->questao->getListas(array('hash' => $hash, 'periodo'=>$turma['cla_per_id']),'todos');
 		$nota_alunos = array();
 		$i = 0;
+		//var_dump($listas);
 		
-		foreach ($alunos as $aluno){
-			$nota_alunos[$i]['inf_name'] = $aluno->inf_name;
-			$nota_alunos[$i]['inf_lastname'] = $aluno->inf_lastname;
-			$nota_alunos[$i]['inf_registration'] = $aluno->inf_registration;
+		if($listas){
+			foreach ($alunos as $aluno){
+				$nota_alunos[$i]['inf_name'] = $aluno->inf_name;
+				$nota_alunos[$i]['inf_lastname'] = $aluno->inf_lastname;
+				$nota_alunos[$i]['inf_registration'] = $aluno->inf_registration;
 			//echo $aluno->inf_name." ".$aluno->inf_lastname.": <br>";
-			$j = 0;
-			foreach ($listas as $lista){
-				$nota_alunos[$i]['respostas'][$j]['lis_id'] = $lista['lis_id'];
-				$nota_alunos[$i]['respostas'][$j]['lis_name'] = $lista['lis_name'];
-				$nota = $this->questao->getNotaLista(array('id_lista' => $lista['lis_id'], 'id_aluno'=>$aluno->usu_id));
-				if($nota == ''){
-					$nota_alunos[$i]['respostas'][$j]['nota'] = '0';
-				}else{
-					$nota_alunos[$i]['respostas'][$j]['nota'] = $nota;
-				}
-				
+				$j = 0;
+				foreach ($listas as $lista){
+					$nota_alunos[$i]['respostas'][$j]['lis_id'] = $lista['lis_id'];
+					$nota_alunos[$i]['respostas'][$j]['lis_name'] = $lista['lis_name'];
+					$nota = $this->questao->getNotaLista(array('id_lista' => $lista['lis_id'], 'id_aluno'=>$aluno->usu_id));
+					if($nota == ''){
+						$nota_alunos[$i]['respostas'][$j]['nota'] = '0';
+					}else{
+						$nota_alunos[$i]['respostas'][$j]['nota'] = $nota;
+					}
+
 
 				//echo "nota: ".$this->questao->getNotaLista(array('id_lista' => $lista['lis_id'], 'id_aluno'=>$aluno->usu_id))."<br>";
-				$j++;
-			}
+					$j++;
+				}
 			//echo "<hr>";
-			$i++;
-		}
-		$html = "<table class='table table-bordered'>
-		<thead>
-		<tr>
-		<th style='padding: 10px 10px;'>Aluno</th>";
-		for($k = 0;$k < count($nota_alunos[0]['respostas']); $k++) {
-			$html.="<th style='padding: 10px 10px;'>".$nota_alunos[0]['respostas'][$k]['lis_name']."</th>";					
-		}
-		$html.= "</tr></thead>
-		<tbody>";
-		$l=0;
-		foreach ($nota_alunos as $nota_aluno) {
-			if($l%2 == 0){
-				$d = 'background-color: #eee;';
-			}else{
-				$d ='';
-			}
-			$nome = $nota_aluno['inf_name'].' '.$nota_aluno['inf_lastname'];
-			$nome = explode(' ',$nome);
-			if(count($nome) >= 2){
-				$nome = $nome[0].' '.$nome[1];
-			}else{
-				$nome = $nome[0];
+				$i++;
 			}
 
-			$html.= "<tr style='".$d." padding-top: 15px;padding-bottom:15px;'><td style='padding: 5px 5x;".$d."'>".$nome.'</td>';
+			$dados['nota_alunos'] = $nota_alunos;
+			$dados['turma'] = $turma;
 
-			
-			foreach ($nota_aluno['respostas'] as $resposta) {
-
-				$html.="<td style='padding: 5px 5px;".$d."'>".$resposta['nota']."</td>";
+			if($link = gerar_pdf($dados,'boletim_professor')){
+				$pdfs[] = array(
+					'rel_cla_hash' => $hash, 
+					'rel_per_id'=>$turma['cla_per_id'],
+					'rel_pdf' => $link
+				);
+				$this->questao->cadastrar_relatorio_pdf($pdfs);
+				force_download($link,NULL);
+				redirect('turma/'.$hash);
 			}
-			$html.="</tr>";
-			$l++;
+		}else{
+			//redirect('turma/'.$hash);
 		}
-		$html.='</tbody></table>';
-		$dados['nota_alunos'] = $nota_alunos;
-		$dados['turma'] = $turma;
 		
-		$stylesheet = file_get_contents('assets/css/bootstrap.min.css');
-		$stylesheet2 = file_get_contents('assets/style.css');
-
-		if($link = gerar_pdf($dados,'boletim_professor')){
-			echo $link;
-		}
 		 // opens in browser
 	}
 
